@@ -1,0 +1,94 @@
+{
+  "local_latency": {
+    "avg_ms": 4218.5,
+    "median_ms": 4256.1,
+    "p95_ms": 5175.2,
+    "min_ms": 3461.2,
+    "max_ms": 5175.2,
+    "count": 7
+  },
+  "local_cost": {
+    "input_tokens": 8753,
+    "output_tokens": 122,
+    "estimated_usd": 0.0
+  },
+  "scenario_pairs": [
+    {
+      "scenario_id": "sc_001",
+      "question": "Who directed Inception?",
+      "category": "simple_factual",
+      "cloud_answer": null,
+      "cloud_latency_ms": null,
+      "cloud_model": null,
+      "local_answer": "Christopher Nolan.",
+      "local_latency_ms": 3591.1,
+      "local_model": "llama3.2"
+    },
+    {
+      "scenario_id": "sc_002",
+      "question": "What genre is Toy Story?",
+      "category": "simple_factual",
+      "cloud_answer": null,
+      "cloud_latency_ms": null,
+      "cloud_model": null,
+      "local_answer": "According to the provided context, Toy Story is classified under the genres: Animation, Comedy, Family.",
+      "local_latency_ms": 4256.1,
+      "local_model": "llama3.2"
+    },
+    {
+      "scenario_id": "sc_003",
+      "question": "What year was The Dark Knight released?",
+      "category": "simple_factual",
+      "cloud_answer": null,
+      "cloud_latency_ms": null,
+      "cloud_model": null,
+      "local_answer": "The Dark Knight was released in 2008.",
+      "local_latency_ms": 3724.7,
+      "local_model": "llama3.2"
+    },
+    {
+      "scenario_id": "sc_004",
+      "question": "What is the plot of Avatar?",
+      "category": "simple_factual",
+      "cloud_answer": null,
+      "cloud_latency_ms": null,
+      "cloud_model": null,
+      "local_answer": "I don't have enough information to answer that based on the available data.",
+      "local_latency_ms": 4781.0,
+      "local_model": "llama3.2"
+    },
+    {
+      "scenario_id": "sc_005",
+      "question": "How much revenue did Titanic generate?",
+      "category": "simple_factual",
+      "cloud_answer": null,
+      "cloud_latency_ms": null,
+      "cloud_model": null,
+      "local_answer": "$1,845,034,188.",
+      "local_latency_ms": 3461.2,
+      "local_model": "llama3.2"
+    },
+    {
+      "scenario_id": "sc_006",
+      "question": "What is the runtime of The Lord of the Rings: The Return of the King?",
+      "category": "simple_factual",
+      "cloud_answer": null,
+      "cloud_latency_ms": null,
+      "cloud_model": null,
+      "local_answer": "The runtime of The Lord of the Rings: The Return of the King is 201 minutes.",
+      "local_latency_ms": 4540.3,
+      "local_model": "llama3.2"
+    },
+    {
+      "scenario_id": "sc_007",
+      "question": "Who are the main cast members of The Avengers?",
+      "category": "simple_factual",
+      "cloud_answer": null,
+      "cloud_latency_ms": null,
+      "cloud_model": null,
+      "local_answer": "The main cast members of The Avengers are:\n\n1. Robert Downey Jr.\n2. Chris Evans\n3. Mark Ruffalo\n4. Chris Hemsworth\n5. Scarlett Johansson",
+      "local_latency_ms": 5175.2,
+      "local_model": "llama3.2"
+    }
+  ]
+}
