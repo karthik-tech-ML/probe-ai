@@ -1,0 +1,30 @@
+{
+  "cloud": {
+    "model": "claude-sonnet-4-5-20250929",
+    "latency": {"avg_ms": 1728, "median_ms": 1605, "p95_ms": 2461, "min_ms": 1358, "max_ms": 2461},
+    "cost": {"input_tokens": 9749, "output_tokens": 220, "estimated_usd": 0.0325},
+    "scenarios": [
+      {"id": "sc_001", "question": "Who directed Inception?", "answer": "Christopher Nolan directed Inception.", "latency_ms": 1502, "correct": true},
+      {"id": "sc_002", "question": "What genre is Toy Story?", "answer": "Animation, Comedy, and Family.", "latency_ms": 1518, "correct": true},
+      {"id": "sc_003", "question": "What year was The Dark Knight released?", "answer": "2008.", "latency_ms": 1605, "correct": true},
+      {"id": "sc_004", "question": "What is the plot of Avatar?", "answer": "I don't have enough information (retrieval miss).", "latency_ms": 2461, "correct": false},
+      {"id": "sc_005", "question": "How much revenue did Titanic generate?", "answer": "$1,845,034,188.", "latency_ms": 1926, "correct": true},
+      {"id": "sc_006", "question": "Runtime of Return of the King?", "answer": "201 minutes.", "latency_ms": 1358, "correct": true},
+      {"id": "sc_007", "question": "Main cast of The Avengers?", "answer": "Downey Jr., Evans, Ruffalo, Hemsworth, Johansson.", "latency_ms": 1726, "correct": true}
+    ]
+  },
+  "local": {
+    "model": "llama3.2 (3B)",
+    "latency": {"avg_ms": 5104, "median_ms": 4566, "p95_ms": 9778, "min_ms": 3499, "max_ms": 9778},
+    "cost": {"input_tokens": 8753, "output_tokens": 122, "estimated_usd": 0.0},
+    "scenarios": [
+      {"id": "sc_001", "question": "Who directed Inception?", "answer": "Christopher Nolan.", "latency_ms": 9778, "correct": true},
+      {"id": "sc_002", "question": "What genre is Toy Story?", "answer": "Animation, Comedy, Family.", "latency_ms": 4156, "correct": true},
+      {"id": "sc_003", "question": "What year was The Dark Knight released?", "answer": "2008.", "latency_ms": 3754, "correct": true},
+      {"id": "sc_004", "question": "What is the plot of Avatar?", "answer": "I don't have enough information.", "latency_ms": 4792, "correct": false},
+      {"id": "sc_005", "question": "How much revenue did Titanic generate?", "answer": "$1,845,034,188.", "latency_ms": 3499, "correct": true},
+      {"id": "sc_006", "question": "Runtime of Return of the King?", "answer": "201 minutes.", "latency_ms": 4566, "correct": true},
+      {"id": "sc_007", "question": "Main cast of The Avengers?", "answer": "Downey Jr., Evans, Ruffalo, Hemsworth, Johansson.", "latency_ms": 5186, "correct": true}
+    ]
+  }
+}

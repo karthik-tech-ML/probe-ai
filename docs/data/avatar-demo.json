@@ -1,0 +1,27 @@
+{
+  "query": "What is the plot of Avatar?",
+  "before": {
+    "method": "Standard embedding (all-MiniLM-L6-v2)",
+    "recall": 0.0,
+    "results": [
+      {"rank": 1, "title": "Princess Mononoke", "similarity": 0.4482, "movie_id": 128},
+      {"rank": 2, "title": "Pocahontas", "similarity": 0.4201, "movie_id": 10530},
+      {"rank": 3, "title": "FernGully: The Last Rainforest", "similarity": 0.3998, "movie_id": 13225},
+      {"rank": 4, "title": "Dances with Wolves", "similarity": 0.3812, "movie_id": 581},
+      {"rank": 5, "title": "The Last Samurai", "similarity": 0.3654, "movie_id": 616}
+    ],
+    "explanation": "The generic title 'Avatar' drifts toward thematically similar movies (nature, indigenous cultures) instead of the exact match. The embedding doesn't distinguish the specific movie from the theme."
+  },
+  "after": {
+    "method": "Title-boosted embedding (chunk-format prefix)",
+    "recall": 1.0,
+    "results": [
+      {"rank": 1, "title": "Avatar", "similarity": 0.7891, "movie_id": 19995},
+      {"rank": 2, "title": "The Last Airbender", "similarity": 0.4102, "movie_id": 10195},
+      {"rank": 3, "title": "Princess Mononoke", "similarity": 0.3912, "movie_id": 128},
+      {"rank": 4, "title": "Aliens", "similarity": 0.3654, "movie_id": 679},
+      {"rank": 5, "title": "Pocahontas", "similarity": 0.3421, "movie_id": 10530}
+    ],
+    "explanation": "Prepending 'Title: Avatar\\nDirector: \\nCast: \\nGenres: \\nPlot:' mirrors the chunk template so the embedding lands in the same vector space region as the actual Avatar document."
+  }
+}
