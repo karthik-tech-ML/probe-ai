@@ -1,16 +1,18 @@
 """
 Eval harness: load scenarios, run each through the RAG pipeline
-(or agent), score with metric functions, output structured JSON results.
+(or agent or any ProbeConnector), score with metric functions,
+output structured JSON results.
 
 Designed to be called from scripts/evaluate.py or used directly
 in code. Metric scorers are pluggable — pass any list of functions
 that take (scenario, pipeline_result) and return a dict of scores.
 
-The --agent path runs scenarios through the LangGraph ReAct agent
-instead of single-shot RAG. The PipelineResult interface stays the
-same so all existing metrics (faithfulness, grounding, etc.) still
-work. Agent-specific metrics (task_success, tool_selection) get the
-trace via the _agent_trace attribute stashed on the result.
+Three execution paths:
+1. Direct RAG pipeline (default, no connector needed)
+2. LangGraph agent (--agent flag)
+3. Any ProbeConnector (--connector flag) — the model-agnostic path
+
+All three produce PipelineResult so metrics work unchanged.
 """
 
 import json
@@ -206,6 +208,41 @@ def _run_single_agent(
     )
 
 
+def _run_single_connector(
+    scenario: Scenario,
+    connector: "ProbeConnector",
+    metrics: list[MetricFn],
+    mode: str = "rag",
+) -> ScenarioResult:
+    """
+    Run one scenario through any ProbeConnector and score it.
+
+    The connector returns a ProbeResult, which the adapter converts
+    to PipelineResult so all existing metric functions still work.
+    """
+    from src.connectors.adapters import (
+        probe_result_to_pipeline_result,
+        probe_result_to_scenario_result,
+    )
+
+    logger.info(f"[{scenario.id}] (connector/{mode}) {scenario.question}")
+
+    probe_result = connector.ask(scenario.question, mode=mode)
+    pipeline_result = probe_result_to_pipeline_result(probe_result)
+
+    # run metrics against the adapted PipelineResult — same as always
+    scores: dict[str, Any] = {}
+    for metric_fn in metrics:
+        try:
+            metric_scores = metric_fn(scenario, pipeline_result)
+            scores.update(metric_scores)
+        except Exception as e:
+            logger.error(f"[{scenario.id}] metric {metric_fn.__name__} failed: {e}")
+            scores[metric_fn.__name__] = {"error": str(e)}
+
+    return probe_result_to_scenario_result(probe_result, scenario, scores)
+
+
 @dataclass
 class EvalRun:
     """Full eval run result — all scenarios + summary stats."""
@@ -240,6 +277,7 @@ def run(
     top_k: int = 5,
     model: str = "claude-sonnet-4-5-20250929",
     use_agent: bool = False,
+    connector: "ProbeConnector | None" = None,
 ) -> EvalRun:
     """
     Run the eval harness across scenarios.
@@ -251,6 +289,9 @@ def run(
         top_k: how many chunks to retrieve per query (RAG mode only)
         model: which Claude model to use for generation (RAG mode only)
         use_agent: if True, route through the LangGraph agent instead of RAG
+        connector: if provided, route through this connector instead of
+                   the built-in pipeline. overrides use_agent — pass
+                   mode via the connector's ask() method instead.
     """
     if scenarios is None:
         scenarios = load_scenarios(category=category)
@@ -258,11 +299,20 @@ def run(
     if metrics is None:
         metrics = []
 
-    mode_label = "agent" if use_agent else "RAG"
+    if connector is not None:
+        mode_label = "connector"
+    elif use_agent:
+        mode_label = "agent"
+    else:
+        mode_label = "RAG"
+
     logger.info(
         f"starting {mode_label} eval run: {len(scenarios)} scenarios, "
         f"{len(metrics)} metrics"
     )
+
+    # figure out which mode to pass to the connector
+    connector_mode = "agent" if use_agent else "rag"
 
     t0 = time.perf_counter()
     results = []
@@ -270,7 +320,11 @@ def run(
     for i, scenario in enumerate(scenarios, 1):
         logger.info(f"--- scenario {i}/{len(scenarios)} ---")
         try:
-            if use_agent:
+            if connector is not None:
+                result = _run_single_connector(
+                    scenario, connector, metrics, mode=connector_mode
+                )
+            elif use_agent:
                 result = _run_single_agent(scenario, metrics)
             else:
                 result = _run_single(scenario, metrics, top_k, model)

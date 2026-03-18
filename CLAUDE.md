@@ -81,6 +81,16 @@ probeai/
 ├── src/
 │   ├── __init__.py
 │   ├── config.py                # Settings, env vars, constants
+│   ├── connectors/              # Pluggable system connectors
+│   │   ├── __init__.py          # Registry + get_connector() factory
+│   │   ├── base.py              # ProbeConnector ABC + data classes
+│   │   ├── adapters.py          # ProbeResult → PipelineResult bridge
+│   │   ├── tmdb.py              # Built-in TMDB connector
+│   │   └── example_connector.py # Documented template for new connectors
+│   ├── generator/               # Auto scenario generation
+│   │   ├── __init__.py
+│   │   ├── prompts.py           # Category-specific prompt templates
+│   │   └── scenario_generator.py # Generate scenarios from any connector
 │   ├── ingestion/
 │   │   ├── __init__.py
 │   │   ├── loader.py            # Load and parse TMDB CSVs
@@ -136,6 +146,7 @@ probeai/
 └── scripts/
     ├── ingest.py                # CLI script to run data ingestion
     ├── evaluate.py              # CLI script to run eval suite
+    ├── generate_scenarios.py    # CLI script to auto-generate scenarios
     └── benchmark.py             # CLI script to run benchmarks
 ```
 
@@ -163,11 +174,34 @@ Plot: A thief who steals corporate secrets through the use of dream-sharing tech
 ### Ground Truth Strategy
 Structured metadata fields (director, cast, genres, budget, revenue) serve as verifiable ground truth for eval scenarios. If the RAG system says "Inception was directed by Christopher Nolan" — we can validate that against the source data.
 
+## Connector Architecture (Model-Agnostic)
+ProbeAI is data-agnostic and model-agnostic. Any RAG or agent system can plug in via the `ProbeConnector` interface:
+
+```
+ProbeConnector (ABC)
+├── ask(question, mode) → ProbeResult
+├── get_corpus_sample(n) → list[SourceDocument]
+└── get_schema() → CorpusSchema
+
+Adapter layer converts ProbeResult → PipelineResult so all 7 existing
+metric functions work unchanged. No metric code was modified.
+```
+
+To add a new system:
+1. Copy `src/connectors/example_connector.py`
+2. Implement the three abstract methods
+3. Register in `src/connectors/__init__.py`
+4. Run: `python scripts/evaluate.py --connector your_name`
+
+The scenario generator (`src/generator/`) uses Claude to auto-create test
+scenarios from any connector's schema + sample data.
+
 ## Key Design Decisions
 - **Document chunks = 1 per movie**: No sub-chunking needed since each movie overview is short enough. The composite format keeps all movie info in one retrievable unit.
 - **Embedding model**: all-MiniLM-L6-v2 locally via sentence-transformers. Free, fast, good enough for the eval framework demo. Can swap in OpenAI embeddings later for inference benchmark comparison.
 - **LLM-as-judge for faithfulness**: Use a second Claude API call to judge whether generated answers are supported by retrieved context. Cheaper and faster than fine-tuned classifiers for this use case.
 - **Scenario-driven evaluation**: All eval runs pull from the scenario library. No ad-hoc testing.
+- **Adapter pattern for connectors**: ProbeResult → PipelineResult adapter lets any connector work with all existing metrics without changing metric code.
 
 ## Development Phases
 - **Weeks 1-2**: RAG pipeline + initial eval metrics (retrieval recall, faithfulness, grounding)
@@ -191,11 +225,21 @@ LATENCY_THRESHOLD_MS=2000
 # Ingest TMDB data
 python scripts/ingest.py
 
-# Run evaluation suite
+# Run evaluation suite (direct pipeline — no connector needed)
 python scripts/evaluate.py
 
 # Run specific eval category
 python scripts/evaluate.py --category simple_factual
+
+# Run eval through a connector (model-agnostic path)
+python scripts/evaluate.py --connector tmdb --category simple_factual
+
+# Run agent eval through a connector
+python scripts/evaluate.py --connector tmdb --agent --category multi_field
+
+# Auto-generate scenarios from any connector
+python scripts/generate_scenarios.py --connector tmdb --categories simple_factual,multi_field --count 5
+python scripts/generate_scenarios.py --connector tmdb --out scenarios/generated.json
 
 # Run inference benchmark
 python scripts/benchmark.py

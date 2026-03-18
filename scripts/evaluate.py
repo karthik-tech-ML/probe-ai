@@ -7,6 +7,8 @@ Usage:
     python scripts/evaluate.py --category adversarial --top-k 3
     python scripts/evaluate.py --out eval_results/run_001.json
     python scripts/evaluate.py --agent --category multi_field
+    python scripts/evaluate.py --connector tmdb --category simple_factual
+    python scripts/evaluate.py --scenarios scenarios/generated.json --connector tmdb
 """
 
 import argparse
@@ -173,11 +175,23 @@ def main() -> None:
                         help="number of chunks to retrieve per query (RAG mode)")
     parser.add_argument("--agent", action="store_true",
                         help="run scenarios through the LangGraph agent instead of RAG")
+    parser.add_argument("--connector", type=str, default=None,
+                        help="use a ProbeConnector instead of the built-in pipeline (e.g. 'tmdb')")
+    parser.add_argument("--scenarios", type=str, default=None,
+                        help="path to a custom scenarios JSON file (default: scenarios/library.json)")
     parser.add_argument("--out", type=str, default=None,
                         help="path to write full JSON results")
     args = parser.parse_args()
 
-    scenarios = load_scenarios(category=args.category)
+    scenario_path = Path(args.scenarios) if args.scenarios else None
+    scenarios = load_scenarios(path=scenario_path, category=args.category) if scenario_path else load_scenarios(category=args.category)
+
+    # resolve the connector if requested
+    connector = None
+    if args.connector:
+        from src.connectors import get_connector
+        connector = get_connector(args.connector)
+        logger.info(f"using connector: {args.connector}")
 
     if args.agent:
         metrics = AGENT_METRICS
@@ -189,6 +203,7 @@ def main() -> None:
         metrics=metrics,
         top_k=args.top_k,
         use_agent=args.agent,
+        connector=connector,
     )
 
     print_summary(eval_run, is_agent=args.agent)

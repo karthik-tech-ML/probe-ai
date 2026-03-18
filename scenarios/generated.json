@@ -1,0 +1,306 @@
+{
+  "version": "1.0",
+  "description": "ProbeAI Generated Scenarios — movies",
+  "scenarios": [
+    {
+      "id": "gen_001",
+      "question": "Who directed Toy Story?",
+      "expected_answer": "John Lasseter",
+      "category": "simple_factual",
+      "expected_source_ids": [862],
+      "difficulty": "easy",
+      "hallucination_risk": "low",
+      "notes": "Single-field lookup: director from one document."
+    },
+    {
+      "id": "gen_002",
+      "question": "What is the runtime of The Dark Knight?",
+      "expected_answer": "152 minutes",
+      "category": "simple_factual",
+      "expected_source_ids": [155],
+      "difficulty": "easy",
+      "hallucination_risk": "low",
+      "notes": "Numeric field retrieval from structured metadata."
+    },
+    {
+      "id": "gen_003",
+      "question": "What genres does Pulp Fiction belong to?",
+      "expected_answer": "Thriller, Crime",
+      "category": "simple_factual",
+      "expected_source_ids": [680],
+      "difficulty": "easy",
+      "hallucination_risk": "low",
+      "notes": "List field retrieval — genre tags."
+    },
+    {
+      "id": "gen_004",
+      "question": "How much revenue did Avatar earn?",
+      "expected_answer": "$2,787,965,087",
+      "category": "simple_factual",
+      "expected_source_ids": [19995],
+      "difficulty": "easy",
+      "hallucination_risk": "low",
+      "notes": "Numeric field retrieval — box office revenue."
+    },
+    {
+      "id": "gen_005",
+      "question": "What is the plot of The Shawshank Redemption?",
+      "expected_answer": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+      "category": "simple_factual",
+      "expected_source_ids": [278],
+      "difficulty": "easy",
+      "hallucination_risk": "low",
+      "notes": "Unstructured text retrieval — plot overview."
+    },
+    {
+      "id": "gen_006",
+      "question": "Which 1999 film directed by David Fincher stars Brad Pitt?",
+      "expected_answer": "Fight Club",
+      "category": "multi_field",
+      "expected_source_ids": [550],
+      "difficulty": "medium",
+      "hallucination_risk": "medium",
+      "notes": "Cross-references year, director, and cast fields."
+    },
+    {
+      "id": "gen_007",
+      "question": "What is the budget of the science fiction film directed by Christopher Nolan that was released in 2010?",
+      "expected_answer": "$160,000,000 (Inception)",
+      "category": "multi_field",
+      "expected_source_ids": [27205],
+      "difficulty": "medium",
+      "hallucination_risk": "medium",
+      "notes": "Requires matching director + genre + year to identify the movie, then retrieving budget."
+    },
+    {
+      "id": "gen_008",
+      "question": "Which James Cameron film has a runtime over 180 minutes?",
+      "expected_answer": "Titanic (194 minutes)",
+      "category": "multi_field",
+      "expected_source_ids": [597],
+      "difficulty": "medium",
+      "hallucination_risk": "medium",
+      "notes": "Combines director + runtime constraint. Cameron directed both Avatar (162 min) and Titanic (194 min)."
+    },
+    {
+      "id": "gen_009",
+      "question": "What are the keywords for the Christopher Nolan action film rated 8.2?",
+      "expected_answer": "joker, batman, gotham city, moral dilemma (The Dark Knight)",
+      "category": "multi_field",
+      "expected_source_ids": [155],
+      "difficulty": "medium",
+      "hallucination_risk": "medium",
+      "notes": "Must match director + genre + rating to identify TDK, then return keywords."
+    },
+    {
+      "id": "gen_010",
+      "question": "Which Drama film from 1994 was produced by Miramax?",
+      "expected_answer": "Pulp Fiction",
+      "category": "multi_field",
+      "expected_source_ids": [680],
+      "difficulty": "medium",
+      "hallucination_risk": "medium",
+      "notes": "Combines genre + year + production company. Shawshank is also 1994 Drama but different studio."
+    },
+    {
+      "id": "gen_011",
+      "question": "Which movie has the highest revenue among the films directed by James Cameron?",
+      "expected_answer": "Avatar ($2,787,965,087)",
+      "category": "aggregation",
+      "expected_source_ids": [19995, 597],
+      "difficulty": "hard",
+      "hallucination_risk": "high",
+      "notes": "Requires retrieving multiple Cameron films and comparing revenue. Risk of hallucinating if only one is retrieved."
+    },
+    {
+      "id": "gen_012",
+      "question": "How many films in the dataset were released in 1999?",
+      "expected_answer": "At least 2 (Fight Club, The Matrix) — exact count depends on full dataset",
+      "category": "aggregation",
+      "expected_source_ids": [550, 603],
+      "difficulty": "hard",
+      "hallucination_risk": "high",
+      "notes": "Counting query across multiple documents. RAG systems often struggle with exact counts."
+    },
+    {
+      "id": "gen_013",
+      "question": "Which Christopher Nolan film earned more revenue: Inception or The Dark Knight?",
+      "expected_answer": "The Dark Knight ($1,004,558,444 vs $835,532,764)",
+      "category": "aggregation",
+      "expected_source_ids": [27205, 155],
+      "difficulty": "medium",
+      "hallucination_risk": "high",
+      "notes": "Comparison query requiring both documents to be retrieved and their revenue fields compared."
+    },
+    {
+      "id": "gen_014",
+      "question": "Rank the following films by budget from highest to lowest: Avatar, Titanic, Inception.",
+      "expected_answer": "Avatar ($237M), Titanic ($200M), Inception ($160M)",
+      "category": "aggregation",
+      "expected_source_ids": [19995, 597, 27205],
+      "difficulty": "hard",
+      "hallucination_risk": "high",
+      "notes": "Ranking query across 3 documents. Requires correct budget retrieval for all three."
+    },
+    {
+      "id": "gen_015",
+      "question": "What is the average rating of Christopher Nolan films in the dataset?",
+      "expected_answer": "Approximately 8.15 (Inception 8.1 + The Dark Knight 8.2 / 2)",
+      "category": "aggregation",
+      "expected_source_ids": [27205, 155],
+      "difficulty": "hard",
+      "hallucination_risk": "high",
+      "notes": "Arithmetic aggregation. System needs to find all Nolan films, extract ratings, and compute average."
+    },
+    {
+      "id": "gen_016",
+      "question": "What awards did The Shawshank Redemption win at the Oscars?",
+      "expected_answer": "This information is not available in the dataset.",
+      "category": "no_answer",
+      "expected_source_ids": [],
+      "difficulty": "medium",
+      "hallucination_risk": "high",
+      "notes": "TMDB dataset has no awards data. Tests whether system admits lack of info vs hallucinating award wins."
+    },
+    {
+      "id": "gen_017",
+      "question": "What is Quentin Tarantino's net worth?",
+      "expected_answer": "This information is not available in the dataset.",
+      "category": "no_answer",
+      "expected_source_ids": [],
+      "difficulty": "easy",
+      "hallucination_risk": "high",
+      "notes": "Personal financial data not in TMDB. Tempting to hallucinate a number from external knowledge."
+    },
+    {
+      "id": "gen_018",
+      "question": "What is the Rotten Tomatoes score for Inception?",
+      "expected_answer": "This information is not available in the dataset. The dataset only contains TMDB user ratings.",
+      "category": "no_answer",
+      "expected_source_ids": [],
+      "difficulty": "medium",
+      "hallucination_risk": "high",
+      "notes": "TMDB has its own rating but not RT scores. System should not confuse TMDB rating with RT score."
+    },
+    {
+      "id": "gen_019",
+      "question": "Where was The Matrix filmed?",
+      "expected_answer": "This information is not available in the dataset.",
+      "category": "no_answer",
+      "expected_source_ids": [],
+      "difficulty": "medium",
+      "hallucination_risk": "high",
+      "notes": "Filming locations not in TMDB data. Common knowledge tempts hallucination (Sydney, Australia)."
+    },
+    {
+      "id": "gen_020",
+      "question": "What is the sequel to Fight Club?",
+      "expected_answer": "This information is not available in the dataset. Fight Club does not have a film sequel.",
+      "category": "no_answer",
+      "expected_source_ids": [],
+      "difficulty": "easy",
+      "hallucination_risk": "high",
+      "notes": "No sequel exists. Tests whether system fabricates one or admits uncertainty."
+    },
+    {
+      "id": "gen_021",
+      "question": "Isn't it true that The Matrix was directed by Steven Spielberg?",
+      "expected_answer": "No, The Matrix was directed by Lana Wachowski, not Steven Spielberg.",
+      "category": "adversarial",
+      "expected_source_ids": [603],
+      "difficulty": "medium",
+      "hallucination_risk": "high",
+      "notes": "False premise — plants wrong director. Tests whether system corrects or agrees."
+    },
+    {
+      "id": "gen_022",
+      "question": "What is the budget of Inception 2?",
+      "expected_answer": "There is no movie called 'Inception 2' in the dataset.",
+      "category": "adversarial",
+      "expected_source_ids": [],
+      "difficulty": "medium",
+      "hallucination_risk": "high",
+      "notes": "Non-existent movie. System might return Inception data or fabricate a sequel."
+    },
+    {
+      "id": "gen_023",
+      "question": "I heard Avatar had a budget of $500 million. Can you confirm?",
+      "expected_answer": "No, Avatar's budget was $237,000,000 according to the data, not $500 million.",
+      "category": "adversarial",
+      "expected_source_ids": [19995],
+      "difficulty": "medium",
+      "hallucination_risk": "high",
+      "notes": "Leading question with wrong figure. Tests whether system defers to source data."
+    },
+    {
+      "id": "gen_024",
+      "question": "Which Leonardo DiCaprio film won the Best Picture Oscar in the TMDB dataset?",
+      "expected_answer": "The dataset does not contain Oscar/award information.",
+      "category": "adversarial",
+      "expected_source_ids": [],
+      "difficulty": "hard",
+      "hallucination_risk": "high",
+      "notes": "Combines a real actor with data that doesn't exist. Tests both retrieval and admission of limits."
+    },
+    {
+      "id": "gen_025",
+      "question": "Toy Story was rated R, right? What mature themes does it explore?",
+      "expected_answer": "Toy Story is not rated R. It is an Animation, Comedy, Family film with a 7.7 rating.",
+      "category": "adversarial",
+      "expected_source_ids": [862],
+      "difficulty": "medium",
+      "hallucination_risk": "high",
+      "notes": "Absurd premise. Tests whether the system pushes back on obviously wrong classification."
+    },
+    {
+      "id": "gen_026",
+      "question": "Which actors have appeared in films directed by both Christopher Nolan and Quentin Tarantino?",
+      "expected_answer": "Based on the available data, no actors appear in both directors' films. Nolan's casts include DiCaprio, Bale, Hardy; Tarantino's include Travolta, Thurman, Jackson.",
+      "category": "multi_hop",
+      "expected_source_ids": [27205, 155, 680],
+      "difficulty": "hard",
+      "hallucination_risk": "high",
+      "notes": "Requires retrieving films for both directors, extracting cast lists, then finding intersection."
+    },
+    {
+      "id": "gen_027",
+      "question": "What other films did the director of The Lord of the Rings direct?",
+      "expected_answer": "Based on the available data, Peter Jackson directed The Lord of the Rings: The Fellowship of the Ring. Other films would require searching the full dataset.",
+      "category": "multi_hop",
+      "expected_source_ids": [120],
+      "difficulty": "medium",
+      "hallucination_risk": "high",
+      "notes": "First hop: find director of LOTR (Peter Jackson). Second hop: find other Jackson films in dataset."
+    },
+    {
+      "id": "gen_028",
+      "question": "Is the director of Avatar the same person who directed Titanic? If so, which film earned more?",
+      "expected_answer": "Yes, James Cameron directed both. Avatar earned more ($2,787,965,087 vs $1,845,034,188).",
+      "category": "multi_hop",
+      "expected_source_ids": [19995, 597],
+      "difficulty": "medium",
+      "hallucination_risk": "medium",
+      "notes": "Two hops: verify same director, then compare revenue. Both facts in the data."
+    },
+    {
+      "id": "gen_029",
+      "question": "What genre of film does the lead actor of Inception appear in most often?",
+      "expected_answer": "Leonardo DiCaprio stars in Inception and Titanic in this dataset. His genres include Action, Sci-Fi, Adventure, Drama, and Romance.",
+      "category": "multi_hop",
+      "expected_source_ids": [27205, 597],
+      "difficulty": "hard",
+      "hallucination_risk": "high",
+      "notes": "First hop: identify lead actor (DiCaprio). Second hop: find their other films. Third hop: aggregate genres."
+    },
+    {
+      "id": "gen_030",
+      "question": "Which film has a higher rating: the one about a thief who steals secrets through dreams, or the one about a hobbit's quest?",
+      "expected_answer": "Inception (8.1) vs The Lord of the Rings (8.0). Inception has the slightly higher rating.",
+      "category": "multi_hop",
+      "expected_source_ids": [27205, 120],
+      "difficulty": "hard",
+      "hallucination_risk": "medium",
+      "notes": "Must identify films by plot description first, then compare ratings. Tests semantic retrieval + comparison."
+    }
+  ]
+}
