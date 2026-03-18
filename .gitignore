@@ -23,3 +23,5 @@ build/
 
 # Eval outputs
 eval_results/
+dashboard/node_modules/
+node_modules/
