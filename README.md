@@ -14,31 +14,7 @@ Most teams evaluate AI outputs by eyeballing them. This project answers: *"How d
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────┐
-│              SYSTEM UNDER TEST                   │
-│  ┌──────────────┐    ┌──────────────────────┐   │
-│  │  RAG Pipeline │    │  Tool-Using Agent    │   │
-│  │  pgvector     │    │  LangGraph           │   │
-│  │  Claude API   │    │  Multi-step tasks    │   │
-│  └──────────────┘    └──────────────────────┘   │
-├─────────────────────────────────────────────────┤
-│              TESTING FRAMEWORK                   │
-│  ┌────────────┐ ┌───────────┐ ┌──────────────┐ │
-│  │ Scenario   │ │ Eval      │ │ Safety &     │ │
-│  │ Library    │ │ Layer     │ │ Guardrails   │ │
-│  │            │ │           │ │              │ │
-│  │ 30+ test   │ │ Recall@K  │ │ Injection    │ │
-│  │ scenarios  │ │ Grounding │ │ Red team     │ │
-│  │ 6 category │ │ Faithful  │ │ PII checks   │ │
-│  │ types      │ │ Halluc.   │ │ Guardrails   │ │
-│  └────────────┘ └───────────┘ └──────────────┘ │
-│  ┌──────────────────────────────────────────┐   │
-│  │         Inference Benchmark              │   │
-│  │   Local vs Cloud · Latency · Cost        │   │
-│  └──────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────┘
-```
+![ProbeAI Architecture](docs/images/probeai_architecture.jpg)
 
 ## Tech Stack
 
