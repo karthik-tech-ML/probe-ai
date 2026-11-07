@@ -1,0 +1,764 @@
+{
+  "summary": {
+    "total_scenarios": 7,
+    "total_latency_ms": 112515.9,
+    "avg_latency_ms": 16073.7,
+    "categories_run": [
+      "simple_factual"
+    ],
+    "model": "claude-sonnet-4-5-20250929"
+  },
+  "results": [
+    {
+      "scenario_id": "sc_001",
+      "question": "Who directed Inception?",
+      "category": "simple_factual",
+      "difficulty": "easy",
+      "expected_answer": "Christopher Nolan",
+      "expected_source_ids": [
+        27205
+      ],
+      "answer": "Based on the context provided, Christopher Nolan directed Inception.",
+      "retrieved_source_ids": [
+        27205,
+        68727,
+        473,
+        34647,
+        48138
+      ],
+      "retrieved_titles": [
+        "Inception",
+        "Trance",
+        "Pi",
+        "Enter the Void",
+        "Unknown"
+      ],
+      "similarity_scores": [
+        0.7264,
+        0.54,
+        0.4955,
+        0.4901,
+        0.4824
+      ],
+      "latency_ms": 3790.0,
+      "token_usage": {
+        "input_tokens": 1318,
+        "output_tokens": 17
+      },
+      "model": "claude-sonnet-4-5-20250929",
+      "scores": {
+        "recall_at_k": 1.0,
+        "precision_at_k": 0.2,
+        "expected_found": [
+          27205
+        ],
+        "expected_missing": [],
+        "hit_positions": {
+          "27205": 1
+        },
+        "context_precision": 0.2,
+        "mrr": 1.0,
+        "mrr_first_hit_position": 1,
+        "ndcg": 1.0,
+        "faithfulness_score": 1.0,
+        "faithfulness_claims": [
+          {
+            "claim": "Christopher Nolan directed Inception",
+            "verdict": "SUPPORTED"
+          }
+        ],
+        "judge_model": "claude-sonnet-4-5-20250929",
+        "grounding_score": 1.0,
+        "grounding_claims": [
+          {
+            "claim": "Christopher Nolan directed Inception",
+            "source_id": 1,
+            "verdict": "GROUNDED"
+          }
+        ],
+        "hallucination_score": 0.0,
+        "hallucination_claims": [
+          {
+            "claim": "Christopher Nolan directed Inception",
+            "verdict": "SUPPORTED",
+            "reason": "Source 1 explicitly states 'Title: Inception' and 'Director: Christopher Nolan'"
+          }
+        ],
+        "latency_pass": true,
+        "latency_ms": 3790.0,
+        "latency_threshold_ms": 5000,
+        "answer_relevancy": 1.0,
+        "answer_relevancy_reasoning": "The answer directly and completely addresses the question by identifying Christopher Nolan as the director of Inception.",
+        "context_relevancy": 1.0,
+        "context_relevancy_reasoning": "Document 1 directly answers the question by clearly stating that Christopher Nolan directed Inception, making it perfectly relevant.",
+        "input_tokens": 1318,
+        "output_tokens": 17,
+        "total_tokens": 1335,
+        "cost_usd": 0.004209,
+        "cost_model": "claude-sonnet-4-5-20250929",
+        "cost_input_price_per_mtok": 3.0,
+        "cost_output_price_per_mtok": 15.0
+      }
+    },
+    {
+      "scenario_id": "sc_002",
+      "question": "What genre is Toy Story?",
+      "category": "simple_factual",
+      "difficulty": "easy",
+      "expected_answer": "Animation, Comedy, Family",
+      "expected_source_ids": [
+        862
+      ],
+      "answer": "Based on the context provided, Toy Story's genres are: Animation, Comedy, and Family.",
+      "retrieved_source_ids": [
+        10193,
+        863,
+        2280,
+        862,
+        49852
+      ],
+      "retrieved_titles": [
+        "Toy Story 3",
+        "Toy Story 2",
+        "Big",
+        "Toy Story",
+        "The Nutcracker: The Untold Story"
+      ],
+      "similarity_scores": [
+        0.5545,
+        0.5237,
+        0.4871,
+        0.4816,
+        0.4639
+      ],
+      "latency_ms": 2252.4,
+      "token_usage": {
+        "input_tokens": 1323,
+        "output_tokens": 23
+      },
+      "model": "claude-sonnet-4-5-20250929",
+      "scores": {
+        "recall_at_k": 1.0,
+        "precision_at_k": 0.2,
+        "expected_found": [
+          862
+        ],
+        "expected_missing": [],
+        "hit_positions": {
+          "862": 4
+        },
+        "context_precision": 0.2,
+        "mrr": 0.25,
+        "mrr_first_hit_position": 4,
+        "ndcg": 0.4307,
+        "faithfulness_score": 1.0,
+        "faithfulness_claims": [
+          {
+            "claim": "Toy Story's genres are Animation",
+            "verdict": "SUPPORTED"
+          },
+          {
+            "claim": "Toy Story's genres are Comedy",
+            "verdict": "SUPPORTED"
+          },
+          {
+            "claim": "Toy Story's genres are Family",
+            "verdict": "SUPPORTED"
+          }
+        ],
+        "judge_model": "claude-sonnet-4-5-20250929",
+        "grounding_score": 1.0,
+        "grounding_claims": [
+          {
+            "claim": "Toy Story's genre is Animation",
+            "source_id": 4,
+            "verdict": "GROUNDED"
+          },
+          {
+            "claim": "Toy Story's genre is Comedy",
+            "source_id": 4,
+            "verdict": "GROUNDED"
+          },
+          {
+            "claim": "Toy Story's genre is Family",
+            "source_id": 4,
+            "verdict": "GROUNDED"
+          }
+        ],
+        "hallucination_score": 0.0,
+        "hallucination_claims": [
+          {
+            "claim": "Toy Story's genres are Animation",
+            "verdict": "SUPPORTED",
+            "reason": "Source 4 explicitly lists 'Animation' as one of Toy Story's genres"
+          },
+          {
+            "claim": "Toy Story's genres are Comedy",
+            "verdict": "SUPPORTED",
+            "reason": "Source 4 explicitly lists 'Comedy' as one of Toy Story's genres"
+          },
+          {
+            "claim": "Toy Story's genres are Family",
+            "verdict": "SUPPORTED",
+            "reason": "Source 4 explicitly lists 'Family' as one of Toy Story's genres"
+          }
+        ],
+        "latency_pass": true,
+        "latency_ms": 2252.4,
+        "latency_threshold_ms": 5000,
+        "answer_relevancy": 1.0,
+        "answer_relevancy_reasoning": "The answer directly and completely addresses the question by specifying Toy Story's genres.",
+        "context_relevancy": 1.0,
+        "context_relevancy_reasoning": "Document 4 directly provides the genre information for Toy Story (Animation, Comedy, Family), making the retrieved documents highly relevant for answering the question.",
+        "input_tokens": 1323,
+        "output_tokens": 23,
+        "total_tokens": 1346,
+        "cost_usd": 0.004314,
+        "cost_model": "claude-sonnet-4-5-20250929",
+        "cost_input_price_per_mtok": 3.0,
+        "cost_output_price_per_mtok": 15.0
+      }
+    },
+    {
+      "scenario_id": "sc_003",
+      "question": "What year was The Dark Knight released?",
+      "category": "simple_factual",
+      "difficulty": "easy",
+      "expected_answer": "2008",
+      "expected_source_ids": [
+        155
+      ],
+      "answer": "The Dark Knight was released in 2008.",
+      "retrieved_source_ids": [
+        142061,
+        49026,
+        155,
+        11469,
+        268
+      ],
+      "retrieved_titles": [
+        "Batman: The Dark Knight Returns, Part 2",
+        "The Dark Knight Rises",
+        "The Dark Knight",
+        "Black Knight",
+        "Batman"
+      ],
+      "similarity_scores": [
+        0.5517,
+        0.4937,
+        0.4891,
+        0.4516,
+        0.4375
+      ],
+      "latency_ms": 1845.7,
+      "token_usage": {
+        "input_tokens": 1314,
+        "output_tokens": 13
+      },
+      "model": "claude-sonnet-4-5-20250929",
+      "scores": {
+        "recall_at_k": 1.0,
+        "precision_at_k": 0.2,
+        "expected_found": [
+          155
+        ],
+        "expected_missing": [],
+        "hit_positions": {
+          "155": 3
+        },
+        "context_precision": 0.2,
+        "mrr": 0.3333,
+        "mrr_first_hit_position": 3,
+        "ndcg": 0.5,
+        "faithfulness_score": 1.0,
+        "faithfulness_claims": [
+          {
+            "claim": "The Dark Knight was released in 2008",
+            "verdict": "SUPPORTED"
+          }
+        ],
+        "judge_model": "claude-sonnet-4-5-20250929",
+        "grounding_score": 1.0,
+        "grounding_claims": [
+          {
+            "claim": "The Dark Knight was released in 2008",
+            "source_id": 3,
+            "verdict": "GROUNDED"
+          }
+        ],
+        "hallucination_score": 0.0,
+        "hallucination_claims": [
+          {
+            "claim": "The Dark Knight was released in 2008",
+            "verdict": "SUPPORTED",
+            "reason": "Source 3 explicitly states 'Release Year: 2008' for The Dark Knight directed by Christopher Nolan"
+          }
+        ],
+        "latency_pass": true,
+        "latency_ms": 1845.7,
+        "latency_threshold_ms": 5000,
+        "answer_relevancy": 1.0,
+        "answer_relevancy_reasoning": "The answer directly and completely addresses the question by providing the exact year requested.",
+        "context_relevancy": 1.0,
+        "context_relevancy_reasoning": "Document 3 directly provides the answer with complete information about The Dark Knight's 2008 release year, making the retrieval perfectly relevant.",
+        "input_tokens": 1314,
+        "output_tokens": 13,
+        "total_tokens": 1327,
+        "cost_usd": 0.004137,
+        "cost_model": "claude-sonnet-4-5-20250929",
+        "cost_input_price_per_mtok": 3.0,
+        "cost_output_price_per_mtok": 15.0
+      }
+    },
+    {
+      "scenario_id": "sc_004",
+      "question": "What is the plot of Avatar?",
+      "category": "simple_factual",
+      "difficulty": "easy",
+      "expected_answer": "In the 22nd century, a paraplegic Marine is dispatched to the moon Pandora on a unique mission, but becomes torn between following orders and protecting an alien civilization.",
+      "expected_source_ids": [
+        19995
+      ],
+      "answer": "I don't have enough information to answer that based on the available data. The context provided includes information about \"The Last Airbender\" which features a character named Aang who is an Avatar, but there is no movie specifically titled \"Avatar\" in the sources provided.",
+      "retrieved_source_ids": [
+        128,
+        20455,
+        10196,
+        250902,
+        153518
+      ],
+      "retrieved_titles": [
+        "Princess Mononoke",
+        "Digimon: The Movie",
+        "The Last Airbender",
+        "The Image Revolution",
+        "The Angry Birds Movie"
+      ],
+      "similarity_scores": [
+        0.4482,
+        0.4361,
+        0.4072,
+        0.3967,
+        0.3965
+      ],
+      "latency_ms": 2841.2,
+      "token_usage": {
+        "input_tokens": 1572,
+        "output_tokens": 60
+      },
+      "model": "claude-sonnet-4-5-20250929",
+      "scores": {
+        "recall_at_k": 0.0,
+        "precision_at_k": 0.0,
+        "expected_found": [],
+        "expected_missing": [
+          19995
+        ],
+        "hit_positions": {},
+        "context_precision": 0.0,
+        "mrr": 0.0,
+        "mrr_first_hit_position": null,
+        "ndcg": 0.0,
+        "faithfulness_score": 1.0,
+        "faithfulness_claims": [
+          {
+            "claim": "The context does not include a movie specifically titled 'Avatar'",
+            "verdict": "SUPPORTED"
+          },
+          {
+            "claim": "The context includes information about 'The Last Airbender'",
+            "verdict": "SUPPORTED"
+          },
+          {
+            "claim": "The Last Airbender features a character named Aang who is an Avatar",
+            "verdict": "SUPPORTED"
+          },
+          {
+            "claim": "There is not enough information to answer what the plot of Avatar is",
+            "verdict": "SUPPORTED"
+          }
+        ],
+        "judge_model": "claude-sonnet-4-5-20250929",
+        "grounding_score": 1.0,
+        "grounding_claims": [
+          {
+            "claim": "The context includes information about 'The Last Airbender'",
+            "source_id": 3,
+            "verdict": "GROUNDED"
+          },
+          {
+            "claim": "The Last Airbender features a character named Aang who is an Avatar",
+            "source_id": 3,
+            "verdict": "GROUNDED"
+          },
+          {
+            "claim": "There is no movie specifically titled 'Avatar' in the sources provided",
+            "source_id": null,
+            "verdict": "GROUNDED"
+          }
+        ],
+        "hallucination_score": 0.0,
+        "hallucination_claims": [
+          {
+            "claim": "The context includes information about 'The Last Airbender'",
+            "verdict": "SUPPORTED",
+            "reason": "Source 3 is titled 'The Last Airbender'"
+          },
+          {
+            "claim": "The Last Airbender features a character named Aang who is an Avatar",
+            "verdict": "SUPPORTED",
+            "reason": "Source 3 plot states 'The story follows the adventures of Aang, a young successor to a long line of Avatars'"
+          },
+          {
+            "claim": "There is no movie specifically titled 'Avatar' in the sources provided",
+            "verdict": "SUPPORTED",
+            "reason": "The five sources are titled: Princess Mononoke, Digimon: The Movie, The Last Airbender, The Image Revolution, and The Angry Birds Movie. None is titled 'Avatar'"
+          }
+        ],
+        "latency_pass": true,
+        "latency_ms": 2841.2,
+        "latency_threshold_ms": 5000,
+        "answer_relevancy": 0.5,
+        "answer_relevancy_reasoning": "The answer addresses the question by acknowledging it cannot provide the requested information and attempts to clarify potential confusion with a similarly-named property, but fails to recognize that 'Avatar' likely refers to the well-known 2009 James Cameron film, making it only partially relevant.",
+        "context_relevancy": 0.2,
+        "context_relevancy_reasoning": "Only Document 3 about 'The Last Airbender' has marginal relevance as it mentions 'Avatar' in keywords, but it's about a different property than the likely intended 'Avatar' (2009 film by James Cameron), while all other documents are completely unrelated animated films.",
+        "input_tokens": 1572,
+        "output_tokens": 60,
+        "total_tokens": 1632,
+        "cost_usd": 0.005616,
+        "cost_model": "claude-sonnet-4-5-20250929",
+        "cost_input_price_per_mtok": 3.0,
+        "cost_output_price_per_mtok": 15.0
+      }
+    },
+    {
+      "scenario_id": "sc_005",
+      "question": "How much revenue did Titanic generate?",
+      "category": "simple_factual",
+      "difficulty": "easy",
+      "expected_answer": "Approximately $1.845 billion",
+      "expected_source_ids": [
+        597
+      ],
+      "answer": "Based on the context provided, Titanic generated $1,845,034,188 in revenue.",
+      "retrieved_source_ids": [
+        597,
+        24575,
+        756,
+        173,
+        9457
+      ],
+      "retrieved_titles": [
+        "Titanic",
+        "Raise the Titanic",
+        "Fantasia",
+        "20,000 Leagues Under the Sea",
+        "Deep Rising"
+      ],
+      "similarity_scores": [
+        0.5249,
+        0.4687,
+        0.4065,
+        0.3728,
+        0.3652
+      ],
+      "latency_ms": 1421.8,
+      "token_usage": {
+        "input_tokens": 1249,
+        "output_tokens": 25
+      },
+      "model": "claude-sonnet-4-5-20250929",
+      "scores": {
+        "recall_at_k": 1.0,
+        "precision_at_k": 0.2,
+        "expected_found": [
+          597
+        ],
+        "expected_missing": [],
+        "hit_positions": {
+          "597": 1
+        },
+        "context_precision": 0.2,
+        "mrr": 1.0,
+        "mrr_first_hit_position": 1,
+        "ndcg": 1.0,
+        "faithfulness_score": 1.0,
+        "faithfulness_claims": [
+          {
+            "claim": "Titanic generated $1,845,034,188 in revenue",
+            "verdict": "SUPPORTED"
+          }
+        ],
+        "judge_model": "claude-sonnet-4-5-20250929",
+        "grounding_score": 1.0,
+        "grounding_claims": [
+          {
+            "claim": "Titanic generated $1,845,034,188 in revenue",
+            "source_id": 1,
+            "verdict": "GROUNDED"
+          }
+        ],
+        "hallucination_score": 0.0,
+        "hallucination_claims": [
+          {
+            "claim": "Titanic generated $1,845,034,188 in revenue",
+            "verdict": "SUPPORTED",
+            "reason": "Source 1 explicitly states 'Revenue: $1,845,034,188' for the Titanic movie"
+          }
+        ],
+        "latency_pass": true,
+        "latency_ms": 1421.8,
+        "latency_threshold_ms": 5000,
+        "answer_relevancy": 1.0,
+        "answer_relevancy_reasoning": "The answer directly and completely addresses the question by providing the specific revenue figure for Titanic.",
+        "context_relevancy": 1.0,
+        "context_relevancy_reasoning": "Document 1 directly provides the exact revenue figure for Titanic ($1,845,034,188), making it perfectly relevant to answer the question.",
+        "input_tokens": 1249,
+        "output_tokens": 25,
+        "total_tokens": 1274,
+        "cost_usd": 0.004122,
+        "cost_model": "claude-sonnet-4-5-20250929",
+        "cost_input_price_per_mtok": 3.0,
+        "cost_output_price_per_mtok": 15.0
+      }
+    },
+    {
+      "scenario_id": "sc_006",
+      "question": "What is the runtime of The Lord of the Rings: The Return of the King?",
+      "category": "simple_factual",
+      "difficulty": "easy",
+      "expected_answer": "201 minutes",
+      "expected_source_ids": [
+        122
+      ],
+      "answer": "According to the context, The Lord of the Rings: The Return of the King has a runtime of 201 minutes.",
+      "retrieved_source_ids": [
+        122,
+        121,
+        120,
+        122917,
+        57158
+      ],
+      "retrieved_titles": [
+        "The Lord of the Rings: The Return of the King",
+        "The Lord of the Rings: The Two Towers",
+        "The Lord of the Rings: The Fellowship of the Ring",
+        "The Hobbit: The Battle of the Five Armies",
+        "The Hobbit: The Desolation of Smaug"
+      ],
+      "similarity_scores": [
+        0.573,
+        0.4794,
+        0.4465,
+        0.4251,
+        0.4144
+      ],
+      "latency_ms": 1932.4,
+      "token_usage": {
+        "input_tokens": 1482,
+        "output_tokens": 29
+      },
+      "model": "claude-sonnet-4-5-20250929",
+      "scores": {
+        "recall_at_k": 1.0,
+        "precision_at_k": 0.2,
+        "expected_found": [
+          122
+        ],
+        "expected_missing": [],
+        "hit_positions": {
+          "122": 1
+        },
+        "context_precision": 0.2,
+        "mrr": 1.0,
+        "mrr_first_hit_position": 1,
+        "ndcg": 1.0,
+        "faithfulness_score": 1.0,
+        "faithfulness_claims": [
+          {
+            "claim": "The Lord of the Rings: The Return of the King has a runtime of 201 minutes",
+            "verdict": "SUPPORTED"
+          }
+        ],
+        "judge_model": "claude-sonnet-4-5-20250929",
+        "grounding_score": 1.0,
+        "grounding_claims": [
+          {
+            "claim": "The Lord of the Rings: The Return of the King has a runtime of 201 minutes",
+            "source_id": 1,
+            "verdict": "GROUNDED"
+          }
+        ],
+        "hallucination_score": 0.0,
+        "hallucination_claims": [
+          {
+            "claim": "The Lord of the Rings: The Return of the King has a runtime of 201 minutes",
+            "verdict": "SUPPORTED",
+            "reason": "Source 1 explicitly states 'Runtime: 201 minutes' for The Lord of the Rings: The Return of the King"
+          }
+        ],
+        "latency_pass": true,
+        "latency_ms": 1932.4,
+        "latency_threshold_ms": 5000,
+        "answer_relevancy": 1.0,
+        "answer_relevancy_reasoning": "The answer directly and completely addresses the question by providing the specific runtime requested.",
+        "context_relevancy": 1.0,
+        "context_relevancy_reasoning": "Document 1 directly provides the exact runtime information (201 minutes) for The Lord of the Rings: The Return of the King, perfectly answering the question.",
+        "input_tokens": 1482,
+        "output_tokens": 29,
+        "total_tokens": 1511,
+        "cost_usd": 0.004881,
+        "cost_model": "claude-sonnet-4-5-20250929",
+        "cost_input_price_per_mtok": 3.0,
+        "cost_output_price_per_mtok": 15.0
+      }
+    },
+    {
+      "scenario_id": "sc_007",
+      "question": "Who are the main cast members of The Avengers?",
+      "category": "simple_factual",
+      "difficulty": "easy",
+      "expected_answer": "Robert Downey Jr., Chris Evans, Scarlett Johansson, Chris Hemsworth, Mark Ruffalo, Jeremy Renner, Tom Hiddleston, Samuel L. Jackson",
+      "expected_source_ids": [
+        24428
+      ],
+      "answer": "Based on the provided context, the main cast members of The Avengers are:\n\n- Robert Downey Jr.\n- Chris Evans\n- Mark Ruffalo\n- Chris Hemsworth\n- Scarlett Johansson",
+      "retrieved_source_ids": [
+        24428,
+        99861,
+        271110,
+        1927,
+        100402
+      ],
+      "retrieved_titles": [
+        "The Avengers",
+        "Avengers: Age of Ultron",
+        "Captain America: Civil War",
+        "Hulk",
+        "Captain America: The Winter Soldier"
+      ],
+      "similarity_scores": [
+        0.5702,
+        0.5295,
+        0.507,
+        0.496,
+        0.4772
+      ],
+      "latency_ms": 2028.5,
+      "token_usage": {
+        "input_tokens": 1491,
+        "output_tokens": 54
+      },
+      "model": "claude-sonnet-4-5-20250929",
+      "scores": {
+        "recall_at_k": 1.0,
+        "precision_at_k": 0.2,
+        "expected_found": [
+          24428
+        ],
+        "expected_missing": [],
+        "hit_positions": {
+          "24428": 1
+        },
+        "context_precision": 0.2,
+        "mrr": 1.0,
+        "mrr_first_hit_position": 1,
+        "ndcg": 1.0,
+        "faithfulness_score": 1.0,
+        "faithfulness_claims": [
+          {
+            "claim": "Robert Downey Jr. is a main cast member of The Avengers",
+            "verdict": "SUPPORTED"
+          },
+          {
+            "claim": "Chris Evans is a main cast member of The Avengers",
+            "verdict": "SUPPORTED"
+          },
+          {
+            "claim": "Mark Ruffalo is a main cast member of The Avengers",
+            "verdict": "SUPPORTED"
+          },
+          {
+            "claim": "Chris Hemsworth is a main cast member of The Avengers",
+            "verdict": "SUPPORTED"
+          },
+          {
+            "claim": "Scarlett Johansson is a main cast member of The Avengers",
+            "verdict": "SUPPORTED"
+          }
+        ],
+        "judge_model": "claude-sonnet-4-5-20250929",
+        "grounding_score": 1.0,
+        "grounding_claims": [
+          {
+            "claim": "Robert Downey Jr. is a main cast member of The Avengers",
+            "source_id": 1,
+            "verdict": "GROUNDED"
+          },
+          {
+            "claim": "Chris Evans is a main cast member of The Avengers",
+            "source_id": 1,
+            "verdict": "GROUNDED"
+          },
+          {
+            "claim": "Mark Ruffalo is a main cast member of The Avengers",
+            "source_id": 1,
+            "verdict": "GROUNDED"
+          },
+          {
+            "claim": "Chris Hemsworth is a main cast member of The Avengers",
+            "source_id": 1,
+            "verdict": "GROUNDED"
+          },
+          {
+            "claim": "Scarlett Johansson is a main cast member of The Avengers",
+            "source_id": 1,
+            "verdict": "GROUNDED"
+          }
+        ],
+        "hallucination_score": 0.0,
+        "hallucination_claims": [
+          {
+            "claim": "Robert Downey Jr. is a main cast member of The Avengers",
+            "verdict": "SUPPORTED",
+            "reason": "Source 1 explicitly lists Robert Downey Jr. in the cast of The Avengers"
+          },
+          {
+            "claim": "Chris Evans is a main cast member of The Avengers",
+            "verdict": "SUPPORTED",
+            "reason": "Source 1 explicitly lists Chris Evans in the cast of The Avengers"
+          },
+          {
+            "claim": "Mark Ruffalo is a main cast member of The Avengers",
+            "verdict": "SUPPORTED",
+            "reason": "Source 1 explicitly lists Mark Ruffalo in the cast of The Avengers"
+          },
+          {
+            "claim": "Chris Hemsworth is a main cast member of The Avengers",
+            "verdict": "SUPPORTED",
+            "reason": "Source 1 explicitly lists Chris Hemsworth in the cast of The Avengers"
+          },
+          {
+            "claim": "Scarlett Johansson is a main cast member of The Avengers",
+            "verdict": "SUPPORTED",
+            "reason": "Source 1 explicitly lists Scarlett Johansson in the cast of The Avengers"
+          }
+        ],
+        "latency_pass": true,
+        "latency_ms": 2028.5,
+        "latency_threshold_ms": 5000,
+        "answer_relevancy": 1.0,
+        "answer_relevancy_reasoning": "The answer directly and completely addresses the question by providing a clear list of the main cast members of The Avengers.",
+        "context_relevancy": 1.0,
+        "context_relevancy_reasoning": "Document 1 directly lists the main cast members of The Avengers, providing exactly the information needed to answer the question completely.",
+        "input_tokens": 1491,
+        "output_tokens": 54,
+        "total_tokens": 1545,
+        "cost_usd": 0.005283,
+        "cost_model": "claude-sonnet-4-5-20250929",
+        "cost_input_price_per_mtok": 3.0,
+        "cost_output_price_per_mtok": 15.0
+      }
+    }
+  ]
+}

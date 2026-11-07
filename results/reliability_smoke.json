@@ -1,0 +1,265 @@
+{
+  "summary": {
+    "scenarios_tested": 5,
+    "k": 3,
+    "pass_threshold": 0.7,
+    "total_runs": 15,
+    "total_cost_usd": 0.0677,
+    "total_time_ms": 125900.0,
+    "avg_pass_rate": 1.0,
+    "pct_strict_pass": 1.0,
+    "avg_consistency": 0.9856
+  },
+  "results": [
+    {
+      "scenario_id": "sc_008",
+      "question": "What Christopher Nolan movies are in the science fiction genre?",
+      "category": "multi_field",
+      "difficulty": "medium",
+      "k": 3,
+      "pass_threshold": 0.7,
+      "attempts": [
+        {
+          "run_index": 1,
+          "answer": "Based on the provided context, there are two Christopher Nolan movies in the science fiction genre:\n\n1. **Interstellar** (2014) - Genres: Adventure, Drama, Science Fiction\n2. **Inception** (2010) - Genres: Action, Thriller, Science Fiction, Mystery, Adventure",
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "latency_ms": 4478.8,
+          "total_tokens": 1378,
+          "cost_usd": 0.004998,
+          "passed": true
+        },
+        {
+          "run_index": 2,
+          "answer": "Based on the provided context, the Christopher Nolan movies in the science fiction genre are:\n\n1. **Interstellar** (2014) - Genres: Adventure, Drama, Science Fiction\n2. **Inception** (2010) - Genres: Action, Thriller, Science Fiction, Mystery, Adventure",
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "latency_ms": 2252.4,
+          "total_tokens": 1377,
+          "cost_usd": 0.004983,
+          "passed": true
+        },
+        {
+          "run_index": 3,
+          "answer": "Based on the provided context, there are two Christopher Nolan movies in the science fiction genre:\n\n1. **Interstellar** (2014) - Genres: Adventure, Drama, Science Fiction\n2. **Inception** (2010) - Genres: Action, Thriller, Science Fiction, Mystery, Adventure",
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "latency_ms": 2932.4,
+          "total_tokens": 1378,
+          "cost_usd": 0.004998,
+          "passed": true
+        }
+      ],
+      "passes": 3,
+      "pass_rate": 1.0,
+      "strict_pass": true,
+      "consistency_score": 1.0,
+      "score_variance": 0.0,
+      "avg_faithfulness": 1.0,
+      "avg_answer_relevancy": 1.0,
+      "avg_latency_ms": 3221.2,
+      "total_cost_usd": 0.014979,
+      "avg_cost_usd": 0.004993
+    },
+    {
+      "scenario_id": "sc_002",
+      "question": "What genre is Toy Story?",
+      "category": "simple_factual",
+      "difficulty": "easy",
+      "k": 3,
+      "pass_threshold": 0.7,
+      "attempts": [
+        {
+          "run_index": 1,
+          "answer": "Based on the context provided, Toy Story's genres are Animation, Comedy, and Family.",
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "latency_ms": 2107.9,
+          "total_tokens": 1345,
+          "cost_usd": 0.004299,
+          "passed": true
+        },
+        {
+          "run_index": 2,
+          "answer": "Based on the context provided, Toy Story's genres are: Animation, Comedy, and Family.",
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "latency_ms": 1884.8,
+          "total_tokens": 1346,
+          "cost_usd": 0.004314,
+          "passed": true
+        },
+        {
+          "run_index": 3,
+          "answer": "Based on the context provided, Toy Story's genres are: Animation, Comedy, and Family.",
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "latency_ms": 2046.5,
+          "total_tokens": 1346,
+          "cost_usd": 0.004314,
+          "passed": true
+        }
+      ],
+      "passes": 3,
+      "pass_rate": 1.0,
+      "strict_pass": true,
+      "consistency_score": 1.0,
+      "score_variance": 0.0,
+      "avg_faithfulness": 1.0,
+      "avg_answer_relevancy": 1.0,
+      "avg_latency_ms": 2013.1,
+      "total_cost_usd": 0.012927,
+      "avg_cost_usd": 0.004309
+    },
+    {
+      "scenario_id": "sc_018",
+      "question": "Who directed Barbie (2023)?",
+      "category": "no_answer",
+      "difficulty": "medium",
+      "k": 3,
+      "pass_threshold": 0.7,
+      "attempts": [
+        {
+          "run_index": 1,
+          "answer": "I don't have enough information to answer that based on the available data. The context provided does not include information about Barbie (2023).",
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "latency_ms": 1844.8,
+          "total_tokens": 1151,
+          "cost_usd": 0.003849,
+          "passed": true
+        },
+        {
+          "run_index": 2,
+          "answer": "I don't have enough information to answer that based on the available data. The context provided does not include information about Barbie (2023).",
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "latency_ms": 1843.0,
+          "total_tokens": 1151,
+          "cost_usd": 0.003849,
+          "passed": true
+        },
+        {
+          "run_index": 3,
+          "answer": "I don't have enough information to answer that based on the available data. The context provided does not include information about the movie Barbie (2023).",
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "latency_ms": 2010.3,
+          "total_tokens": 1153,
+          "cost_usd": 0.003879,
+          "passed": true
+        }
+      ],
+      "passes": 3,
+      "pass_rate": 1.0,
+      "strict_pass": true,
+      "consistency_score": 1.0,
+      "score_variance": 0.0,
+      "avg_faithfulness": 1.0,
+      "avg_answer_relevancy": 1.0,
+      "avg_latency_ms": 1899.4,
+      "total_cost_usd": 0.011577,
+      "avg_cost_usd": 0.003859
+    },
+    {
+      "scenario_id": "sc_016",
+      "question": "What is the average rating of Christopher Nolan films?",
+      "category": "aggregation",
+      "difficulty": "hard",
+      "k": 3,
+      "pass_threshold": 0.7,
+      "attempts": [
+        {
+          "run_index": 1,
+          "answer": "Based on the available data, I only have information about one Christopher Nolan film: **The Prestige**, which has a rating of **8.0/10**.\n\nI don't have enough information to answer what the average rating of Christopher Nolan films is, as the context only includes data for this single film by him.",
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.75,
+          "latency_ms": 3175.9,
+          "total_tokens": 1117,
+          "cost_usd": 0.004227,
+          "passed": true
+        },
+        {
+          "run_index": 2,
+          "answer": "Based on the available data, I only have information about one Christopher Nolan film - \"The Prestige\" which has a rating of 8.0/10. \n\nI don't have enough information to calculate an average rating of Christopher Nolan films, as I would need data on his other films to provide a meaningful average.",
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "latency_ms": 2866.9,
+          "total_tokens": 1118,
+          "cost_usd": 0.004242,
+          "passed": true
+        },
+        {
+          "run_index": 3,
+          "answer": "Based on the available data, I only have information about one Christopher Nolan film - The Prestige, which has a rating of 8.0/10.\n\nI don't have enough information to calculate an average rating of Christopher Nolan films, as I would need data on multiple films he directed.",
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "latency_ms": 2764.3,
+          "total_tokens": 1112,
+          "cost_usd": 0.004152,
+          "passed": true
+        }
+      ],
+      "passes": 3,
+      "pass_rate": 1.0,
+      "strict_pass": true,
+      "consistency_score": 0.9278,
+      "score_variance": 0.005208,
+      "avg_faithfulness": 1.0,
+      "avg_answer_relevancy": 0.9167,
+      "avg_latency_ms": 2935.7,
+      "total_cost_usd": 0.012621,
+      "avg_cost_usd": 0.004207
+    },
+    {
+      "scenario_id": "sc_015",
+      "question": "Which director has the most movies in the dataset?",
+      "category": "aggregation",
+      "difficulty": "hard",
+      "k": 3,
+      "pass_threshold": 0.7,
+      "attempts": [
+        {
+          "run_index": 1,
+          "answer": "Based on the provided context, I don't have enough information to answer that. The context only shows 5 movies, each directed by a different director:\n- Michael Rymer (In Too Deep)\n- Rob Marshall (Nine)\n- Phil Traill (All About Steve)\n- Nicolas Winding Refn (Drive)\n- Brad Furman (The Infiltrator)\n\nEach director appears only once in this limited dataset, so there is no director with multiple movies shown.",
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "latency_ms": 3375.3,
+          "total_tokens": 1251,
+          "cost_usd": 0.005061,
+          "passed": true
+        },
+        {
+          "run_index": 2,
+          "answer": "Based on the provided context, I don't have enough information to answer that question. The context only shows 5 movies, each with a different director:\n\n- Michael Rymer (In Too Deep)\n- Rob Marshall (Nine)\n- Phil Traill (All About Steve)\n- Nicolas Winding Refn (Drive)\n- Brad Furman (The Infiltrator)\n\nEach director appears only once in this dataset, so there is no director with \"the most\" movies among these five entries.",
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "latency_ms": 3355.4,
+          "total_tokens": 1256,
+          "cost_usd": 0.005136,
+          "passed": true
+        },
+        {
+          "run_index": 3,
+          "answer": "Based on the provided context, I cannot determine which director has the most movies in the dataset. The context only shows 5 movies, each with a different director:\n\n1. Michael Rymer - \"In Too Deep\"\n2. Rob Marshall - \"Nine\"\n3. Phil Traill - \"All About Steve\"\n4. Nicolas Winding Refn - \"Drive\"\n5. Brad Furman - \"The Infiltrator\"\n\nEach director appears only once in this limited sample. I don't have enough information to answer which director has the most movies across the entire dataset.",
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "latency_ms": 3260.6,
+          "total_tokens": 1272,
+          "cost_usd": 0.005376,
+          "passed": true
+        }
+      ],
+      "passes": 3,
+      "pass_rate": 1.0,
+      "strict_pass": true,
+      "consistency_score": 1.0,
+      "score_variance": 0.0,
+      "avg_faithfulness": 1.0,
+      "avg_answer_relevancy": 1.0,
+      "avg_latency_ms": 3330.4,
+      "total_cost_usd": 0.015573,
+      "avg_cost_usd": 0.005191
+    }
+  ]
+}
