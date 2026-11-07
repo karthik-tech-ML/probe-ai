@@ -23,6 +23,24 @@ from src.database.models import MovieChunk
 from src.rag.retriever import retrieve
 
 
+def field_pattern(field: str, value: str) -> str:
+    """
+    Regex that matches `value` only on the line that starts with `field:`.
+
+    A plain ILIKE '%Director: %name%' lets % cross newlines, so a name in the
+    Cast line (or Plot, Keywords...) also "matches" the Director field. This
+    pattern stays on the field's own line. Use it with a case-insensitive
+    regex operator in newline-sensitive mode (Postgres: '(?n)' + pattern with
+    '~*'), where ^ matches at line starts.
+    """
+    return rf"^{re.escape(field)}:[^\n]*{re.escape(value)}"
+
+
+def _field_filter(field: str, value: str):
+    """SQLAlchemy clause: `value` appears on the `field:` line of chunk_text."""
+    return MovieChunk.chunk_text.op("~*")("(?n)" + field_pattern(field, value))
+
+
 def _parse_chunk_field(chunk_text: str, field: str) -> str:
     """Pull a field value from the chunk text (e.g. 'Director: Christopher Nolan')."""
     pattern = rf"^{field}:\s*(.+)$"
@@ -97,10 +115,10 @@ def search_by_director(director_name: str) -> list[dict]:
     logger.debug(f"tool:search_by_director name={director_name!r}")
     session = get_session()
     try:
-        # case-insensitive search within chunk_text
+        # case-insensitive, restricted to the Director line
         rows = (
             session.query(MovieChunk)
-            .filter(MovieChunk.chunk_text.ilike(f"%Director: %{director_name}%"))
+            .filter(_field_filter("Director", director_name))
             .all()
         )
         results = [_chunk_to_summary(r) for r in rows]
@@ -120,7 +138,7 @@ def search_by_genre(genre: str) -> list[dict]:
     try:
         rows = (
             session.query(MovieChunk)
-            .filter(MovieChunk.chunk_text.ilike(f"%Genres:%{genre}%"))
+            .filter(_field_filter("Genres", genre))
             .all()
         )
         results = [_chunk_to_summary(r) for r in rows]
@@ -143,7 +161,7 @@ def search_by_cast(actor_name: str) -> list[dict]:
     try:
         rows = (
             session.query(MovieChunk)
-            .filter(MovieChunk.chunk_text.ilike(f"%Cast:%{actor_name}%"))
+            .filter(_field_filter("Cast", actor_name))
             .all()
         )
         results = [_chunk_to_summary(r) for r in rows]
@@ -188,7 +206,7 @@ def filter_movies(
 
         # start with genre filter in SQL if provided (narrows the scan)
         if genre:
-            query = query.filter(MovieChunk.chunk_text.ilike(f"%Genres:%{genre}%"))
+            query = query.filter(_field_filter("Genres", genre))
 
         rows = query.all()
 
