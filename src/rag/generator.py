@@ -44,7 +44,7 @@ class GenerationResult:
 def generate(
     question: str,
     chunks: list[SearchResult],
-    model: str = "claude-sonnet-4-5-20250929",
+    model: str = settings.llm_model,
 ) -> GenerationResult:
     """
     Call Claude with the question and retrieved context.

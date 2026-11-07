@@ -84,7 +84,7 @@ def generate_scenarios(
     connector: ProbeConnector,
     categories: list[str] | None = None,
     count_per_category: int = 5,
-    model: str = "claude-sonnet-4-5-20250929",
+    model: str = settings.llm_model,
 ) -> list[dict[str, Any]]:
     """
     Generate test scenarios for any connected system.

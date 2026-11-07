@@ -23,6 +23,7 @@ from src.benchmark.local_backend import (
 )
 from src.evaluation.runner import Scenario
 from src.rag.retriever import retrieve
+from src.config import settings
 
 
 @dataclass
@@ -58,7 +59,7 @@ class BenchmarkResult:
 def _run_cloud(
     question: str,
     context_texts: list[str],
-    model: str = "claude-sonnet-4-5-20250929",
+    model: str = settings.llm_model,
 ) -> BenchmarkResult:
     """Generate an answer via Claude API."""
     from src.database.vector_store import SearchResult
@@ -126,7 +127,7 @@ def run_benchmark(
     """
     if model is None:
         model = (
-            "claude-sonnet-4-5-20250929" if backend == "cloud"
+            settings.llm_model if backend == "cloud"
             else DEFAULT_LOCAL_MODEL
         )
 
