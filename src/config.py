@@ -26,6 +26,10 @@ class Settings(BaseSettings):
     default_top_k: int = Field(default=5)
     latency_threshold_ms: int = Field(default=2000)
 
+    # -- llm --
+    # model used for generation, the agents, and cost lookups (env: LLM_MODEL)
+    llm_model: str = Field(default="claude-sonnet-4-5-20250929")
+
     # -- eval --
     eval_judge_model: str = Field(default="claude-sonnet-4-5-20250929")
 

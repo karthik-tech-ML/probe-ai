@@ -14,6 +14,7 @@ import random
 
 from loguru import logger
 
+from src.config import settings
 from src.connectors.base import (
     CorpusSchema,
     FieldInfo,
@@ -172,6 +173,8 @@ class TMDBConnector(ProbeConnector):
     """Connector for the built-in TMDB 5000 movie RAG + agent system."""
 
     def ask(self, question: str, mode: str = "rag") -> ProbeResult:
+        if mode == "multi_agent":
+            return self._ask_multi_agent(question)
         if mode == "agent":
             return self._ask_agent(question)
         return self._ask_rag(question)
@@ -227,7 +230,34 @@ class TMDBConnector(ProbeConnector):
                 "input_tokens": result.trace.total_input_tokens,
                 "output_tokens": result.trace.total_output_tokens,
             },
-            model="claude-sonnet-4-5-20250929 (agent)",
+            model=f"{settings.llm_model} (agent)",
+            agent_trace=result.trace,
+        )
+
+    def _ask_multi_agent(self, question: str) -> ProbeResult:
+        from src.multi_agent.graph import run_multi_agent
+
+        result = run_multi_agent(question)
+
+        context_texts = []
+        for tc in result.trace.tool_calls:
+            if tc.tool_output:
+                ctx = str(tc.tool_output)
+                if len(ctx) > 3000:
+                    ctx = ctx[:3000] + "..."
+                context_texts.append(ctx)
+
+        return ProbeResult(
+            question=result.question,
+            answer=result.answer,
+            source_documents=[],
+            context_texts=context_texts,
+            latency_ms=result.latency_ms,
+            token_usage={
+                "input_tokens": result.trace.total_input_tokens,
+                "output_tokens": result.trace.total_output_tokens,
+            },
+            model=f"{settings.llm_model} (multi-agent)",
             agent_trace=result.trace,
         )
 

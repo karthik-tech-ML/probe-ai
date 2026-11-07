@@ -15,6 +15,7 @@ Each scenario in the library represents a single test case for the ProbeAI evalu
 | `difficulty` | enum | yes | One of: `easy`, `medium`, `hard` |
 | `hallucination_risk` | enum | yes | One of: `low`, `medium`, `high` |
 | `notes` | string | no | Explanation of what this scenario tests |
+| `expected_route` | list[string] | no | Multi-agent only. The specialists a good run should use, in order, with repeats collapsed. Values: `retrieval_agent`, `structured_agent`, `analyst_agent`. Defaults to `[]` (no routing expectation); the routing metrics return `None` for those scenarios. |
 
 ## Categories
 

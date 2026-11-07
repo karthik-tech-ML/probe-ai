@@ -1,0 +1,1103 @@
+{
+  "scenarios": [
+    "sc_008",
+    "sc_013",
+    "sc_027"
+  ],
+  "summary": {
+    "rag": {
+      "n": 3,
+      "accuracy": 0.6666666666666666,
+      "fully_correct": 2,
+      "faithfulness": 1.0,
+      "hallucination": 0.0,
+      "routing_accuracy": null,
+      "avg_llm_calls": 1.0,
+      "avg_tokens": 1374.6666666666667,
+      "tokens_per_correct_answer": 2062.0,
+      "avg_latency_ms": 2947.8333333333335,
+      "avg_cost_usd": 0.005399999999999999,
+      "total_cost_usd": 0.0162,
+      "loops": 0,
+      "verifier_revisions": 0,
+      "failures_by_culprit": {}
+    },
+    "agent": {
+      "n": 3,
+      "accuracy": 1.0,
+      "fully_correct": 3,
+      "faithfulness": 1.0,
+      "hallucination": 0.0,
+      "routing_accuracy": null,
+      "avg_llm_calls": 2.0,
+      "avg_tokens": 4597.333333333333,
+      "tokens_per_correct_answer": 4597.333333333333,
+      "avg_latency_ms": 5927.066666666667,
+      "avg_cost_usd": 0.017748,
+      "total_cost_usd": 0.053244,
+      "loops": 0,
+      "verifier_revisions": 0,
+      "failures_by_culprit": {}
+    },
+    "multi_agent": {
+      "n": 3,
+      "accuracy": 0.8333333333333334,
+      "fully_correct": 2,
+      "faithfulness": 1.0,
+      "hallucination": 0.0,
+      "routing_accuracy": null,
+      "avg_llm_calls": 7.666666666666667,
+      "avg_tokens": 13671.0,
+      "tokens_per_correct_answer": 20506.5,
+      "avg_latency_ms": 23389.166666666668,
+      "avg_cost_usd": 0.058193,
+      "total_cost_usd": 0.174579,
+      "loops": 0,
+      "verifier_revisions": 0,
+      "failures_by_culprit": {
+        "data / missing_evidence": 1
+      }
+    }
+  },
+  "runs": {
+    "rag": {
+      "summary": {
+        "total_scenarios": 3,
+        "total_latency_ms": 45829.0,
+        "avg_latency_ms": 15276.3,
+        "categories_run": [
+          "aggregation",
+          "multi_field",
+          "multi_hop"
+        ],
+        "model": "claude-sonnet-4-5-20250929"
+      },
+      "results": [
+        {
+          "scenario_id": "sc_008",
+          "question": "What Christopher Nolan movies are in the science fiction genre?",
+          "category": "multi_field",
+          "difficulty": "medium",
+          "expected_answer": "Inception, Interstellar, The Dark Knight Rises (if tagged sci-fi), The Prestige",
+          "expected_source_ids": [
+            27205,
+            157336,
+            49026
+          ],
+          "expected_route": [],
+          "answer": "Based on the provided context, there are two Christopher Nolan movies in the science fiction genre:\n\n1. **Interstellar** (2014) - Genres: Adventure, Drama, Science Fiction\n2. **Inception** (2010) - Genres: Action, Thriller, Science Fiction, Mystery, Adventure",
+          "retrieved_source_ids": [
+            3594,
+            1124,
+            157336,
+            27205,
+            70981
+          ],
+          "retrieved_titles": [
+            "The Number 23",
+            "The Prestige",
+            "Interstellar",
+            "Inception",
+            "Prometheus"
+          ],
+          "similarity_scores": [
+            0.4974,
+            0.4967,
+            0.4964,
+            0.478,
+            0.4632
+          ],
+          "latency_ms": 3387.9,
+          "token_usage": {
+            "input_tokens": 1306,
+            "output_tokens": 72
+          },
+          "model": "claude-sonnet-4-5-20250929",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly identifies two core Christopher Nolan sci-fi films (Inception and Interstellar) that are definitive matches with the expected answer. The expected answer's inclusion of 'The Dark Knight Rises (if tagged sci-fi)' and 'The Prestige' are conditional/debatable, so not including them doesn't constitute an error. The answer accurately addresses the question.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "There are two Christopher Nolan movies in the science fiction genre in the provided context",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Interstellar (2014) is a Christopher Nolan movie",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Interstellar has genres: Adventure, Drama, Science Fiction",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Inception (2010) is a Christopher Nolan movie",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Inception has genres: Action, Thriller, Science Fiction, Mystery, Adventure",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "There are two Christopher Nolan movies in the science fiction genre",
+                "verdict": "SUPPORTED",
+                "reason": "Sources 3 and 4 show Interstellar and Inception are both directed by Christopher Nolan and include Science Fiction in their genres"
+              },
+              {
+                "claim": "Interstellar (2014) is directed by Christopher Nolan",
+                "verdict": "SUPPORTED",
+                "reason": "Source 3 explicitly states Director: Christopher Nolan for Interstellar with Release Year: 2014"
+              },
+              {
+                "claim": "Interstellar has genres: Adventure, Drama, Science Fiction",
+                "verdict": "SUPPORTED",
+                "reason": "Source 3 lists 'Genres: Adventure, Drama, Science Fiction' for Interstellar"
+              },
+              {
+                "claim": "Inception (2010) is directed by Christopher Nolan",
+                "verdict": "SUPPORTED",
+                "reason": "Source 4 explicitly states Director: Christopher Nolan for Inception with Release Year: 2010"
+              },
+              {
+                "claim": "Inception has genres: Action, Thriller, Science Fiction, Mystery, Adventure",
+                "verdict": "SUPPORTED",
+                "reason": "Source 4 lists 'Genres: Action, Thriller, Science Fiction, Mystery, Adventure' for Inception"
+              }
+            ],
+            "latency_pass": true,
+            "latency_ms": 3387.9,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 1306,
+            "output_tokens": 72,
+            "total_tokens": 1378,
+            "cost_usd": 0.004998,
+            "cost_model": "claude-sonnet-4-5-20250929",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 1
+          }
+        },
+        {
+          "scenario_id": "sc_013",
+          "question": "What is the highest-grossing movie in the dataset?",
+          "category": "aggregation",
+          "difficulty": "medium",
+          "expected_answer": "Avatar with approximately $2.787 billion in revenue",
+          "expected_source_ids": [
+            19995
+          ],
+          "expected_route": [],
+          "answer": "Based on the provided context, the highest-grossing movie in the dataset is **Money Monster** with a revenue of $93,282,604.",
+          "retrieved_source_ids": [
+            9899,
+            7512,
+            303858,
+            241239,
+            23706
+          ],
+          "retrieved_titles": [
+            "The Producers",
+            "Idiocracy",
+            "Money Monster",
+            "A Most Violent Year",
+            "All About Steve"
+          ],
+          "similarity_scores": [
+            0.4384,
+            0.4377,
+            0.4303,
+            0.4231,
+            0.4211
+          ],
+          "latency_ms": 1495.3,
+          "token_usage": {
+            "input_tokens": 1312,
+            "output_tokens": 34
+          },
+          "model": "claude-sonnet-4-5-20250929",
+          "scores": {
+            "task_success_score": 0.0,
+            "task_success_reason": "The actual answer identifies 'Money Monster' with $93.3M as the highest-grossing movie, which is completely incorrect. The expected answer is 'Avatar' with approximately $2.787 billion in revenue - a difference of nearly 30x. This is a fundamental factual error that fails to address the question correctly.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "Money Monster is the highest-grossing movie in the dataset",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Money Monster has a revenue of $93,282,604",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": null,
+            "hallucination_claims": [],
+            "error": "judge returned unparseable response",
+            "raw_response": "Let me analyze the factual claims in the answer against the provided sources.\n\n**Claims identified:**\n\n1. **Claim:** \"Money Monster\" is the highest-grossing movie in the dataset\n2. **Claim:** \"Money Monster\" has a revenue of $93,282,604\n\n**Verification:**\n\nLet me check the revenue figures from all sources:\n- Source 1 (The Producers): Revenue: $38,058,335\n- Source 2 (Idiocracy): Revenue: $495,303\n- Source 3 (Money Monster): Revenue: $93,282,604\n- Source 4 (A Most Violent Year): Revenue: $12,007,070\n- Source 5 (All About Steve): Revenue: $40,105,542\n\n**Claim 1:** Money Monster having the highest revenue ($93,282,604) is indeed greater than all other movies listed. This is SUPPORTED by the sources.\n\n**Claim 2:** The revenue figure of $93,282,604 for Money Monster exactly matches Source 3. This is SUPPORTED.\n\n```json\n{\n  \"claims\": [\n    {\n      \"claim\": \"Money Monster is the highest-grossing movie in the dataset\",\n      \"verdict\": \"SUPPORTED\",\n      \"reason\": \"Source 3 shows Money Monster with revenue of $93,282,604, which is higher than all other movies: The Producers ($38,058,335), Idiocracy ($495,303), A Most Violent Year ($12,007,070), and All About Steve ($40,105,542)\"\n    },\n    {\n      \"claim\": \"Money Monster has a revenue of $93,282,604\",\n      \"verdict\": \"SUPPORTED\",\n      \"reason\": \"Source 3 explicitly states Money Monster's revenue as $93,282,604\"\n    }\n  ],\n  \"hallucination_score\": 0.0\n}\n```",
+            "latency_pass": true,
+            "latency_ms": 1495.3,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 1312,
+            "output_tokens": 34,
+            "total_tokens": 1346,
+            "cost_usd": 0.004446,
+            "cost_model": "claude-sonnet-4-5-20250929",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 1
+          }
+        },
+        {
+          "scenario_id": "sc_027",
+          "question": "Which actors appeared in both a Christopher Nolan film and a Quentin Tarantino film?",
+          "category": "multi_hop",
+          "difficulty": "hard",
+          "expected_answer": "Varies \u2014 requires cross-referencing cast lists across Nolan and Tarantino films in dataset",
+          "expected_source_ids": [],
+          "expected_route": [],
+          "answer": "Based on the provided context, I don't have enough information to answer that question.\n\nThe context shows:\n- Christopher Nolan films: \"The Prestige\" (cast: Hugh Jackman, Christian Bale, Michael Caine, Scarlett Johansson, Andy Serkis) and \"Insomnia\" (cast: Al Pacino, Robin Williams, Hilary Swank, Maura Tierney, Martin Donovan)\n- Quentin Tarantino films: \"Pulp Fiction\" (cast: John Travolta, Samuel L. Jackson, Uma Thurman, Bruce Willis, Ving Rhames)\n\nThere is no overlap between the actors listed in these casts. However, this is only a small sample of films from each director, so I cannot definitively answer whether any actors have appeared in both directors' films overall - I can only confirm that none appear in both within this limited dataset.",
+          "retrieved_source_ids": [
+            1124,
+            320,
+            680,
+            709,
+            271969
+          ],
+          "retrieved_titles": [
+            "The Prestige",
+            "Insomnia",
+            "Pulp Fiction",
+            "Licence to Kill",
+            "Ben-Hur"
+          ],
+          "similarity_scores": [
+            0.5525,
+            0.4992,
+            0.4959,
+            0.4937,
+            0.4772
+          ],
+          "latency_ms": 3960.3,
+          "token_usage": {
+            "input_tokens": 1187,
+            "output_tokens": 213
+          },
+          "model": "claude-sonnet-4-5-20250929",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The assistant correctly identifies that it cannot provide a definitive answer about all Nolan-Tarantino actor overlaps based on limited data. It accurately reports no overlap in the specific films shown, while appropriately acknowledging this is only a sample. This matches the expected answer's indication that the query 'requires cross-referencing cast lists' across the full dataset, which the assistant doesn't have complete access to.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "The context shows Christopher Nolan films 'The Prestige' and 'Insomnia'",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Prestige cast includes Hugh Jackman, Christian Bale, Michael Caine, Scarlett Johansson, Andy Serkis",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Insomnia cast includes Al Pacino, Robin Williams, Hilary Swank, Maura Tierney, Martin Donovan",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The context shows Quentin Tarantino film 'Pulp Fiction'",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Pulp Fiction cast includes John Travolta, Samuel L. Jackson, Uma Thurman, Bruce Willis, Ving Rhames",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "There is no overlap between the actors listed in these casts",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "This is only a small sample of films from each director",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Cannot definitively answer whether any actors have appeared in both directors' films overall",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "None of the actors appear in both within this limited dataset",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "The Prestige cast includes Hugh Jackman, Christian Bale, Michael Caine, Scarlett Johansson, Andy Serkis",
+                "verdict": "SUPPORTED",
+                "reason": "Source 1 lists these exact actors in The Prestige cast"
+              },
+              {
+                "claim": "The Prestige is a Christopher Nolan film",
+                "verdict": "SUPPORTED",
+                "reason": "Source 1 shows Christopher Nolan as director of The Prestige"
+              },
+              {
+                "claim": "Insomnia cast includes Al Pacino, Robin Williams, Hilary Swank, Maura Tierney, Martin Donovan",
+                "verdict": "SUPPORTED",
+                "reason": "Source 2 lists these exact actors in Insomnia cast"
+              },
+              {
+                "claim": "Insomnia is a Christopher Nolan film",
+                "verdict": "SUPPORTED",
+                "reason": "Source 2 shows Christopher Nolan as director of Insomnia"
+              },
+              {
+                "claim": "Pulp Fiction cast includes John Travolta, Samuel L. Jackson, Uma Thurman, Bruce Willis, Ving Rhames",
+                "verdict": "SUPPORTED",
+                "reason": "Source 3 lists these exact actors in Pulp Fiction cast"
+              },
+              {
+                "claim": "Pulp Fiction is a Quentin Tarantino film",
+                "verdict": "SUPPORTED",
+                "reason": "Source 3 shows Quentin Tarantino as director of Pulp Fiction"
+              },
+              {
+                "claim": "There is no overlap between the actors listed in these casts",
+                "verdict": "SUPPORTED",
+                "reason": "Comparing the cast lists from Sources 1, 2, and 3 confirms no actor appears in both a Nolan film and Pulp Fiction among those listed"
+              },
+              {
+                "claim": "This is only a small sample of films from each director",
+                "verdict": "SUPPORTED",
+                "reason": "The sources only provide 2 Nolan films and 1 Tarantino film, which is indeed a small sample of each director's filmography"
+              }
+            ],
+            "latency_pass": true,
+            "latency_ms": 3960.3,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 1187,
+            "output_tokens": 213,
+            "total_tokens": 1400,
+            "cost_usd": 0.006756,
+            "cost_model": "claude-sonnet-4-5-20250929",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 1
+          }
+        }
+      ]
+    },
+    "agent": {
+      "summary": {
+        "total_scenarios": 3,
+        "total_latency_ms": 59080.0,
+        "avg_latency_ms": 19693.3,
+        "categories_run": [
+          "aggregation",
+          "multi_field",
+          "multi_hop"
+        ],
+        "model": "claude-sonnet-4-5-20250929"
+      },
+      "results": [
+        {
+          "scenario_id": "sc_008",
+          "question": "What Christopher Nolan movies are in the science fiction genre?",
+          "category": "multi_field",
+          "difficulty": "medium",
+          "expected_answer": "Inception, Interstellar, The Dark Knight Rises (if tagged sci-fi), The Prestige",
+          "expected_source_ids": [
+            27205,
+            157336,
+            49026
+          ],
+          "expected_route": [],
+          "answer": "Based on the data, Christopher Nolan has **2 science fiction movies** in the database:\n\n1. **Interstellar** (2014) - Adventure, Drama, Science Fiction\n   - Rating: 8.1\n   - Starring Matthew McConaughey, Jessica Chastain, Anne Hathaway\n\n2. **Inception** (2010) - Action, Thriller, Science Fiction, Mystery, Adventure\n   - Rating: 8.1\n   - Starring Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page, Tom Hardy\n\nBoth are highly rated films that blend science fiction with other genres.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 4152.68583299985,
+          "token_usage": {
+            "input_tokens": 4069,
+            "output_tokens": 203
+          },
+          "model": "claude-sonnet-4-5-20250929 (agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly identifies Inception and Interstellar as Christopher Nolan's science fiction movies, which are the two core films in the expected answer. The expected answer includes 'The Dark Knight Rises (if tagged sci-fi)' and 'The Prestige' as conditional possibilities, but the actual answer's omission of these is appropriate since they are either conditionally tagged or may not be tagged as sci-fi in the database. The answer provides accurate, relevant information with additional helpful details about ratings and cast.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "Christopher Nolan has 2 science fiction movies in the database",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Interstellar was released in 2014",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Interstellar's genres include Adventure, Drama, Science Fiction",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Interstellar has a rating of 8.1",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Interstellar stars Matthew McConaughey, Jessica Chastain, Anne Hathaway",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Inception was released in 2010",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Inception's genres include Action, Thriller, Science Fiction, Mystery, Adventure",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Inception has a rating of 8.1",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Inception stars Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page, Tom Hardy",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Both films are highly rated",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "Christopher Nolan has 2 science fiction movies in the database",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Interstellar and Inception both have 'Science Fiction' in their genres field"
+              },
+              {
+                "claim": "Interstellar was released in 2014",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Interstellar has release_year: 2014"
+              },
+              {
+                "claim": "Interstellar genres are Adventure, Drama, Science Fiction",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Interstellar has genres: 'Adventure, Drama, Science Fiction'"
+              },
+              {
+                "claim": "Interstellar has a rating of 8.1",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Interstellar has rating: 8.1"
+              },
+              {
+                "claim": "Interstellar stars Matthew McConaughey, Jessica Chastain, Anne Hathaway",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Interstellar cast includes 'Matthew McConaughey, Jessica Chastain, Anne Hathaway, Michael Caine, Casey Affleck'"
+              },
+              {
+                "claim": "Inception was released in 2010",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Inception has release_year: 2010"
+              },
+              {
+                "claim": "Inception genres are Action, Thriller, Science Fiction, Mystery, Adventure",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Inception has genres: 'Action, Thriller, Science Fiction, Mystery, Adventure'"
+              },
+              {
+                "claim": "Inception has a rating of 8.1",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Inception has rating: 8.1"
+              },
+              {
+                "claim": "Inception stars Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page, Tom Hardy",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Inception cast includes 'Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page, Tom Hardy, Ken Watanabe'"
+              },
+              {
+                "claim": "Both are highly rated films that blend science fiction with other genres",
+                "verdict": "SUPPORTED",
+                "reason": "Both films have ratings of 8.1 (which can be considered highly rated) and both have Science Fiction combined with other genres as shown in the tool output"
+              }
+            ],
+            "latency_pass": true,
+            "latency_ms": 4152.7,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 4069,
+            "output_tokens": 203,
+            "total_tokens": 4272,
+            "cost_usd": 0.015252,
+            "cost_model": "claude-sonnet-4-5-20250929",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 2,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 1,
+            "tool_selection_tools_used": [
+              "search_by_director"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": 1.0,
+            "tool_selection_coverage_detail": {
+              "expected": [
+                27205,
+                49026,
+                157336
+              ],
+              "found_in_tools": [
+                27205,
+                49026,
+                157336
+              ],
+              "missing": []
+            }
+          }
+        },
+        {
+          "scenario_id": "sc_013",
+          "question": "What is the highest-grossing movie in the dataset?",
+          "category": "aggregation",
+          "difficulty": "medium",
+          "expected_answer": "Avatar with approximately $2.787 billion in revenue",
+          "expected_source_ids": [
+            19995
+          ],
+          "expected_route": [],
+          "answer": "The highest-grossing movie in the dataset is **Avatar** (2009), directed by James Cameron. It earned approximately **$2.79 billion** in revenue worldwide.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 3279.791208000006,
+          "token_usage": {
+            "input_tokens": 3384,
+            "output_tokens": 113
+          },
+          "model": "claude-sonnet-4-5-20250929 (agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly identifies Avatar as the highest-grossing movie and provides the revenue figure of approximately $2.79 billion, which matches the expected answer of $2.787 billion (the difference of $3 million is negligible and within reasonable rounding). The additional context about the year and director enhances rather than detracts from the answer.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "The highest-grossing movie in the dataset is Avatar",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Avatar was released in 2009",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Avatar was directed by James Cameron",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Avatar earned approximately $2.79 billion in revenue worldwide",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "The highest-grossing movie in the dataset is Avatar",
+                "verdict": "SUPPORTED",
+                "reason": "The tool call filtered movies by revenue in descending order with limit 1, returning Avatar with revenue of 2787965087, confirming it as the highest-grossing movie"
+              },
+              {
+                "claim": "Avatar was released in 2009",
+                "verdict": "SUPPORTED",
+                "reason": "The tool output shows 'release_year': 2009 for Avatar"
+              },
+              {
+                "claim": "Avatar was directed by James Cameron",
+                "verdict": "SUPPORTED",
+                "reason": "The tool output shows 'director': 'James Cameron' for Avatar"
+              },
+              {
+                "claim": "Avatar earned approximately $2.79 billion in revenue worldwide",
+                "verdict": "SUPPORTED",
+                "reason": "The tool output shows 'revenue': 2787965087 for Avatar, which equals approximately $2.79 billion"
+              }
+            ],
+            "latency_pass": true,
+            "latency_ms": 3279.8,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 3384,
+            "output_tokens": 113,
+            "total_tokens": 3497,
+            "cost_usd": 0.011847,
+            "cost_model": "claude-sonnet-4-5-20250929",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 2,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 1,
+            "tool_selection_tools_used": [
+              "filter_movies"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": 1.0,
+            "tool_selection_coverage_detail": {
+              "expected": [
+                19995
+              ],
+              "found_in_tools": [
+                19995
+              ],
+              "missing": []
+            }
+          }
+        },
+        {
+          "scenario_id": "sc_027",
+          "question": "Which actors appeared in both a Christopher Nolan film and a Quentin Tarantino film?",
+          "category": "multi_hop",
+          "difficulty": "hard",
+          "expected_answer": "Varies \u2014 requires cross-referencing cast lists across Nolan and Tarantino films in dataset",
+          "expected_source_ids": [],
+          "expected_route": [],
+          "answer": "Now let me compare the casts from both directors' films to find actors who appeared in both.\n\n**Christopher Nolan films cast:**\n- Christian Bale, Michael Caine, Gary Oldman, Anne Hathaway, Tom Hardy, Heath Ledger, Aaron Eckhart, Maggie Gyllenhaal, Matthew McConaughey, Jessica Chastain, Casey Affleck, Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page, Ken Watanabe, Liam Neeson, Katie Holmes, Al Pacino, Robin Williams, Hilary Swank, Maura Tierney, Martin Donovan, Hugh Jackman, Scarlett Johansson, Andy Serkis, Guy Pearce, Carrie-Anne Moss, Joe Pantoliano, Mark Boone Junior, Stephen Tobolowsky\n\n**Quentin Tarantino films cast:**\n- Jamie Foxx, Christoph Waltz, Leonardo DiCaprio, Kerry Washington, Samuel L. Jackson, Brad Pitt, M\u00e9lanie Laurent, Eli Roth, Michael Fassbender, Kurt Russell, Jennifer Jason Leigh, Walton Goggins, Demi\u00e1n Bichir, Uma Thurman, Lucy Liu, Vivica A. Fox, Daryl Hannah, David Carradine, Michael Madsen, Gordon Liu Chia-Hui, Zo\u00eb Bell, Rosario Dawson, Vanessa Ferlito, Sydney Tamiia Poitier, George Clooney, Quentin Tarantino, Harvey Keitel, Juliette Lewis, Ernest Liu, Pam Grier, Robert Forster, Bridget Fonda, Michael Keaton, Theresa Randle, Isaiah Washington, Spike Lee, Jenifer Lewis, Debi Mazar, John Travolta, Bruce Willis, Ving Rhames, Tim Roth, Chris Penn, Steve Buscemi\n\n**Actor who appeared in both:**\n- **Leonardo DiCaprio** - appeared in Inception (Nolan, 2010) and Django Unchained (Tarantino, 2012)\n\nBased on the data available, Leonardo DiCaprio is the only actor who appeared in both a Christopher Nolan film and a Quentin Tarantino film.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 10348.71345800002,
+          "token_usage": {
+            "input_tokens": 5350,
+            "output_tokens": 673
+          },
+          "model": "claude-sonnet-4-5-20250929 (agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The answer correctly identifies Leonardo DiCaprio as an actor who appeared in both a Christopher Nolan film (Inception) and a Quentin Tarantino film (Django Unchained). The response demonstrates proper cross-referencing of cast lists from both directors' films, which is exactly what the expected answer requires. The methodology is sound and the conclusion is factually accurate based on the dataset being analyzed.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "Leonardo DiCaprio appeared in Inception (Nolan, 2010)",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Leonardo DiCaprio appeared in Django Unchained (Tarantino, 2012)",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Leonardo DiCaprio is the only actor who appeared in both a Christopher Nolan film and a Quentin Tarantino film",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "Christian Bale appeared in Christopher Nolan films",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 2 shows Christian Bale in The Dark Knight Rises, The Dark Knight, The Prestige, and Batman Begins, all directed by Christopher Nolan"
+              },
+              {
+                "claim": "Michael Caine appeared in Christopher Nolan films",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 2 shows Michael Caine in multiple Nolan films including The Dark Knight Rises, The Dark Knight, Interstellar, Batman Begins, and The Prestige"
+              },
+              {
+                "claim": "Leonardo DiCaprio appeared in Christopher Nolan films",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 2 shows Leonardo DiCaprio in Inception directed by Christopher Nolan"
+              },
+              {
+                "claim": "Leonardo DiCaprio appeared in Quentin Tarantino films",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Leonardo DiCaprio in Django Unchained directed by Quentin Tarantino"
+              },
+              {
+                "claim": "Leonardo DiCaprio appeared in Inception (Nolan, 2010)",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 2 shows Inception directed by Christopher Nolan in 2010 with Leonardo DiCaprio in the cast"
+              },
+              {
+                "claim": "Leonardo DiCaprio appeared in Django Unchained (Tarantino, 2012)",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Django Unchained directed by Quentin Tarantino in 2012 with Leonardo DiCaprio in the cast"
+              },
+              {
+                "claim": "Leonardo DiCaprio is the only actor who appeared in both a Christopher Nolan film and a Quentin Tarantino film",
+                "verdict": "SUPPORTED",
+                "reason": "Comparing all cast members from Tool Call 1 (Tarantino films) and Tool Call 2 (Nolan films), Leonardo DiCaprio is the only name that appears in both lists"
+              },
+              {
+                "claim": "Tom Hardy appeared in Christopher Nolan films",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 2 shows Tom Hardy in The Dark Knight Rises and Inception, both directed by Christopher Nolan"
+              },
+              {
+                "claim": "Anne Hathaway appeared in Christopher Nolan films",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 2 shows Anne Hathaway in The Dark Knight Rises and Interstellar, both directed by Christopher Nolan"
+              },
+              {
+                "claim": "Jamie Foxx appeared in Quentin Tarantino films",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Jamie Foxx in Django Unchained directed by Quentin Tarantino"
+              },
+              {
+                "claim": "Christoph Waltz appeared in Quentin Tarantino films",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Christoph Waltz in Django Unchained and Inglourious Basterds, both directed by Quentin Tarantino"
+              },
+              {
+                "claim": "Samuel L. Jackson appeared in Quentin Tarantino films",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Samuel L. Jackson in multiple Tarantino films including Django Unchained, The Hateful Eight, Jackie Brown, and Pulp Fiction"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 10348.7,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 5350,
+            "output_tokens": 673,
+            "total_tokens": 6023,
+            "cost_usd": 0.026145,
+            "cost_model": "claude-sonnet-4-5-20250929",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 2,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 2,
+            "tool_selection_tools_used": [
+              "search_by_director",
+              "search_by_director"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": null,
+            "tool_selection_coverage_detail": "no expected_source_ids for this scenario"
+          }
+        }
+      ]
+    },
+    "multi_agent": {
+      "summary": {
+        "total_scenarios": 3,
+        "total_latency_ms": 105062.9,
+        "avg_latency_ms": 35021.0,
+        "categories_run": [
+          "aggregation",
+          "multi_field",
+          "multi_hop"
+        ],
+        "model": "claude-sonnet-4-5-20250929"
+      },
+      "results": [
+        {
+          "scenario_id": "sc_008",
+          "question": "What Christopher Nolan movies are in the science fiction genre?",
+          "category": "multi_field",
+          "difficulty": "medium",
+          "expected_answer": "Inception, Interstellar, The Dark Knight Rises (if tagged sci-fi), The Prestige",
+          "expected_source_ids": [
+            27205,
+            157336,
+            49026
+          ],
+          "expected_route": [],
+          "answer": "Based on the evidence, Christopher Nolan has directed **two movies** in the science fiction genre:\n\n1. **Interstellar** (2014)\n2. **Inception** (2010)",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 13835.771791999832,
+          "token_usage": {
+            "input_tokens": 7190,
+            "output_tokens": 656
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 0.5,
+            "task_success_reason": "The actual answer correctly identifies two Christopher Nolan sci-fi films (Interstellar and Inception), but misses The Dark Knight Rises and The Prestige which are listed in the expected answer. The answer is partially correct but incomplete.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "Christopher Nolan has directed two movies in the science fiction genre",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Interstellar (2014) is a Christopher Nolan movie in the science fiction genre",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Inception (2010) is a Christopher Nolan movie in the science fiction genre",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "Christopher Nolan has directed two movies in the science fiction genre",
+                "verdict": "SUPPORTED",
+                "reason": "The tool results show Interstellar has genres 'Adventure, Drama, Science Fiction' and Inception has genres 'Action, Thriller, Science Fiction, Mystery, Adventure', confirming two science fiction movies"
+              },
+              {
+                "claim": "Interstellar is a Christopher Nolan movie in the science fiction genre",
+                "verdict": "SUPPORTED",
+                "reason": "Tool results show Interstellar (movie_id 157336) with director 'Christopher Nolan' and genres including 'Science Fiction'"
+              },
+              {
+                "claim": "Interstellar was released in 2014",
+                "verdict": "SUPPORTED",
+                "reason": "Tool results show Interstellar with release_year 2014"
+              },
+              {
+                "claim": "Inception is a Christopher Nolan movie in the science fiction genre",
+                "verdict": "SUPPORTED",
+                "reason": "Tool results show Inception (movie_id 27205) with director 'Christopher Nolan' and genres including 'Science Fiction'"
+              },
+              {
+                "claim": "Inception was released in 2010",
+                "verdict": "SUPPORTED",
+                "reason": "Tool results show Inception with release_year 2010"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 13835.8,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 7190,
+            "output_tokens": 656,
+            "total_tokens": 7846,
+            "cost_usd": 0.03141,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 6,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 1,
+            "tool_selection_tools_used": [
+              "search_by_director"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": 1.0,
+            "tool_selection_coverage_detail": {
+              "expected": [
+                27205,
+                49026,
+                157336
+              ],
+              "found_in_tools": [
+                27205,
+                49026,
+                157336
+              ],
+              "missing": []
+            },
+            "routing_accuracy": null,
+            "routing_precision": null,
+            "routing_recall": null,
+            "routing_exact_order": null,
+            "routing_reason": "scenario has no expected_route",
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 8,
+            "step_cap_hit": false,
+            "llm_call_count": 6,
+            "ma_total_tokens": 7846,
+            "ma_latency_ms": 13835.8,
+            "tokens_per_correct_answer": null,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": "data",
+            "attribution_failure_type": "missing_evidence",
+            "attribution_reason": "The expected answer includes The Dark Knight Rises and The Prestige as sci-fi films, but the database does not tag them with the Science Fiction genre, making them unreachable via the available tools.",
+            "attribution_error_propagated": false,
+            "attribution_cached": false
+          }
+        },
+        {
+          "scenario_id": "sc_013",
+          "question": "What is the highest-grossing movie in the dataset?",
+          "category": "aggregation",
+          "difficulty": "medium",
+          "expected_answer": "Avatar with approximately $2.787 billion in revenue",
+          "expected_source_ids": [
+            19995
+          ],
+          "expected_route": [],
+          "answer": "Based on the dataset, the highest-grossing movie is **Avatar** with a revenue of **$2,787,965,087**.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 11383.685958000115,
+          "token_usage": {
+            "input_tokens": 4820,
+            "output_tokens": 517
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly identifies Avatar as the highest-grossing movie and provides the exact revenue figure of $2,787,965,087, which matches the expected answer of approximately $2.787 billion. The answer is accurate and complete.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "The highest-grossing movie is Avatar",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Avatar has a revenue of $2,787,965,087",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "The highest-grossing movie is Avatar",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 filtered movies by revenue in descending order with limit 1, returning 'Avatar' with movie_id 19995"
+              },
+              {
+                "claim": "Avatar has a revenue of $2,787,965,087",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Avatar with revenue: 2787965087, which matches the claimed dollar amount"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 11383.7,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 4820,
+            "output_tokens": 517,
+            "total_tokens": 5337,
+            "cost_usd": 0.022215,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 6,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 1,
+            "tool_selection_tools_used": [
+              "filter_movies"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": 1.0,
+            "tool_selection_coverage_detail": {
+              "expected": [
+                19995
+              ],
+              "found_in_tools": [
+                19995
+              ],
+              "missing": []
+            },
+            "routing_accuracy": null,
+            "routing_precision": null,
+            "routing_recall": null,
+            "routing_exact_order": null,
+            "routing_reason": "scenario has no expected_route",
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 8,
+            "step_cap_hit": false,
+            "llm_call_count": 6,
+            "ma_total_tokens": 5337,
+            "ma_latency_ms": 11383.7,
+            "tokens_per_correct_answer": 5337,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_027",
+          "question": "Which actors appeared in both a Christopher Nolan film and a Quentin Tarantino film?",
+          "category": "multi_hop",
+          "difficulty": "hard",
+          "expected_answer": "Varies \u2014 requires cross-referencing cast lists across Nolan and Tarantino films in dataset",
+          "expected_source_ids": [],
+          "expected_route": [],
+          "answer": "Based on the evidence gathered from the movie database, **Leonardo DiCaprio** is the actor who appeared in both a Christopher Nolan film and a Quentin Tarantino film.\n\n- **Nolan film:** Inception (2010)\n- **Tarantino film:** Django Unchained (2012)",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 44947.998000000094,
+          "token_usage": {
+            "input_tokens": 24708,
+            "output_tokens": 3122
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer provides a specific, verifiable example (Leonardo DiCaprio in Inception and Django Unchained) that correctly addresses the question. While the expected answer indicates multiple possibilities exist, providing one correct answer with supporting evidence from the database is a valid and complete response to the question 'Which actors appeared in both...'",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "Leonardo DiCaprio appeared in both a Christopher Nolan film and a Quentin Tarantino film",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Leonardo DiCaprio appeared in Inception (2010), a Nolan film",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Leonardo DiCaprio appeared in Django Unchained (2012), a Tarantino film",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": null,
+            "hallucination_claims": [],
+            "error": "judge returned unparseable response",
+            "raw_response": "I need to analyze each factual claim in the answer against the tool results.\n\n**Tool Results Summary:**\n\nFrom Tool Call 1 (Nolan films), the cast lists include:\n- Inception (2010): Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page, Tom Hardy, Ken Watanabe\n\nFrom Tool Call 2 (Tarantino films), the cast lists include:\n- Django Unchained (2012): Jamie Foxx, Christoph Waltz, Leonardo DiCaprio, Kerry Washington, Samuel L. Jackson\n\n**Claims Analysis:**\n\n1. **Claim:** \"Leonardo DiCaprio is the actor who appeared in both a Christopher Nolan film and a Quentin Tarantino film\"\n   - Leonardo DiCaprio appears in Inception cast list (Tool Call 1)\n   - Leonardo DiCaprio appears in Django Unchained cast list (Tool Call 2)\n   - **Verdict:** SUPPORTED\n\n2. **Claim:** \"Nolan film: Inception (2010)\"\n   - Inception is listed in Tool Call 1 results with director Christopher Nolan and release_year 2010\n   - Leonardo DiCaprio is in the cast\n   - **Verdict:** SUPPORTED\n\n3. **Claim:** \"Tarantino film: Django Unchained (2012)\"\n   - Django Unchained is listed in Tool Call 2 results with director Quentin Tarantino and release_year 2012\n   - Leonardo DiCaprio is in the cast\n   - **Verdict:** SUPPORTED\n\nHowever, I need to check if the answer is complete or if it missed other actors. Looking at the cast lists:\n- Tom Hardy appears in both Inception (Nolan) and The Dark Knight Rises (Nolan) - but I need to check Tarantino films... Tom Hardy is NOT in any Tarantino film cast list.\n- Michael Caine appears in multiple Nolan films but NOT in any Tarantino film.\n- Samuel L. Jackson appears in multiple Tarantino films but NOT in any Nolan film.\n\nThe answer appears to have identified the correct actor and provided accurate information supported by the tool results.\n\n```json\n{\n  \"claims\": [\n    {\n      \"claim\": \"Leonardo DiCaprio appeared in both a Christopher Nolan film and a Quentin Tarantino film\",\n      \"verdict\": \"SUPPORTED\",\n      \"reason\": \"Leonardo DiCaprio appears in the cast of Inception (Nolan, Tool Call 1) and Django Unchained (Tarantino, Tool Call 2)\"\n    },\n    {\n      \"claim\": \"Leonardo DiCaprio appeared in Inception (2010) directed by Nolan\",\n      \"verdict\": \"SUPPORTED\",\n      \"reason\": \"Tool Call 1 shows Inception (2010) directed by Christopher Nolan with Leonardo DiCaprio in the cast\"\n    },\n    {\n      \"claim\": \"Leonardo DiCaprio appeared in Django Unchained (2012) directed by Tarantino\",\n      \"verdict\": \"SUPPORTED\",\n      \"reason\": \"Tool Call 2 shows Django Unchained (2012) directed by Quentin Tarantino with Leonardo DiCaprio in the cast\"\n    }\n  ],\n  \"hallucination_score\": 0.0\n}\n```",
+            "latency_pass": false,
+            "latency_ms": 44948.0,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 24708,
+            "output_tokens": 3122,
+            "total_tokens": 27830,
+            "cost_usd": 0.120954,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 11,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 2,
+            "tool_selection_tools_used": [
+              "search_by_director",
+              "search_by_director"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": null,
+            "tool_selection_coverage_detail": "no expected_source_ids for this scenario",
+            "routing_accuracy": null,
+            "routing_precision": null,
+            "routing_recall": null,
+            "routing_exact_order": null,
+            "routing_reason": "scenario has no expected_route",
+            "handoff_count": 6,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 17,
+            "step_cap_hit": false,
+            "llm_call_count": 11,
+            "ma_total_tokens": 27830,
+            "ma_latency_ms": 44948.0,
+            "tokens_per_correct_answer": 27830,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        }
+      ]
+    }
+  }
+}

@@ -16,6 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from loguru import logger
 
+from src.config import settings
 from src.connectors import get_connector
 from src.generator.prompts import ALL_CATEGORIES
 from src.generator.scenario_generator import generate_scenarios, scenarios_to_library
@@ -39,7 +40,7 @@ def main() -> None:
         help="number of scenarios per category (default: 5)",
     )
     parser.add_argument(
-        "--model", type=str, default="claude-sonnet-4-5-20250929",
+        "--model", type=str, default=settings.llm_model,
         help="Claude model to use for generation",
     )
     parser.add_argument(
