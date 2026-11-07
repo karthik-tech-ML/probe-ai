@@ -83,3 +83,36 @@ def test_cast_search_still_finds_actors(db):
     assert len(films) >= 10
     assert all("Leonardo DiCaprio" in m["cast"] for m in films)
     assert search_by_cast.invoke({"actor_name": "Christopher Nolan"}) == []
+
+
+def test_production_pattern_stays_on_production_line():
+    chunk = "Title: X\nCast: Warner Bros.\nProduction: Legendary Pictures, Syncopy\n"
+    on_prod = lambda v: re.search(field_pattern("Production", v), chunk, re.MULTILINE | re.IGNORECASE)
+    assert on_prod("Legendary Pictures")
+    assert not on_prod("Warner Bros.")  # appears only on the Cast line
+
+
+def test_filter_movies_by_both_production_companies(db):
+    from src.agent.tools import filter_movies
+
+    both = filter_movies.invoke({
+        "production_companies": ["Warner Bros.", "Legendary Pictures"], "limit": 50,
+    })
+    movies = [m for m in both if "movie_id" in m]
+    titles = {m["title"] for m in movies}
+    assert {"Inception", "The Dark Knight", "Interstellar", "Man of Steel"} <= titles
+    assert len(movies) >= 20
+    assert all("Warner Bros." in m["production"] and "Legendary Pictures" in m["production"] for m in movies)
+
+    # one company alone matches at least as many
+    one = [m for m in filter_movies.invoke({"production_companies": ["Legendary Pictures"], "limit": 50})
+           if "movie_id" in m]
+    assert len(one) >= len(movies)
+
+
+def test_filter_movies_without_production_filter_is_unchanged(db):
+    from src.agent.tools import filter_movies
+
+    out = [m for m in filter_movies.invoke({"genre": "Comedy", "min_rating": 7.5, "year_from": 2010})
+           if "movie_id" in m]
+    assert out and all("production" not in m for m in out)

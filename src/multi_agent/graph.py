@@ -180,7 +180,8 @@ def _build_graph(trace: MultiAgentTrace, max_steps: int):
         if state["verifier_feedback"]:
             user += f"\nVerifier feedback on your last draft: {state['verifier_feedback']}\n"
 
-        resp = _llm(512).invoke([SystemMessage(prompts.SUPERVISOR_SYSTEM), HumanMessage(user)])
+        # 1024: the task string can carry pasted evidence, and truncated JSON is unparseable
+        resp = _llm(1024).invoke([SystemMessage(prompts.SUPERVISOR_SYSTEM), HumanMessage(user)])
         in_tok, out_tok = _usage(resp)
         decision = parse_json_object(_text(resp.content))
 

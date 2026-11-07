@@ -118,7 +118,7 @@
     },
     {
       "id": "sc_012",
-      "expected_route": ["retrieval_agent"],
+      "expected_route": ["structured_agent"],
       "question": "What movies were produced by both Warner Bros. and Legendary Pictures?",
       "expected_answer": "Inception, The Dark Knight, The Dark Knight Rises, Interstellar, and others",
       "category": "multi_field",
