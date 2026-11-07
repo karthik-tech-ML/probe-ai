@@ -46,7 +46,12 @@ def _result(trace, scores):
 
 def test_wrong_gate():
     assert attr.answer_is_wrong({"task_success_score": 0.5}) is True
-    assert attr.answer_is_wrong({"task_success_score": 1.0, "hallucination_score": 0.2}) is True
+    # hallucination alone only counts above the gate
+    assert attr.answer_is_wrong({"task_success_score": 1.0, "hallucination_score": 0.25}) is True
+    assert attr.answer_is_wrong({"task_success_score": 1.0, "hallucination_score": attr.HALLUCINATION_GATE}) is False
+    assert attr.answer_is_wrong({"task_success_score": 1.0, "hallucination_score": 0.06}) is False
+    # a failing task_success wins regardless of hallucination
+    assert attr.answer_is_wrong({"task_success_score": 0.5, "hallucination_score": 0.0}) is True
     assert attr.answer_is_wrong({"task_success_score": 1.0, "hallucination_score": 0.0}) is False
     assert attr.answer_is_wrong({"task_success_score": None}) is None
     assert attr.answer_is_wrong({}) is None
