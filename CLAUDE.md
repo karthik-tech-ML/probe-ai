@@ -28,7 +28,9 @@ This is a portfolio project demonstrating AI quality engineering skills, and wil
    - Claude API for answer generation
 
 2. Agent System (weeks 3-4)
-   - LangGraph tool-using agent
+   - LangGraph tool-using agent (single ReAct agent: src/agent/)
+   - Multi-agent variant: supervisor + retrieval/structured/analyst specialists + verifier
+     (src/multi_agent/). Supervisor routes each step, capped at 12 steps, one verifier revise loop.
    - Multi-step task execution
    - Memory / conversation state
    - Failure recovery and error handling flows
@@ -65,6 +67,42 @@ This is a portfolio project demonstrating AI quality engineering skills, and wil
    - Cost per query
    - Quality parity scoring
 ```
+
+## Evaluation Metrics (expanding to industry standard)
+
+Current metrics (7):
+- Retrieval Recall@K (mechanical)
+- Faithfulness (LLM-as-judge)
+- Grounding (LLM-as-judge)
+- Hallucination (derived from grounding)
+- Task Success (LLM-as-judge, agent only)
+- Tool Selection (mechanical, agent only)
+- Latency (mechanical)
+
+Phase 1 additions (3):
+- Answer Relevancy (LLM-as-judge) — does the answer address the question?
+- Context Precision / Precision@K (mechanical) — of K retrieved docs, how many were relevant?
+- Context Relevancy (LLM-as-judge) — are retrieved docs useful for this question?
+
+Phase 2 additions (2):
+- MRR — Mean Reciprocal Rank (mechanical) — how early does the first relevant doc appear in results?
+- nDCG — Normalized Discounted Cumulative Gain (mechanical) — are the most relevant docs ranked highest?
+
+Phase 4 additions (2):
+- Token Efficiency (mechanical) — input + output tokens consumed per query
+- Cost per Query (mechanical) — estimated dollar cost based on model pricing
+
+Multi-agent additions (5, only meaningful with a `MultiAgentTrace`; otherwise they return None):
+- Routing accuracy (mechanical) — specialists routed to vs `scenario.expected_route` (precision, recall, F1, exact order)
+- Coordination (mechanical) — handoff count, loop detection (repeated call or step cap), steps to answer
+- Multi-agent cost (mechanical) — LLM calls, tokens, latency, tokens per correct answer
+- Verifier behaviour (mechanical) — approve/revise, and whether a revision changed the answer
+- Error attribution (LLM-as-judge, wrong answers only) — culprit agent, failure type, error propagation; cached in `results/.cache/`
+
+All scorers follow the same pattern: function takes scenario + result, returns
+a dict of scores. LLM-based scorers use judge prompts from
+`src/generator/prompts.py` (constants `ANSWER_RELEVANCY_JUDGE_SYSTEM` and
+`CONTEXT_RELEVANCY_JUDGE_SYSTEM`).
 
 ## Project Structure
 ```
@@ -218,6 +256,7 @@ ANTHROPIC_API_KEY=sk-ant-...
 EMBEDDING_MODEL=all-MiniLM-L6-v2
 DEFAULT_TOP_K=5
 LATENCY_THRESHOLD_MS=2000
+LLM_MODEL=claude-sonnet-4-5-20250929   # generation + agents; set once, used everywhere
 ```
 
 ## Commands
@@ -240,6 +279,20 @@ python scripts/evaluate.py --connector tmdb --agent --category multi_field
 # Auto-generate scenarios from any connector
 python scripts/generate_scenarios.py --connector tmdb --categories simple_factual,multi_field --count 5
 python scripts/generate_scenarios.py --connector tmdb --out scenarios/generated.json
+
+# Run the multi-agent system through the eval harness
+python scripts/evaluate.py --multi-agent --category multi_hop
+python scripts/evaluate.py --connector tmdb --multi-agent --category multi_field
+
+# Smoke-test the multi-agent system (3 scenarios, prints route/handoffs/LLM calls/verifier)
+python scripts/smoke_test_multi_agent.py --trace
+
+# Compare RAG vs single agent vs multi-agent on the 18-scenario hard subset
+python scripts/compare_modes.py --limit 3      # cheap trial first
+python scripts/compare_modes.py
+
+# Unit tests (no API calls)
+python -m pytest tests
 
 # Run inference benchmark
 python scripts/benchmark.py

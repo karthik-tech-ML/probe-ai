@@ -11,9 +11,10 @@ from dataclasses import dataclass, field
 
 from loguru import logger
 
+from src.config import settings
 from src.database.vector_store import SearchResult
 from src.rag.generator import GenerationResult, generate
-from src.rag.retriever import retrieve
+from src.rag.retriever import retrieve, retrieve_with_title_boost
 
 
 @dataclass
@@ -34,19 +35,29 @@ class PipelineResult:
 def ask(
     question: str,
     top_k: int = 5,
-    model: str = "claude-sonnet-4-5-20250929",
+    model: str = settings.llm_model,
+    title_boost: bool = True,
 ) -> PipelineResult:
     """
     Full RAG pipeline: embed the question, retrieve relevant chunks,
     generate an answer grounded in those chunks.
+
+    title_boost: when True (default), uses retrieve_with_title_boost()
+      which mirrors the chunk template format so exact-title queries
+      land near their document instead of near thematically similar ones.
+      Example: "What is the plot of Avatar?" without boost retrieves
+      Princess Mononoke (sim=0.45); with boost retrieves Avatar (sim=0.72).
 
     Returns everything needed for evaluation: answer, sources with
     similarity scores, token usage, and total latency.
     """
     t0 = time.perf_counter()
 
-    # 1. retrieve
-    retrieval = retrieve(question, top_k=top_k)
+    # 1. retrieve — use title-boost by default to fix exact-title drift
+    if title_boost:
+        retrieval = retrieve_with_title_boost(question, top_k=top_k)
+    else:
+        retrieval = retrieve(question, top_k=top_k)
 
     # 2. generate
     generation = generate(question, retrieval.results, model=model)

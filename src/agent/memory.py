@@ -28,6 +28,8 @@ class AgentTrace:
     # total token usage across all LLM calls in this run
     total_input_tokens: int = 0
     total_output_tokens: int = 0
+    # number of LLM calls (one per model turn)
+    llm_calls: int = 0
 
     def add_tool_call(self, name: str, input: dict, output: Any) -> None:
         self.tool_calls.append(ToolCall(
@@ -61,6 +63,7 @@ class AgentTrace:
             ],
             "total_input_tokens": self.total_input_tokens,
             "total_output_tokens": self.total_output_tokens,
+            "llm_calls": self.llm_calls,
         }
 
 

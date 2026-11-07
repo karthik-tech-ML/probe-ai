@@ -25,6 +25,7 @@ from loguru import logger
 from src.config import settings
 from src.evaluation.runner import Scenario
 from src.rag.pipeline import PipelineResult
+from src.multi_agent.utils import parse_json_object
 
 # --- RAG mode ---
 
@@ -164,12 +165,11 @@ def _parse_response(raw: str, scenario_id: str) -> dict | None:
     except json.JSONDecodeError:
         pass
 
-    cleaned = raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
-    try:
-        return json.loads(cleaned)
-    except json.JSONDecodeError:
+    # fences, or prose around the JSON: pull out the outermost {...}
+    parsed = parse_json_object(raw)
+    if parsed is None:
         logger.error(f"[{scenario_id}] could not parse hallucination judge response")
-        return None
+    return parsed
 
 
 def _derive_from_grounding(scores: dict) -> dict[str, Any] | None:

@@ -25,3 +25,6 @@ build/
 eval_results/
 dashboard/node_modules/
 node_modules/
+
+# Judge result cache
+results/.cache/

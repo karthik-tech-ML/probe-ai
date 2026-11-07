@@ -24,6 +24,7 @@ from typing import Any, Callable
 from loguru import logger
 
 from src.rag.pipeline import PipelineResult, ask
+from src.config import settings
 
 # where the scenario library lives by default
 DEFAULT_LIBRARY = Path(__file__).resolve().parent.parent.parent / "scenarios" / "library.json"
@@ -39,6 +40,9 @@ class Scenario:
     difficulty: str
     hallucination_risk: str
     notes: str = ""
+    # specialists a good run should use, in order, repeats collapsed
+    # (multi-agent only; empty = no routing expectation)
+    expected_route: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -62,6 +66,7 @@ class ScenarioResult:
             "difficulty": self.scenario.difficulty,
             "expected_answer": self.scenario.expected_answer,
             "expected_source_ids": self.scenario.expected_source_ids,
+            "expected_route": self.scenario.expected_route,
             "answer": self.answer,
             "retrieved_source_ids": self.retrieved_source_ids,
             "retrieved_titles": self.retrieved_titles,
@@ -165,7 +170,7 @@ def _run_single_agent(
     # create a minimal GenerationResult for the interface
     fake_generation = GenerationResult(
         answer=agent_result.answer,
-        model="claude-sonnet-4-5-20250929",
+        model=settings.llm_model,
         usage={
             "input_tokens": agent_result.trace.total_input_tokens,
             "output_tokens": agent_result.trace.total_output_tokens,
@@ -203,7 +208,78 @@ def _run_single_agent(
         context_texts=context_texts,
         latency_ms=agent_result.latency_ms,
         token_usage=fake_generation.usage,
-        model="claude-sonnet-4-5-20250929 (agent)",
+        model=f"{settings.llm_model} (agent)",
+        scores=scores,
+    )
+
+
+def _run_single_multi_agent(
+    scenario: Scenario,
+    metrics: list[MetricFn],
+) -> ScenarioResult:
+    """
+    Run one scenario through the supervisor + specialists system.
+
+    Same shape as _run_single_agent: the MultiAgentResult is wrapped in a
+    PipelineResult (context = tool outputs) and the trace is stashed on
+    _agent_trace. MultiAgentTrace subclasses AgentTrace, so the existing
+    tool_selection and task_success metrics work on it unchanged.
+    """
+    from src.multi_agent.graph import run_multi_agent
+    from src.rag.generator import GenerationResult
+
+    logger.info(f"[{scenario.id}] (multi-agent) {scenario.question}")
+
+    ma_result = run_multi_agent(scenario.question)
+
+    context_texts = []
+    for tc in ma_result.trace.tool_calls:
+        if tc.tool_output:
+            ctx = str(tc.tool_output)
+            if len(ctx) > 3000:
+                ctx = ctx[:3000] + "..."
+            context_texts.append(ctx)
+
+    model_label = f"{settings.llm_model} (multi-agent)"
+    fake_generation = GenerationResult(
+        answer=ma_result.answer,
+        model=model_label,
+        usage={
+            "input_tokens": ma_result.trace.total_input_tokens,
+            "output_tokens": ma_result.trace.total_output_tokens,
+        },
+    )
+
+    pipeline_result = PipelineResult(
+        question=scenario.question,
+        answer=ma_result.answer,
+        sources=[],  # no vector retrieval
+        generation=fake_generation,
+        latency_ms=ma_result.latency_ms,
+        context_texts=context_texts,
+    )
+    pipeline_result._agent_trace = ma_result.trace  # type: ignore[attr-defined]
+
+    scores: dict[str, Any] = {}
+    # live view of scores so far, so a later scorer (cost) can read task_success
+    pipeline_result._scores = scores  # type: ignore[attr-defined]
+    for metric_fn in metrics:
+        try:
+            scores.update(metric_fn(scenario, pipeline_result))
+        except Exception as e:
+            logger.error(f"[{scenario.id}] metric {metric_fn.__name__} failed: {e}")
+            scores[metric_fn.__name__] = {"error": str(e)}
+
+    return ScenarioResult(
+        scenario=scenario,
+        answer=ma_result.answer,
+        retrieved_source_ids=[],
+        retrieved_titles=[],
+        similarity_scores=[],
+        context_texts=context_texts,
+        latency_ms=ma_result.latency_ms,
+        token_usage=fake_generation.usage,
+        model=model_label,
         scores=scores,
     )
 
@@ -275,9 +351,10 @@ def run(
     category: str | None = None,
     metrics: list[MetricFn] | None = None,
     top_k: int = 5,
-    model: str = "claude-sonnet-4-5-20250929",
+    model: str = settings.llm_model,
     use_agent: bool = False,
     connector: "ProbeConnector | None" = None,
+    use_multi_agent: bool = False,
 ) -> EvalRun:
     """
     Run the eval harness across scenarios.
@@ -289,6 +366,7 @@ def run(
         top_k: how many chunks to retrieve per query (RAG mode only)
         model: which Claude model to use for generation (RAG mode only)
         use_agent: if True, route through the LangGraph agent instead of RAG
+        use_multi_agent: if True, route through the supervisor + specialists system
         connector: if provided, route through this connector instead of
                    the built-in pipeline. overrides use_agent — pass
                    mode via the connector's ask() method instead.
@@ -301,6 +379,8 @@ def run(
 
     if connector is not None:
         mode_label = "connector"
+    elif use_multi_agent:
+        mode_label = "multi-agent"
     elif use_agent:
         mode_label = "agent"
     else:
@@ -312,7 +392,7 @@ def run(
     )
 
     # figure out which mode to pass to the connector
-    connector_mode = "agent" if use_agent else "rag"
+    connector_mode = "multi_agent" if use_multi_agent else "agent" if use_agent else "rag"
 
     t0 = time.perf_counter()
     results = []
@@ -324,6 +404,8 @@ def run(
                 result = _run_single_connector(
                     scenario, connector, metrics, mode=connector_mode
                 )
+            elif use_multi_agent:
+                result = _run_single_multi_agent(scenario, metrics)
             elif use_agent:
                 result = _run_single_agent(scenario, metrics)
             else:

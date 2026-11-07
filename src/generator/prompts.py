@@ -194,3 +194,92 @@ CATEGORY_PROMPTS = {
 }
 
 ALL_CATEGORIES = list(CATEGORY_PROMPTS.keys())
+
+
+# =============================================================================
+# Judge prompts for evaluation metrics
+#
+# Used by the LLM-as-judge scorers in src/evaluation/metrics/.
+# Keeping all Claude prompt templates in one place makes them easy to
+# tune, version, and compare without digging through individual metric files.
+# =============================================================================
+
+ANSWER_RELEVANCY_JUDGE_SYSTEM = """\
+You are an evaluation judge. Your job is to rate how well an AI assistant's \
+answer addresses the question that was asked.
+
+An answer is relevant if it directly tackles what the question asks — even if \
+the system can't fully answer it. An answer like "I don't have that information" \
+is relevant when the question asks about something outside the corpus. An answer \
+that wanders off-topic or ignores the core of the question is not relevant.
+
+Respond with ONLY valid JSON in this exact format, no other text:
+{
+  "answer_relevancy_score": <float 0.0 to 1.0>,
+  "reasoning": "one sentence explaining the score"
+}
+
+Score guide:
+  1.0 — directly and completely addresses the question
+  0.75 — addresses the main question but misses some nuance
+  0.5 — partially relevant, some tangents or incomplete coverage
+  0.25 — mostly off-topic but touches the question
+  0.0 — completely ignores what was asked\
+"""
+
+CONTEXT_RELEVANCY_JUDGE_SYSTEM = """\
+You are an evaluation judge. Your job is to rate how relevant the retrieved \
+documents are for answering a specific question.
+
+Good context retrieval means the documents actually contain the information \
+needed to answer the question. Irrelevant retrieval means the documents were \
+fetched but don't help — they cover a different topic, a different entity, \
+or simply don't contain the key facts the question is asking about.
+
+Respond with ONLY valid JSON in this exact format, no other text:
+{
+  "context_relevancy_score": <float 0.0 to 1.0>,
+  "reasoning": "one sentence explaining the score"
+}
+
+Score guide:
+  1.0 — all retrieved documents are directly useful for answering the question
+  0.75 — most documents are useful, a couple are marginal
+  0.5 — mixed — some relevant, some off-topic
+  0.25 — mostly irrelevant, maybe one document has something useful
+  0.0 — none of the retrieved documents help answer this question\
+"""
+
+
+ATTRIBUTION_JUDGE_SYSTEM = """\
+You are an evaluation judge for a multi-agent system that answers questions about a \
+movie database. A supervisor routes work to specialists (retrieval_agent: semantic \
+search; structured_agent: exact lookups and filters by director/actor/genre/budget/\
+revenue/rating/year; analyst_agent: no database access, compares and aggregates the \
+evidence), then writes a draft that verifier_agent checks.
+
+You are given the question, the expected answer, the final answer (which is wrong or \
+unsupported), and the full trace of what each agent did. Work out which agent is most \
+responsible for the failure.
+
+culprit_agent is one of: supervisor, retrieval_agent, structured_agent, analyst_agent, \
+verifier_agent, data.
+- Use "data" only if the information needed to answer is not in the corpus or not \
+reachable with the available tools, so no agent could have done better.
+- Use verifier_agent only if the failure was already present in the draft it approved \
+and the verifier should have caught it (failure_type verifier_missed).
+
+failure_type is one of:
+- wrong_route: the supervisor sent work to the wrong specialist, or stopped too early
+- missing_evidence: the needed records were never retrieved
+- bad_tool_args: a tool was called with wrong or too-narrow arguments
+- reasoning_error: the evidence was present but was combined or read incorrectly
+- verifier_missed: the verifier approved an answer the evidence did not support
+- other
+
+error_propagated is true if a wrong claim made by a specialist's output appears in the \
+final answer.
+
+Respond with ONLY valid JSON, no prose, no code fences:
+{"culprit_agent": "...", "failure_type": "...", "reason": "one sentence", "error_propagated": true | false}\
+"""

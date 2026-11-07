@@ -74,6 +74,7 @@
     },
     {
       "id": "sc_008",
+      "expected_route": ["structured_agent"],
       "question": "What Christopher Nolan movies are in the science fiction genre?",
       "expected_answer": "Inception, Interstellar, The Dark Knight Rises (if tagged sci-fi), The Prestige",
       "category": "multi_field",
@@ -84,6 +85,7 @@
     },
     {
       "id": "sc_009",
+      "expected_route": ["structured_agent", "analyst_agent"],
       "question": "Which movies star both Leonardo DiCaprio and Tom Hardy?",
       "expected_answer": "Inception, The Revenant",
       "category": "multi_field",
@@ -94,6 +96,7 @@
     },
     {
       "id": "sc_010",
+      "expected_route": ["structured_agent"],
       "question": "What are the action movies directed by James Cameron?",
       "expected_answer": "Aliens, Terminator 2: Judgment Day, Titanic, Avatar",
       "category": "multi_field",
@@ -104,6 +107,7 @@
     },
     {
       "id": "sc_011",
+      "expected_route": ["structured_agent"],
       "question": "Which comedy movies have a rating above 7.5 and were released after 2010?",
       "expected_answer": "Varies based on dataset — requires genre=comedy, vote_average>7.5, release_date>2010",
       "category": "multi_field",
@@ -114,6 +118,7 @@
     },
     {
       "id": "sc_012",
+      "expected_route": ["retrieval_agent"],
       "question": "What movies were produced by both Warner Bros. and Legendary Pictures?",
       "expected_answer": "Inception, The Dark Knight, The Dark Knight Rises, Interstellar, and others",
       "category": "multi_field",
@@ -124,6 +129,7 @@
     },
     {
       "id": "sc_013",
+      "expected_route": ["structured_agent"],
       "question": "What is the highest-grossing movie in the dataset?",
       "expected_answer": "Avatar with approximately $2.787 billion in revenue",
       "category": "aggregation",
@@ -134,6 +140,7 @@
     },
     {
       "id": "sc_014",
+      "expected_route": ["retrieval_agent", "analyst_agent"],
       "question": "Compare the budgets of Avatar and Titanic.",
       "expected_answer": "Avatar had a budget of approximately $237M, Titanic approximately $200M",
       "category": "aggregation",
@@ -144,6 +151,7 @@
     },
     {
       "id": "sc_015",
+      "expected_route": ["structured_agent", "analyst_agent"],
       "question": "Which director has the most movies in the dataset?",
       "expected_answer": "Varies — likely Steven Spielberg or Woody Allen based on typical TMDB data",
       "category": "aggregation",
@@ -154,6 +162,7 @@
     },
     {
       "id": "sc_016",
+      "expected_route": ["structured_agent", "analyst_agent"],
       "question": "What is the average rating of Christopher Nolan films?",
       "expected_answer": "Approximately 7.5-8.0 depending on films in dataset",
       "category": "aggregation",
@@ -264,6 +273,7 @@
     },
     {
       "id": "sc_027",
+      "expected_route": ["structured_agent", "analyst_agent"],
       "question": "Which actors appeared in both a Christopher Nolan film and a Quentin Tarantino film?",
       "expected_answer": "Varies — requires cross-referencing cast lists across Nolan and Tarantino films in dataset",
       "category": "multi_hop",
@@ -274,6 +284,7 @@
     },
     {
       "id": "sc_028",
+      "expected_route": ["structured_agent", "analyst_agent"],
       "question": "Name a movie where the director also acted in it.",
       "expected_answer": "Varies — requires cross-referencing cast and crew for same person across films",
       "category": "multi_hop",
@@ -284,6 +295,7 @@
     },
     {
       "id": "sc_029",
+      "expected_route": ["structured_agent", "analyst_agent"],
       "question": "Which sci-fi movie had the best return on investment based on budget vs revenue?",
       "expected_answer": "Varies — requires filtering sci-fi genre, computing revenue/budget ratio, finding maximum",
       "category": "multi_hop",
@@ -294,6 +306,7 @@
     },
     {
       "id": "sc_030",
+      "expected_route": ["structured_agent"],
       "question": "Find me a drama movie from the 2000s with a budget under $50 million that earned more than $200 million.",
       "expected_answer": "Varies — requires genre + date + budget + revenue filtering across documents",
       "category": "multi_hop",

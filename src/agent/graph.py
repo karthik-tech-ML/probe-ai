@@ -57,7 +57,7 @@ class AgentResult:
 def _build_agent():
     """Create the LangGraph ReAct agent with our tools and Claude."""
     model = ChatAnthropic(
-        model="claude-sonnet-4-5-20250929",
+        model=settings.llm_model,
         api_key=settings.anthropic_api_key,
         max_tokens=2048,
     )
@@ -86,6 +86,7 @@ def run_agent(question: str) -> AgentResult:
     # walk through the message history to build the trace
     for msg in result["messages"]:
         if isinstance(msg, AIMessage):
+            trace.llm_calls += 1
             # accumulate token usage
             if hasattr(msg, "usage_metadata") and msg.usage_metadata:
                 trace.total_input_tokens += msg.usage_metadata.get("input_tokens", 0)
