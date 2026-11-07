@@ -3,7 +3,7 @@ Error attribution: when a multi-agent run gets the answer wrong, which agent
 is to blame and why? (LLM-as-judge.)
 
 Runs only for wrong answers, judged from the scores already computed for the
-run: task_success_score < 1.0, or hallucination_score > 0. Put this scorer
+run: task_success_score < 1.0, or hallucination_score > HALLUCINATION_GATE. Put this scorer
 after those two in the metric list. For right answers it returns None fields
 and makes no API call.
 
@@ -26,6 +26,11 @@ from src.generator.prompts import ATTRIBUTION_JUDGE_SYSTEM
 from src.multi_agent.trace import MultiAgentTrace
 from src.multi_agent.utils import parse_json_object
 from src.rag.pipeline import PipelineResult
+
+# A hallucination score at or below this alone doesn't make an answer "wrong":
+# the judge flags the odd unsupported detail even on answers task_success marks
+# fully correct. Below the gate, only task_success < 1.0 triggers attribution.
+HALLUCINATION_GATE = 0.2
 
 CULPRITS = (
     "supervisor", "retrieval_agent", "structured_agent",
@@ -57,7 +62,7 @@ def answer_is_wrong(scores: dict[str, Any]) -> bool | None:
     has_halluc = isinstance(halluc, (int, float))
     if not has_task and not has_halluc:
         return None
-    return (has_task and task < 1.0) or (has_halluc and halluc > 0)
+    return (has_task and task < 1.0) or (has_halluc and halluc > HALLUCINATION_GATE)
 
 
 def trace_hash(scenario: Scenario, trace: MultiAgentTrace) -> str:

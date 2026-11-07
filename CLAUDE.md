@@ -30,7 +30,7 @@ This is a portfolio project demonstrating AI quality engineering skills, and wil
 2. Agent System (weeks 3-4)
    - LangGraph tool-using agent (single ReAct agent: src/agent/)
    - Multi-agent variant: supervisor + retrieval/structured/analyst specialists + verifier
-     (src/multi_agent/). Supervisor routes each step, capped at 12 steps, one verifier revise loop.
+     (src/multi_agent/). Supervisor routes each step, capped at 12 steps and 6 tool rounds per specialist turn, one verifier revise loop.
    - Multi-step task execution
    - Memory / conversation state
    - Failure recovery and error handling flows

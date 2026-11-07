@@ -16,6 +16,7 @@ from typing import Any, TypedDict
 
 from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, ToolMessage
+from langgraph.errors import GraphRecursionError
 from langgraph.graph import END, START, StateGraph
 from langgraph.prebuilt import create_react_agent
 from loguru import logger
@@ -36,6 +37,12 @@ from src.multi_agent.utils import parse_json_object
 MAX_STEPS = 12
 # one verifier-triggered revision at most
 MAX_REVISIONS = 1
+# tool rounds one specialist may take in a single turn (a round = the model asks
+# for tools, we run them). The step cap bounds supervisor turns; this bounds the
+# work inside one turn, where a question the tools can't answer (e.g. filter by
+# production company) otherwise lets a specialist search without limit.
+MAX_TOOL_ROUNDS = 6
+_LIMIT_NOTE = "[tool-call limit reached: the results above may be incomplete]"
 # per tool output kept in evidence, same bound the eval runner uses for context
 _MAX_EVIDENCE_CHARS = 3000
 
@@ -122,6 +129,29 @@ def _format_evidence(evidence: list[dict[str, Any]], with_tools: bool) -> str:
     return "\n\n".join(blocks)
 
 
+def run_react_with_limit(agent: Any, task: str, max_rounds: int = MAX_TOOL_ROUNDS) -> tuple[dict, bool]:
+    """
+    Run a ReAct agent for at most `max_rounds` tool rounds.
+
+    Each round is two graph steps (model, tools), plus one for the final reply,
+    so the recursion limit is 2 * max_rounds + 1. If the agent is still asking
+    for tools after that, LangGraph raises GraphRecursionError: we keep the last
+    state it reached and report that the limit was hit, rather than crashing.
+    """
+    last: dict = {"messages": [HumanMessage(task)]}
+    hit = False
+    try:
+        for state in agent.stream(
+            {"messages": [HumanMessage(task)]},
+            config={"recursion_limit": 2 * max_rounds + 1},
+            stream_mode="values",
+        ):
+            last = state
+    except GraphRecursionError:
+        hit = True
+    return last, hit
+
+
 # -- graph ------------------------------------------------------------------
 
 def _build_graph(trace: MultiAgentTrace, max_steps: int):
@@ -185,8 +215,11 @@ def _build_graph(trace: MultiAgentTrace, max_steps: int):
                 in_tok, out_tok = _usage(resp)
                 result, tool_outputs, llm_calls = _text(resp.content), [], 1
             else:
-                out = specialists[name].invoke({"messages": [HumanMessage(task)]})
+                out, limit_hit = run_react_with_limit(specialists[name], task)
                 result, tool_outputs, in_tok, out_tok, llm_calls = _record_react_run(name, out)
+                if limit_hit:
+                    logger.warning(f"{name} hit the {MAX_TOOL_ROUNDS}-round tool limit on: {task[:80]!r}")
+                    result = f"{result}\n{_LIMIT_NOTE}".strip()
 
             trace.add_step(name, "draft", task, result, llm_calls=llm_calls,
                            input_tokens=in_tok, output_tokens=out_tok)
@@ -219,7 +252,8 @@ def _build_graph(trace: MultiAgentTrace, max_steps: int):
         for cid in order:
             c = calls[cid]
             trace.add_agent_tool_call(name, c["name"], c["args"], c["output"])
-            tool_outputs.append((c["name"], str(c["output"])))
+            if c["output"] is not None:  # a call cut off by the limit has no output
+                tool_outputs.append((c["name"], str(c["output"])))
         return result, tool_outputs, in_tok, out_tok, llm_calls
 
     def draft(state: MultiAgentState) -> dict[str, Any]:
