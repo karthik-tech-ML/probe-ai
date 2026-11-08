@@ -77,6 +77,7 @@ class MultiAgentTrace(AgentTrace):
     steps: list[TraceStep] = field(default_factory=list)
     # set when the supervisor hit the step cap and we returned a best-effort answer
     step_cap_hit: bool = False
+    token_budget_hit: bool = False
 
     def add_step(
         self,
@@ -160,6 +161,7 @@ class MultiAgentTrace(AgentTrace):
             "llm_call_count": self.llm_call_count,
             "verifier_actions": self.verifier_actions,
             "step_cap_hit": self.step_cap_hit,
+            "token_budget_hit": self.token_budget_hit,
             "steps": [s.to_dict() for s in self.steps],
         })
         return d

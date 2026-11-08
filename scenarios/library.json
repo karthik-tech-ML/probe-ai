@@ -98,7 +98,7 @@
       "id": "sc_010",
       "expected_route": ["structured_agent"],
       "question": "What are the action movies directed by James Cameron?",
-      "expected_answer": "Aliens, Terminator 2: Judgment Day, Titanic, Avatar",
+      "expected_answer": "Avatar, Aliens, Terminator 2: Judgment Day, The Terminator, True Lies, The Abyss",
       "category": "multi_field",
       "expected_source_ids": [19995, 597, 280, 218],
       "difficulty": "medium",

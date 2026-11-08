@@ -42,6 +42,11 @@ MAX_REVISIONS = 1
 # work inside one turn, where a question the tools can't answer (e.g. filter by
 # production company) otherwise lets a specialist search without limit.
 MAX_TOOL_ROUNDS = 6
+# total tokens (input + output) a whole run may spend before the supervisor must
+# stop routing and answer with what it has. The step and round caps bound shape,
+# not cost: a question the tools can't answer (e.g. "which director has the most
+# movies") otherwise burned 325K tokens over repeated handoffs.
+MAX_RUN_TOKENS = 60_000
 _LIMIT_NOTE = "[tool-call limit reached: the results above may be incomplete]"
 # per tool output kept in evidence, same bound the eval runner uses for context
 _MAX_EVIDENCE_CHARS = 3000
@@ -169,6 +174,14 @@ def _build_graph(trace: MultiAgentTrace, max_steps: int):
             logger.warning(f"step cap ({max_steps}) hit, forcing finish")
             trace.step_cap_hit = True
             trace.add_step(SUPERVISOR, "route", "step cap hit", "finish", target=None)
+            return {"next_agent": "finish", "task": "", "steps_taken": steps, "cap_hit": True}
+
+        # token budget: same treatment as the step cap
+        spent = trace.total_input_tokens + trace.total_output_tokens
+        if spent >= MAX_RUN_TOKENS:
+            logger.warning(f"token budget ({MAX_RUN_TOKENS}) hit at {spent}, forcing finish")
+            trace.token_budget_hit = True
+            trace.add_step(SUPERVISOR, "route", "token budget hit", "finish", target=None)
             return {"next_agent": "finish", "task": "", "steps_taken": steps, "cap_hit": True}
 
         user = (

@@ -1,0 +1,82 @@
+2026-11-07 22:45:08.012 | INFO     | src.evaluation.runner:load_scenarios:96 - filtered to 5 scenarios in category='multi_field'
+2026-11-07 22:45:08.012 | INFO     | src.evaluation.runner:load_scenarios:96 - filtered to 4 scenarios in category='aggregation'
+2026-11-07 22:45:08.012 | INFO     | src.evaluation.runner:load_scenarios:96 - filtered to 4 scenarios in category='multi_hop'
+2026-11-07 22:45:08.012 | INFO     | src.evaluation.runner:load_scenarios:96 - filtered to 5 scenarios in category='adversarial'
+2026-11-07 22:45:08.013 | INFO     | src.evaluation.runner:load_scenarios:96 - filtered to 5 scenarios in category='multi_field'
+2026-11-07 22:45:08.013 | INFO     | src.evaluation.runner:load_scenarios:96 - filtered to 4 scenarios in category='aggregation'
+2026-11-07 22:45:08.013 | INFO     | src.evaluation.runner:load_scenarios:96 - filtered to 4 scenarios in category='multi_hop'
+2026-11-07 22:45:08.013 | INFO     | src.evaluation.runner:load_scenarios:96 - filtered to 5 scenarios in category='adversarial'
+2026-11-07 22:45:08.013 | INFO     | __main__:main:196 - comparing ['multi_agent'] on 3 scenarios: ['sc_010', 'sc_012', 'sc_015']
+2026-11-07 22:45:08.013 | INFO     | __main__:main:200 - ===== mode: multi_agent =====
+2026-11-07 22:45:08.013 | INFO     | src.evaluation.runner:run:389 - starting multi-agent eval run: 3 scenarios, 13 metrics
+2026-11-07 22:45:08.013 | INFO     | src.evaluation.runner:run:401 - --- scenario 1/3 ---
+/opt/homebrew/lib/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+2026-11-07 22:45:08.179 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_010] (multi-agent) What are the action movies directed by James Cameron?
+2026-11-07 22:45:08.179 | INFO     | src.multi_agent.graph:run_multi_agent:341 - multi-agent starting: 'What are the action movies directed by James Cameron?'
+2026-11-07 22:45:12.814 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='James Cameron'
+2026-11-07 22:45:12.887 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 7 movies
+2026-11-07 22:45:27.256 | INFO     | src.multi_agent.graph:run_multi_agent:355 - multi-agent done in 19077ms — route=['structured_agent'], 6 LLM calls, 9519 tokens
+2026-11-07 22:45:28.949 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_010] task_success=1.0 — The actual answer correctly identifies all six action movies directed by James Cameron that are listed in the expected answer. The additional information about genres and release years enhances the response without introducing any errors or contradictions.
+2026-11-07 22:45:28.950 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_010] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-07 22:45:32.487 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_010] judge returned invalid JSON, attempting repair
+2026-11-07 22:45:32.487 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_010] faithfulness=1.0 (8 claims)
+2026-11-07 22:45:32.487 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_010] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-07 22:45:40.224 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_010] hallucination=0.0 (8 claims)
+2026-11-07 22:45:40.225 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_010] tool_selection=1.0 (calls=1, tools=['search_by_director'], coverage=1.0)
+2026-11-07 22:45:40.225 | INFO     | src.evaluation.runner:run:401 - --- scenario 2/3 ---
+2026-11-07 22:45:40.225 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_012] (multi-agent) What movies were produced by both Warner Bros. and Legendary Pictures?
+2026-11-07 22:45:40.226 | INFO     | src.multi_agent.graph:run_multi_agent:341 - multi-agent starting: 'What movies were produced by both Warner Bros. and Legendary Pictures?'
+2026-11-07 22:45:45.579 | DEBUG    | src.agent.tools:filter_movies:199 - tool:filter_movies genre=None budget=None-None rev>=None rating>=None year=None-None sort=None limit=50 production=['Warner Bros.', 'Legendary Pictures']
+2026-11-07 22:45:45.637 | DEBUG    | src.agent.tools:filter_movies:262 - tool:filter_movies matched 23 movies, returning 23
+2026-11-07 22:46:03.338 | INFO     | src.multi_agent.graph:run_multi_agent:355 - multi-agent done in 23113ms — route=['structured_agent'], 6 LLM calls, 12834 tokens
+2026-11-07 22:46:06.771 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_012] task_success=1.0 — The actual answer correctly identifies movies produced by both Warner Bros. and Legendary Pictures, including all the key titles mentioned in the expected answer (Inception, The Dark Knight, The Dark Knight Rises, Interstellar). The actual answer provides a comprehensive list of 23 films that goes beyond the expected answer's examples, which is appropriate given the expected answer indicates 'and others.' The response directly addresses the question with accurate, verifiable information.
+2026-11-07 22:46:06.771 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_012] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-07 22:46:14.089 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_012] judge returned invalid JSON, attempting repair
+2026-11-07 22:46:14.089 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_012] faithfulness=0.9583 (24 claims)
+2026-11-07 22:46:14.090 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_012] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-07 22:46:31.048 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_012] hallucination=0.5417 (24 claims)
+2026-11-07 22:46:31.050 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_012] tool_selection=1.0 (calls=1, tools=['filter_movies'], coverage=1.0)
+2026-11-07 22:46:31.053 | INFO     | src.evaluation.metrics.attribution:score_attribution:157 - [sc_012] attribution cache hit
+2026-11-07 22:46:31.053 | INFO     | src.evaluation.runner:run:401 - --- scenario 3/3 ---
+2026-11-07 22:46:31.053 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_015] (multi-agent) Which director has the most movies in the dataset?
+2026-11-07 22:46:31.053 | INFO     | src.multi_agent.graph:run_multi_agent:341 - multi-agent starting: 'Which director has the most movies in the dataset?'
+2026-11-07 22:46:55.166 | INFO     | src.multi_agent.graph:run_multi_agent:355 - multi-agent done in 24113ms — route=['structured_agent', 'retrieval_agent'], 7 LLM calls, 6993 tokens
+2026-11-07 22:46:58.388 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_015] task_success=1.0 — The assistant correctly identifies that it cannot determine which director has the most movies with the available tools. The expected answer acknowledges this is a data-dependent query that 'varies' based on the dataset. The assistant's honest refusal to fabricate an answer and clear explanation of the toolset limitations is the appropriate response when the information cannot be reliably determined.
+2026-11-07 22:46:58.388 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_015] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-07 22:47:00.908 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_015] judge returned invalid JSON, attempting repair
+2026-11-07 22:47:00.909 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_015] faithfulness=1.0 (4 claims)
+2026-11-07 22:47:00.909 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_015] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-07 22:47:05.147 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_015] hallucination=1.0 (3 claims)
+2026-11-07 22:47:05.148 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_015] tool_selection=0.4 (calls=0, tools=[], coverage=None)
+2026-11-07 22:47:05.149 | DEBUG    | src.evaluation.metrics.attribution:score_attribution:166 - [sc_015] calling claude-sonnet-4-5-20250929 for attribution
+2026-11-07 22:47:08.047 | INFO     | src.evaluation.metrics.attribution:score_attribution:174 - [sc_015] attribution: supervisor / wrong_route
+2026-11-07 22:47:08.050 | INFO     | src.evaluation.runner:run:444 - eval run complete: 3 scenarios in 120037ms (avg 40012ms)
+2026-11-07 22:47:08.052 | INFO     | __main__:main:216 - results written to results/mode_comparison_v4_targeted.json
+
+======================================================================================================================
+  Multi-agent — 3 scenarios
+======================================================================================================================
+  ID       Category       Task  Faith  Halluc  LLM  Tokens    Cost$   Latency  Route   Verif  Culprit
+  sc_010   multi_field    1.00   1.00    0.00    6    9519  $0.0428   19077ms   1.00 approve  
+  sc_012   multi_field    1.00   0.96    0.54    6   12834  $0.0541   23112ms   1.00 approve  structured_agent
+  sc_015   aggregation    1.00   1.00    1.00    7    6993  $0.0325   24113ms   0.50 approve  supervisor
+
+======================================================================================================================
+  Side by side
+======================================================================================================================
+                                   Multi-agent
+  Accuracy (task_success)                 1.00
+  Fully correct                              3
+  Faithfulness                            0.99
+  Hallucination                           0.51
+  Routing accuracy                        0.83
+  Avg LLM calls                            6.3
+  Avg tokens                             9,782
+  Tokens / correct answer                9,782
+  Avg latency (ms)                      22,101
+  Avg cost / query                     $0.0431
+  Total cost                            $0.129
+
+  Multi-agent: 0 loop(s), 0 verifier revision(s)
+  Multi-agent failures by culprit / type: {'structured_agent / bad_tool_args': 1, 'supervisor / wrong_route': 1}
