@@ -182,6 +182,7 @@ def filter_movies(
     year_to: int | None = None,
     sort_by: str | None = None,
     limit: int = 20,
+    production_companies: list[str] | None = None,
 ) -> list[dict]:
     """Flexible filter across multiple movie fields at once. Use this when
     the question has multiple constraints like 'comedy movies after 2010
@@ -191,11 +192,14 @@ def filter_movies(
         'rating', 'year'. Prefix with '-' for descending (default), e.g. '-revenue'
         sorts highest first. Without prefix sorts ascending.
     limit: max number of results to return (default 20, max 50). Use with sort_by
-        to get "top N" results efficiently."""
+        to get "top N" results efficiently.
+    production_companies: optional list of production company names, e.g.
+        ['Warner Bros.', 'Legendary Pictures']. A movie must list ALL of them.
+        Matching is by substring. Results then include a 'production' field."""
     logger.debug(
         f"tool:filter_movies genre={genre} budget={min_budget}-{max_budget} "
         f"rev>={min_revenue} rating>={min_rating} year={year_from}-{year_to} "
-        f"sort={sort_by} limit={limit}"
+        f"sort={sort_by} limit={limit} production={production_companies}"
     )
     # clamp limit to avoid context window blowups
     limit = min(limit, 50)
@@ -207,6 +211,10 @@ def filter_movies(
         # start with genre filter in SQL if provided (narrows the scan)
         if genre:
             query = query.filter(_field_filter("Genres", genre))
+
+        # every listed company must appear on the Production line
+        for company in production_companies or []:
+            query = query.filter(_field_filter("Production", company))
 
         rows = query.all()
 
@@ -230,7 +238,10 @@ def filter_movies(
             if year_to is not None and year > year_to:
                 continue
 
-            results.append(_chunk_to_summary(row))
+            summary = _chunk_to_summary(row)
+            if production_companies:
+                summary["production"] = _parse_chunk_field(row.chunk_text, "Production")
+            results.append(summary)
 
         # sorting — lets the agent ask for "top N by revenue" etc.
         if sort_by:

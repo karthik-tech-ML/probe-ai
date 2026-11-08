@@ -178,6 +178,7 @@ def check_mode_ran(mode: str, eval_run: EvalRun) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Compare RAG, single agent and multi-agent")
     parser.add_argument("--limit", type=int, default=None, help="only run this many scenarios (mixed categories)")
+    parser.add_argument("--ids", default=None, help="comma-separated scenario IDs to run (overrides --limit)")
     parser.add_argument("--modes", default=",".join(MODES), help="comma-separated subset of: " + ",".join(MODES))
     parser.add_argument("--out", default="results/mode_comparison.json")
     args = parser.parse_args()
@@ -189,6 +190,9 @@ def main() -> None:
 
     preflight()
     scenarios = select_scenarios(args.limit)
+    if args.ids:
+        wanted = set(args.ids.split(","))
+        scenarios = [s for s in select_scenarios(None) if s.id in wanted]
     logger.info(f"comparing {modes} on {len(scenarios)} scenarios: {[s.id for s in scenarios]}")
 
     runs: dict[str, EvalRun] = {}

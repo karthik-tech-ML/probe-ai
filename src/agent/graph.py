@@ -13,6 +13,7 @@ from typing import Any
 
 from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
+from langgraph.errors import GraphRecursionError
 from langgraph.prebuilt import create_react_agent
 from loguru import logger
 
@@ -54,6 +55,28 @@ class AgentResult:
         }
 
 
+# tool rounds the single agent may take per question (a round = model asks for
+# tools, we run them). Without it a question the tools can't answer loops until
+# LangGraph's default recursion limit.
+MAX_TOOL_ROUNDS = 10
+_LIMIT_NOTE = "[tool-call limit reached: the results above may be incomplete]"
+
+
+def run_with_round_limit(agent, question: str, max_rounds: int = MAX_TOOL_ROUNDS) -> tuple[dict, bool]:
+    """Stream the agent, keeping the last state; returns (state, limit_hit)."""
+    last = {"messages": [HumanMessage(content=question)]}
+    try:
+        for state in agent.stream(
+            {"messages": [HumanMessage(content=question)]},
+            config={"recursion_limit": 2 * max_rounds + 1},
+            stream_mode="values",
+        ):
+            last = state
+    except GraphRecursionError:
+        return last, True
+    return last, False
+
+
 def _build_agent():
     """Create the LangGraph ReAct agent with our tools and Claude."""
     model = ChatAnthropic(
@@ -81,7 +104,9 @@ def run_agent(question: str) -> AgentResult:
     agent = _build_agent()
     trace = AgentTrace(question=question)
 
-    result = agent.invoke({"messages": [HumanMessage(content=question)]})
+    result, limit_hit = run_with_round_limit(agent, question)
+    if limit_hit:
+        logger.warning(f"agent hit the {MAX_TOOL_ROUNDS}-round tool limit on: {question[:80]!r}")
 
     # walk through the message history to build the trace
     for msg in result["messages"]:
@@ -114,6 +139,9 @@ def run_agent(question: str) -> AgentResult:
                 if tc.tool_output is None:
                     tc.tool_output = msg.content
                     break
+
+    if limit_hit:
+        trace.final_answer = f"{trace.final_answer}\n{_LIMIT_NOTE}".strip()
 
     latency_ms = (time.perf_counter() - t0) * 1000
 
