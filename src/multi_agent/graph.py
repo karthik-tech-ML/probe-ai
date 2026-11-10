@@ -11,7 +11,7 @@ cap the supervisor is forced to finish and the verifier is skipped.
 """
 
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any, TypedDict
 
 from langchain_anthropic import ChatAnthropic
@@ -81,6 +81,8 @@ class MultiAgentResult:
     answer: str
     trace: MultiAgentTrace
     latency_ms: float
+    # what the specialists gathered; kept so a finished run can be re-verified
+    evidence: list[dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -132,6 +134,22 @@ def _format_evidence(evidence: list[dict[str, Any]], with_tools: bool) -> str:
             )
         blocks.append(block)
     return "\n\n".join(blocks)
+
+
+def verify_draft(question: str, evidence: list[dict[str, Any]], draft: str) -> tuple[str, str, int, int]:
+    """
+    One verifier call: returns (action, reason, input_tokens, output_tokens), where
+    action is "approve" or "revise". Shared by the graph node and the planted-error
+    experiment so both exercise the same prompt and parsing.
+    """
+    user = (f"Question: {question}\n\n"
+            f"Evidence:\n{_format_evidence(evidence, with_tools=True)}\n\n"
+            f"Draft answer:\n{draft}")
+    resp = _llm(512).invoke([SystemMessage(prompts.VERIFIER_SYSTEM), HumanMessage(user)])
+    in_tok, out_tok = _usage(resp)
+    verdict = parse_json_object(_text(resp.content)) or {}
+    action = "revise" if verdict.get("verdict") == "revise" else "approve"
+    return action, str(verdict.get("reason", "")), in_tok, out_tok
 
 
 def run_react_with_limit(agent: Any, task: str, max_rounds: int = MAX_TOOL_ROUNDS) -> tuple[dict, bool]:
@@ -283,14 +301,7 @@ def _build_graph(trace: MultiAgentTrace, max_steps: int):
         return {"draft": text, "steps_taken": state["steps_taken"] + 1}
 
     def verifier(state: MultiAgentState) -> dict[str, Any]:
-        user = (f"Question: {state['question']}\n\n"
-                f"Evidence:\n{_format_evidence(state['evidence'], with_tools=True)}\n\n"
-                f"Draft answer:\n{state['draft']}")
-        resp = _llm(512).invoke([SystemMessage(prompts.VERIFIER_SYSTEM), HumanMessage(user)])
-        in_tok, out_tok = _usage(resp)
-        verdict = parse_json_object(_text(resp.content)) or {}
-        action = "revise" if verdict.get("verdict") == "revise" else "approve"
-        reason = str(verdict.get("reason", ""))
+        action, reason, in_tok, out_tok = verify_draft(state["question"], state["evidence"], state["draft"])
         trace.add_step(VERIFIER, "verify", state["draft"], f"{action}: {reason}".strip(": "),
                        llm_calls=1, input_tokens=in_tok, output_tokens=out_tok)
         if action == "revise":
@@ -358,4 +369,4 @@ def run_multi_agent(question: str, max_steps: int = MAX_STEPS) -> MultiAgentResu
         f"{trace.total_input_tokens + trace.total_output_tokens} tokens"
     )
     return MultiAgentResult(question=question, answer=state["answer"], trace=trace,
-                            latency_ms=latency_ms)
+                            latency_ms=latency_ms, evidence=state["evidence"])
