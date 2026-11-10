@@ -1,0 +1,66 @@
+/opt/homebrew/lib/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+2026-11-09 22:19:48.932 | INFO     | src.evaluation.runner:load_scenarios:98 - loaded 40 scenarios from library.json
+2026-11-09 22:19:48.932 | INFO     | src.multi_agent.graph:run_multi_agent:352 - multi-agent starting: 'What Christopher Nolan movies are in the science fiction genre?'
+2026-11-09 22:19:53.570 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Christopher Nolan'
+2026-11-09 22:19:53.664 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 8 movies
+2026-11-09 22:20:01.271 | INFO     | src.multi_agent.graph:run_multi_agent:366 - multi-agent done in 12339ms — route=['structured_agent'], 6 LLM calls, 7773 tokens
+2026-11-09 22:20:01.274 | INFO     | src.multi_agent.graph:run_multi_agent:352 - multi-agent starting: 'Which movies star both Leonardo DiCaprio and Tom Hardy?'
+2026-11-09 22:20:07.524 | DEBUG    | src.agent.tools:search_by_cast:159 - tool:search_by_cast actor='Leonardo DiCaprio'
+2026-11-09 22:20:07.527 | DEBUG    | src.agent.tools:search_by_cast:159 - tool:search_by_cast actor='Tom Hardy'
+2026-11-09 22:20:07.571 | DEBUG    | src.agent.tools:search_by_cast:168 - tool:search_by_cast found 22 movies
+2026-11-09 22:20:07.578 | DEBUG    | src.agent.tools:search_by_cast:168 - tool:search_by_cast found 12 movies
+2026-11-09 22:20:18.547 | INFO     | src.multi_agent.graph:run_multi_agent:366 - multi-agent done in 17273ms — route=['structured_agent'], 6 LLM calls, 14002 tokens
+2026-11-09 22:20:18.548 | INFO     | src.multi_agent.graph:run_multi_agent:352 - multi-agent starting: 'What are the action movies directed by James Cameron?'
+2026-11-09 22:20:23.019 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='James Cameron'
+2026-11-09 22:20:23.062 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 7 movies
+2026-11-09 22:20:35.393 | INFO     | src.multi_agent.graph:run_multi_agent:366 - multi-agent done in 16845ms — route=['structured_agent'], 6 LLM calls, 8845 tokens
+2026-11-09 22:20:35.394 | INFO     | src.multi_agent.graph:run_multi_agent:352 - multi-agent starting: 'Which comedy movies have a rating above 7.5 and were released after 2010?'
+2026-11-09 22:20:40.521 | DEBUG    | src.agent.tools:filter_movies:199 - tool:filter_movies genre=Comedy budget=None-None rev>=None rating>=7.5 year=2011-None sort=None limit=50 production=None
+2026-11-09 22:20:40.672 | DEBUG    | src.agent.tools:filter_movies:262 - tool:filter_movies matched 14 movies, returning 14
+2026-11-09 22:21:04.206 | INFO     | src.multi_agent.graph:run_multi_agent:366 - multi-agent done in 28812ms — route=['structured_agent'], 8 LLM calls, 13659 tokens
+2026-11-09 22:21:04.208 | INFO     | src.multi_agent.graph:run_multi_agent:352 - multi-agent starting: 'What movies were produced by both Warner Bros. and Legendary Pictures?'
+2026-11-09 22:21:09.018 | DEBUG    | src.agent.tools:filter_movies:199 - tool:filter_movies genre=None budget=None-None rev>=None rating>=None year=None-None sort=None limit=50 production=['Warner Bros.', 'Legendary Pictures']
+2026-11-09 22:21:09.074 | DEBUG    | src.agent.tools:filter_movies:262 - tool:filter_movies matched 23 movies, returning 23
+2026-11-09 22:21:38.003 | INFO     | src.multi_agent.graph:run_multi_agent:366 - multi-agent done in 33796ms — route=['structured_agent'], 6 LLM calls, 13569 tokens
+2026-11-09 22:21:38.005 | INFO     | src.multi_agent.graph:run_multi_agent:352 - multi-agent starting: 'What is the highest-grossing movie in the dataset?'
+2026-11-09 22:21:41.614 | DEBUG    | src.agent.tools:filter_movies:199 - tool:filter_movies genre=None budget=None-None rev>=None rating>=None year=None-None sort=-revenue limit=1 production=None
+2026-11-09 22:21:41.996 | DEBUG    | src.agent.tools:filter_movies:262 - tool:filter_movies matched 4800 movies, returning 1
+2026-11-09 22:21:48.495 | INFO     | src.multi_agent.graph:run_multi_agent:366 - multi-agent done in 10490ms — route=['structured_agent'], 6 LLM calls, 5696 tokens
+2026-11-09 22:21:48.496 | INFO     | src.multi_agent.graph:run_multi_agent:352 - multi-agent starting: 'Compare the budgets of Avatar and Titanic.'
+2026-11-09 22:21:52.026 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Avatar 2009 James Cameron'
+2026-11-09 22:21:52.026 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Avatar 2009 James Cameron'
+2026-11-09 22:21:52.026 | INFO     | src.ingestion.embedder:_get_model:19 - loading embedding model: all-MiniLM-L6-v2
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9210.59it/s]
+[1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+2026-11-09 22:21:53.924 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-09 22:21:53.957 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Avatar (0.5028)
+2026-11-09 22:21:53.957 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Avatar, sim=0.5028)
+2026-11-09 22:21:58.541 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Titanic 1997 James Cameron'
+2026-11-09 22:21:58.541 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Titanic 1997 James Cameron'
+2026-11-09 22:21:58.589 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-09 22:21:58.612 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Titanic (0.6124)
+2026-11-09 22:21:58.612 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Titanic, sim=0.6124)
+2026-11-09 22:22:07.664 | INFO     | src.multi_agent.graph:run_multi_agent:366 - multi-agent done in 19168ms — route=['retrieval_agent', 'retrieval_agent'], 9 LLM calls, 13072 tokens
+2026-11-09 22:22:07.667 | INFO     | src.multi_agent.graph:run_multi_agent:352 - multi-agent starting: 'What is the average rating of Christopher Nolan films?'
+2026-11-09 22:22:11.604 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Christopher Nolan'
+2026-11-09 22:22:11.649 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 8 movies
+2026-11-09 22:22:22.336 | INFO     | src.multi_agent.graph:run_multi_agent:366 - multi-agent done in 14669ms — route=['structured_agent'], 6 LLM calls, 8528 tokens
+2026-11-09 22:22:22.338 | INFO     | src.multi_agent.graph:run_multi_agent:352 - multi-agent starting: 'Which actors appeared in both a Christopher Nolan film and a Quentin Tarantino film?'
+2026-11-09 22:22:26.150 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Christopher Nolan'
+2026-11-09 22:22:26.196 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 8 movies
+2026-11-09 22:22:33.364 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Quentin Tarantino'
+2026-11-09 22:22:33.406 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 8 movies
+2026-11-09 22:22:59.797 | INFO     | src.multi_agent.graph:run_multi_agent:366 - multi-agent done in 37460ms — route=['structured_agent', 'structured_agent', 'analyst_agent'], 11 LLM calls, 26632 tokens
+2026-11-09 22:22:59.800 | INFO     | src.multi_agent.graph:run_multi_agent:352 - multi-agent starting: 'Find me a drama movie from the 2000s with a budget under $50 million that earned more than $200 million.'
+2026-11-09 22:23:05.740 | DEBUG    | src.agent.tools:filter_movies:199 - tool:filter_movies genre=Drama budget=None-50000000 rev>=200000000 rating>=None year=2000-2009 sort=None limit=50 production=None
+2026-11-09 22:23:05.947 | DEBUG    | src.agent.tools:filter_movies:262 - tool:filter_movies matched 18 movies, returning 18
+2026-11-09 22:23:25.347 | INFO     | src.multi_agent.graph:run_multi_agent:366 - multi-agent done in 25548ms — route=['structured_agent'], 6 LLM calls, 12381 tokens
+2026-11-09 22:23:25.348 | INFO     | __main__:collect:45 - saved 10 cases to results/planted_cases.json

@@ -1,0 +1,324 @@
+{
+  "summary": {
+    "clean": {
+      "n": 10,
+      "flagged": 1,
+      "rate": 0.1
+    },
+    "swap_entity": {
+      "n": 7,
+      "flagged": 7,
+      "rate": 1.0
+    },
+    "change_number": {
+      "n": 10,
+      "flagged": 10,
+      "rate": 1.0
+    },
+    "add_unsupported_claim": {
+      "n": 10,
+      "flagged": 10,
+      "rate": 1.0
+    },
+    "catch_rate_overall": 1.0,
+    "false_alarm_rate": 0.1
+  },
+  "rows": [
+    {
+      "scenario_id": "sc_008",
+      "kind": "clean",
+      "detail": "",
+      "action": "approve",
+      "reason": "The draft answer accurately reflects the evidence provided. The raw tool outputs show a complete list of Christopher Nolan movies with their genres, and only Interstellar and Inception include 'Science Fiction' in their genres field. The draft correctly identifies these two films with their release years, which matches the data exactly.",
+      "tokens": 1259
+    },
+    {
+      "scenario_id": "sc_008",
+      "kind": "swap_entity",
+      "detail": "Christopher Nolan -> Steven Spielberg",
+      "action": "revise",
+      "reason": "The draft answer incorrectly attributes the movies to Steven Spielberg when the evidence clearly shows they were directed by Christopher Nolan. The question asks about Christopher Nolan movies, and the evidence confirms that Interstellar (2014) and Inception (2010) are Christopher Nolan's science fiction films, not Steven Spielberg's.",
+      "tokens": 1270
+    },
+    {
+      "scenario_id": "sc_008",
+      "kind": "change_number",
+      "detail": "2 -> 4",
+      "action": "revise",
+      "reason": "The draft answer states Christopher Nolan has directed '4 science fiction movies' but only lists 2 movies (Interstellar and Inception). The evidence from the raw tool outputs confirms only these 2 movies have 'Science Fiction' in their genres field. The number '4' contradicts both the evidence and the actual list provided in the draft itself.",
+      "tokens": 1273
+    },
+    {
+      "scenario_id": "sc_008",
+      "kind": "add_unsupported_claim",
+      "detail": "appended: The film also won several major industry awards.",
+      "action": "revise",
+      "reason": "The draft answer correctly identifies Interstellar and Inception as Christopher Nolan's science fiction movies, which is supported by the evidence. However, the final sentence 'The film also won several major industry awards' is not supported by any evidence provided and appears to be an unrelated statement that should be removed.",
+      "tokens": 1270
+    },
+    {
+      "scenario_id": "sc_009",
+      "kind": "clean",
+      "detail": "",
+      "action": "approve",
+      "reason": "The draft answer correctly identifies the two movies (Inception and The Revenant) that star both Leonardo DiCaprio and Tom Hardy, as confirmed by the evidence from the search results. Both movies appear in the raw tool outputs showing both actors in their cast lists, and the structured agent's analysis correctly identified these same two films with matching details (directors, years). The answer is accurate and complete.",
+      "tokens": 2813
+    },
+    {
+      "scenario_id": "sc_009",
+      "kind": "swap_entity",
+      "detail": "Christopher Nolan -> Peter Jackson",
+      "action": "revise",
+      "reason": "The draft incorrectly states that Inception was directed by Peter Jackson. According to the evidence, Inception was directed by Christopher Nolan. The Revenant information is correct.",
+      "tokens": 2769
+    },
+    {
+      "scenario_id": "sc_009",
+      "kind": "change_number",
+      "detail": "2010 -> 2013",
+      "action": "revise",
+      "reason": "The draft contains a factual error. According to the evidence, Inception was released in 2010, not 2013. The evidence clearly states: 'Inception' (movie_id: 27205) - Release Year: 2010. The rest of the information is correct.",
+      "tokens": 2795
+    },
+    {
+      "scenario_id": "sc_009",
+      "kind": "add_unsupported_claim",
+      "detail": "appended: A sequel to the film was announced shortly after its release.",
+      "action": "revise",
+      "reason": "The draft contains an unsupported statement: 'A sequel to the film was announced shortly after its release.' The evidence does not mention anything about a sequel to either Inception or The Revenant. This appears to be information from outside knowledge that is not supported by the provided evidence. The first two sentences are correct and supported by the evidence.",
+      "tokens": 2817
+    },
+    {
+      "scenario_id": "sc_010",
+      "kind": "clean",
+      "detail": "",
+      "action": "approve",
+      "reason": "The draft answer accurately lists all 6 action movies directed by James Cameron as shown in the evidence. Each movie title and year matches the data provided. The evidence clearly shows these 6 films all have 'Action' in their genres field, and the draft correctly excludes Titanic (which is Drama, Romance, Thriller). The count of 6 action movies is also correct.",
+      "tokens": 1555
+    },
+    {
+      "scenario_id": "sc_010",
+      "kind": "swap_entity",
+      "detail": "James Cameron -> Christopher Nolan",
+      "action": "revise",
+      "reason": "The draft answer incorrectly attributes the movies to Christopher Nolan when the evidence clearly shows these are James Cameron's films. The question asks about James Cameron, and all the evidence confirms James Cameron as the director. The list of movies and count (6 action films) is correct, but the director name is wrong.",
+      "tokens": 1544
+    },
+    {
+      "scenario_id": "sc_010",
+      "kind": "change_number",
+      "detail": "2009 -> 2012",
+      "action": "revise",
+      "reason": "The draft contains a factual error: Avatar's release year is listed as 2012, but the evidence clearly shows it was released in 2009. All other information is correct.",
+      "tokens": 1512
+    },
+    {
+      "scenario_id": "sc_010",
+      "kind": "add_unsupported_claim",
+      "detail": "appended: The film was shot almost entirely on location abroad.",
+      "action": "revise",
+      "reason": "The draft answer correctly lists the 6 action movies directed by James Cameron based on the evidence. However, it includes an unrelated final sentence ('The film was shot almost entirely on location abroad.') that is not supported by the evidence and appears to be extraneous information that should be removed.",
+      "tokens": 1546
+    },
+    {
+      "scenario_id": "sc_011",
+      "kind": "clean",
+      "detail": "",
+      "action": "revise",
+      "reason": "The draft includes 'The Lego Movie' (2014) with a rating of 7.5 in the evidence, but excludes it from the answer list. The question asks for movies with rating 'above 7.5', which means strictly greater than 7.5, not equal to 7.5. However, the draft also excludes 'Instructions Not Included' (2013) with rating 7.5. The draft should either include both movies with rating exactly 7.5 or exclude both. Since the question specifies 'above 7.5', both should be excluded, but the draft inconsistently omits them from the list while the evidence shows them. The draft should clarify that it's only including movies with ratings strictly above 7.5, or if 7.5 is included, add those two movies.",
+      "tokens": 2100
+    },
+    {
+      "scenario_id": "sc_011",
+      "kind": "change_number",
+      "detail": "7.5 -> 9.0",
+      "action": "revise",
+      "reason": "The draft answer contains a critical error in the opening statement. It says 'comedy movies with a rating above 9.0' when the question asks for 'rating above 7.5'. This misstatement contradicts the actual question being answered. Additionally, the draft omits 'The Lego Movie' (2014, rating 7.5) and 'Instructions Not Included' (2013, rating 7.5), both of which appear in the evidence and meet the criteria of rating above 7.5 (they are exactly 7.5, which satisfies 'above 7.5' is debatable, but the evidence explicitly includes them in the results). The draft should correct the threshold statement and include all movies from the evidence.",
+      "tokens": 2078
+    },
+    {
+      "scenario_id": "sc_011",
+      "kind": "add_unsupported_claim",
+      "detail": "appended: The film also won several major industry awards.",
+      "action": "revise",
+      "reason": "The draft answer contains an unsupported statement at the end: 'The film also won several major industry awards.' This information is not present in the evidence provided and appears to be extraneous text that should be removed. The list of movies itself is accurate and matches the evidence.",
+      "tokens": 1983
+    },
+    {
+      "scenario_id": "sc_012",
+      "kind": "clean",
+      "detail": "",
+      "action": "approve",
+      "reason": "The draft answer accurately lists all 23 movies that were produced by both Warner Bros. and Legendary Pictures as shown in the evidence. The evidence explicitly states '23 movies' were found and lists them with their details. The draft correctly reproduces this list including the first 8 movies shown in detail in the evidence snippet, and the evidence confirms the complete list exists in the raw tool outputs. The total count of 23 matches the evidence.",
+      "tokens": 2187
+    },
+    {
+      "scenario_id": "sc_012",
+      "kind": "change_number",
+      "detail": "2012 -> 2015",
+      "action": "revise",
+      "reason": "The draft contains an error in the release year for 'The Dark Knight Rises'. The evidence clearly states it was released in 2012, but the draft lists it as 2015. All other information appears consistent with the evidence provided.",
+      "tokens": 2145
+    },
+    {
+      "scenario_id": "sc_012",
+      "kind": "add_unsupported_claim",
+      "detail": "appended: A sequel to the film was announced shortly after its release.",
+      "action": "revise",
+      "reason": "The draft includes an unsupported final sentence: 'A sequel to the film was announced shortly after its release.' This statement is not present in the evidence and appears to be extraneous information unrelated to the question. The list of 23 movies itself is supported by the evidence, but this additional sentence should be removed.",
+      "tokens": 2176
+    },
+    {
+      "scenario_id": "sc_013",
+      "kind": "clean",
+      "detail": "",
+      "action": "approve",
+      "reason": "The draft answer correctly identifies Avatar as the highest-grossing movie with revenue of $2,787,965,087, which matches the evidence from the structured_agent tool that sorted movies by revenue in descending order and returned the top result.",
+      "tokens": 562
+    },
+    {
+      "scenario_id": "sc_013",
+      "kind": "swap_entity",
+      "detail": "James Cameron -> Christopher Nolan",
+      "action": "revise",
+      "reason": "The draft incorrectly states that Avatar was directed by Christopher Nolan. According to the evidence, Avatar was directed by James Cameron.",
+      "tokens": 543
+    },
+    {
+      "scenario_id": "sc_013",
+      "kind": "change_number",
+      "detail": "2009 -> 2012",
+      "action": "revise",
+      "reason": "The draft states Avatar was released in 2012, but the evidence clearly shows the release year was 2009. All other information (title, director, revenue) is correct.",
+      "tokens": 550
+    },
+    {
+      "scenario_id": "sc_013",
+      "kind": "add_unsupported_claim",
+      "detail": "appended: The film was shot almost entirely on location abroad.",
+      "action": "revise",
+      "reason": "The draft correctly identifies Avatar as the highest-grossing movie with accurate revenue, director, and year information from the evidence. However, the statement 'The film was shot almost entirely on location abroad' is not supported by any evidence provided and appears to be outside knowledge. This unsupported claim should be removed.",
+      "tokens": 588
+    },
+    {
+      "scenario_id": "sc_014",
+      "kind": "clean",
+      "detail": "",
+      "action": "approve",
+      "reason": "The draft answer accurately reflects the budget information from the evidence: Avatar's budget of $237,000,000 and Titanic's budget of $200,000,000. The calculation of the $37,000,000 difference is correct, and the percentage increase (18.5%) is mathematically accurate. The additional note about both films being directed by James Cameron is also supported by the evidence.",
+      "tokens": 2471
+    },
+    {
+      "scenario_id": "sc_014",
+      "kind": "swap_entity",
+      "detail": "James Cameron -> Christopher Nolan",
+      "action": "revise",
+      "reason": "The draft incorrectly states that both films were directed by Christopher Nolan. According to the evidence, both Avatar (2009) and Titanic (1997) were directed by James Cameron, not Christopher Nolan. The budget figures and comparison are correct.",
+      "tokens": 2446
+    },
+    {
+      "scenario_id": "sc_014",
+      "kind": "change_number",
+      "detail": "2009 -> 2012",
+      "action": "revise",
+      "reason": "The draft states Avatar was released in 2012, but the evidence clearly shows Avatar was released in 2009. The budget figures and comparison are correct, but the release year error must be corrected.",
+      "tokens": 2430
+    },
+    {
+      "scenario_id": "sc_014",
+      "kind": "add_unsupported_claim",
+      "detail": "appended: The film also won several major industry awards.",
+      "action": "revise",
+      "reason": "The draft answer contains an unsupported statement at the end: 'The film also won several major industry awards.' The evidence provided does not contain any information about awards for either Avatar or Titanic. This sentence should be removed as it cannot be verified from the evidence.",
+      "tokens": 2454
+    },
+    {
+      "scenario_id": "sc_016",
+      "kind": "clean",
+      "detail": "",
+      "action": "approve",
+      "reason": "The draft answer correctly lists all 8 Christopher Nolan films from the evidence with their accurate ratings, and the mathematical calculation of the average is correct: (7.6 + 8.2 + 8.1 + 8.1 + 7.5 + 6.8 + 8.0 + 8.1) / 8 = 62.4 / 8 = 7.8. The answer is fully supported by the evidence provided.",
+      "tokens": 1578
+    },
+    {
+      "scenario_id": "sc_016",
+      "kind": "swap_entity",
+      "detail": "Christopher Nolan -> Steven Spielberg",
+      "action": "revise",
+      "reason": "The draft incorrectly attributes Christopher Nolan's films to Steven Spielberg. The evidence clearly shows these are Christopher Nolan films, and the question asks about Christopher Nolan films. While the calculation of the average (7.8) is correct, the director attribution is wrong throughout the answer.",
+      "tokens": 1534
+    },
+    {
+      "scenario_id": "sc_016",
+      "kind": "change_number",
+      "detail": "8 -> 16",
+      "action": "revise",
+      "reason": "The draft states 'Christopher Nolan has directed 16 films' but the evidence only shows 8 films. The calculation and average of 7.8 are correct based on the 8 films provided in the evidence, but the claim of 16 films is unsupported and contradicts the evidence.",
+      "tokens": 1538
+    },
+    {
+      "scenario_id": "sc_016",
+      "kind": "add_unsupported_claim",
+      "detail": "appended: A sequel to the film was announced shortly after its release.",
+      "action": "revise",
+      "reason": "The draft answer contains an extraneous sentence at the end: 'A sequel to the film was announced shortly after its release.' This statement is not supported by the evidence and appears to be unrelated to the question about Christopher Nolan's average film rating. This sentence should be removed. The calculation and list of films are correct based on the evidence provided.",
+      "tokens": 1557
+    },
+    {
+      "scenario_id": "sc_027",
+      "kind": "clean",
+      "detail": "",
+      "action": "approve",
+      "reason": "The draft answer is fully supported by the evidence. The evidence shows Leonardo DiCaprio in the cast of Inception (a Christopher Nolan film from evidence [1]) and Django Unchained (a Quentin Tarantino film from evidence [2]). The analyst agent in evidence [3] correctly identified Leonardo DiCaprio as the only actor appearing in both directors' films based on the provided cast lists. The draft accurately states this finding with the correct film titles and years.",
+      "tokens": 4022
+    },
+    {
+      "scenario_id": "sc_027",
+      "kind": "swap_entity",
+      "detail": "Christopher Nolan -> Steven Spielberg",
+      "action": "revise",
+      "reason": "The draft answer contains a factual error. It states 'Leonardo DiCaprio is the actor who appeared in both a Steven Spielberg film and a Quentin Tarantino film' but the question asks about Christopher Nolan and Quentin Tarantino, not Steven Spielberg. The evidence correctly identifies Leonardo DiCaprio appeared in Nolan's Inception and Tarantino's Django Unchained, but the draft incorrectly names the director as Spielberg instead of Nolan.",
+      "tokens": 4033
+    },
+    {
+      "scenario_id": "sc_027",
+      "kind": "change_number",
+      "detail": "2010 -> 2013",
+      "action": "revise",
+      "reason": "The draft contains a factual error about the release year of Inception. The evidence clearly states that Inception was released in 2010, not 2013. The draft incorrectly lists it as 2013. All other information is correct - Leonardo DiCaprio did appear in Inception (a Nolan film) and Django Unchained (a Tarantino film).",
+      "tokens": 4004
+    },
+    {
+      "scenario_id": "sc_027",
+      "kind": "add_unsupported_claim",
+      "detail": "appended: The film was shot almost entirely on location abroad.",
+      "action": "revise",
+      "reason": "The draft correctly identifies Leonardo DiCaprio as appearing in both Inception (Nolan) and Django Unchained (Tarantino), which is supported by the evidence. However, the final sentence 'The film was shot almost entirely on location abroad' is completely unrelated to the question and is not supported by any evidence provided. This extraneous sentence should be removed.",
+      "tokens": 4012
+    },
+    {
+      "scenario_id": "sc_030",
+      "kind": "clean",
+      "detail": "",
+      "action": "approve",
+      "reason": "The draft answer accurately presents drama movies from the 2000s with budgets under $50 million that earned more than $200 million, all supported by the evidence. The budget and revenue figures match the data provided. The selection of 'My Big Fat Greek Wedding' as the top pick is reasonable given its exceptional ROI ($5M budget to $368M revenue). All nine examples listed meet the specified criteria and their financial data is correctly reported from the evidence.",
+      "tokens": 2414
+    },
+    {
+      "scenario_id": "sc_030",
+      "kind": "change_number",
+      "detail": "2002 -> 2005",
+      "action": "revise",
+      "reason": "The draft states 'My Big Fat Greek Wedding' was released in 2005, but the evidence clearly shows it was released in 2002. This is a factual error that contradicts the evidence provided.",
+      "tokens": 2362
+    },
+    {
+      "scenario_id": "sc_030",
+      "kind": "add_unsupported_claim",
+      "detail": "appended: The film also won several major industry awards.",
+      "action": "revise",
+      "reason": "The draft answer includes an unsupported claim in the final sentence: 'The film also won several major industry awards.' The evidence provided contains no information about awards won by any of these films. This statement should be removed as it cannot be verified from the available evidence.",
+      "tokens": 2383
+    }
+  ]
+}
