@@ -23,7 +23,7 @@ from loguru import logger
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.multi_agent.planted import corrupt_all  # noqa: E402
+from src.multi_agent.planted import corrupt_all, corrupt_hard  # noqa: E402
 
 DEFAULT_IDS = "sc_008,sc_009,sc_010,sc_011,sc_012,sc_013,sc_014,sc_016,sc_027,sc_030"
 
@@ -50,19 +50,21 @@ def _evidence_text(evidence: list[dict]) -> str:
                     for e in evidence)
 
 
-def build_jobs(cases: list[dict]) -> list[dict]:
-    """One clean job per case plus every applicable corruption."""
+def build_jobs(cases: list[dict], hard: bool = False) -> list[dict]:
+    """Easy: a clean job per case plus every corruption. Hard: subtler corruptions only, no clean controls."""
     jobs = []
     for i, c in enumerate(cases):
         base = {"scenario_id": c["scenario_id"], "question": c["question"], "evidence": c["evidence"]}
-        jobs.append({**base, "kind": "clean", "draft": c["answer"], "detail": ""})
-        for cor in corrupt_all(c["answer"], _evidence_text(c["evidence"]), index=i):
+        if not hard:
+            jobs.append({**base, "kind": "clean", "draft": c["answer"], "detail": ""})
+        found = corrupt_hard(c["answer"]) if hard else corrupt_all(c["answer"], _evidence_text(c["evidence"]), index=i)
+        for cor in found:
             jobs.append({**base, "kind": cor.type, "draft": cor.draft, "detail": cor.detail})
     return jobs
 
 
-def evaluate(cases_path: Path, out: Path, dry_run: bool) -> None:
-    jobs = build_jobs(json.loads(cases_path.read_text()))
+def evaluate(cases_path: Path, out: Path, dry_run: bool, hard: bool = False) -> None:
+    jobs = build_jobs(json.loads(cases_path.read_text()), hard)
     counts = defaultdict(int)
     for j in jobs:
         counts[j["kind"]] += 1
@@ -104,11 +106,12 @@ def main() -> None:
     e.add_argument("--cases", default="results/planted_cases.json")
     e.add_argument("--out", default="results/planted_errors.json")
     e.add_argument("--dry-run", action="store_true")
+    e.add_argument("--hard", action="store_true", help="subtler corruptions only (no clean controls)")
     a = p.parse_args()
     if a.cmd == "collect":
         collect(a.ids.split(","), Path(a.out))
     else:
-        evaluate(Path(a.cases), Path(a.out), a.dry_run)
+        evaluate(Path(a.cases), Path(a.out), a.dry_run, a.hard)
 
 
 if __name__ == "__main__":
