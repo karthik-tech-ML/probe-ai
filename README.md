@@ -21,7 +21,7 @@ Most teams evaluate AI outputs by eyeballing them. This project answers: *"How d
 - **Python** · FastAPI · PostgreSQL + pgvector
 - **Embeddings**: sentence-transformers (all-MiniLM-L6-v2)
 - **LLM**: Claude API (Anthropic)
-- **Agent**: LangGraph
+- **Agent**: LangGraph (single ReAct agent and a supervisor + specialists multi-agent system)
 - **Eval**: Custom metrics + RAGAS/DeepEval baselines
 - **Data**: TMDB 5000 Movie Dataset
 
@@ -59,6 +59,9 @@ python scripts/evaluate.py --category adversarial
 | Latency Pass/Fail | Does the response meet the latency threshold? |
 | Task Success | Did the agent complete the multi-step task correctly? |
 | Tool Selection Accuracy | Did the agent pick the right tools? |
+| Answer Relevancy, Context Precision/Relevancy, MRR, nDCG | Does the answer address the question, and are the best documents ranked first? |
+| Token Efficiency, Cost per Query | Tokens and estimated dollars per answer |
+| Routing, Coordination, Multi-agent Cost, Verifier, Error Attribution | Multi-agent only: did the supervisor pick the right specialists, did it loop, what did it cost, did the verifier help, and which agent caused a wrong answer |
 
 ## Scenario Categories
 
@@ -68,6 +71,29 @@ python scripts/evaluate.py --category adversarial
 - **no_answer**: Questions about data NOT in the corpus
 - **adversarial**: False premises and hallucination traps
 - **multi_hop**: Multi-step reasoning across documents
+
+## Multi-agent vs single agent
+
+The repo includes a multi-agent variant (supervisor, retrieval/structured/analyst specialists, and a verifier) and a three-way comparison with RAG and the single agent on 18 hard scenarios.
+
+| | RAG | Single agent | Multi-agent |
+|---|---|---|---|
+| Accuracy (task success) | 0.67 | 0.94 | 0.94 |
+| LLM calls per query | 1 | 2.5 | 8.1 |
+| Tokens per query | 1.3K | 12.3K | 32K to 37K |
+| Cost per query | $0.005 | $0.041 | $0.12 to $0.13 |
+
+- Multi-agent matched the single agent's accuracy at roughly 3x the cost and latency.
+- Following its failure attributions exposed a real tool bug, which fixing cut tokens 40% to 50% on director and cast lookups.
+- A verifier tested with planted errors caught 27 of 27 obvious ones and 19 of 23 subtle ones, with 1 of 10 clean drafts falsely flagged. It is weakest on omissions and counts.
+
+Small sample (18 scenarios, one run each) and a noisy judge: read the caveats in [docs/multi-agent-findings.md](docs/multi-agent-findings.md).
+
+```bash
+python scripts/evaluate.py --multi-agent --category multi_hop
+python scripts/compare_modes.py --limit 3        # cheap trial first
+python scripts/planted_errors.py evaluate --dry-run
+```
 
 ## Bring Your Own System
 
