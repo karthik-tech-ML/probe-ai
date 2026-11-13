@@ -19,23 +19,29 @@ from loguru import logger
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.safety.indirect_injection import (  # noqa: E402
-    PAYLOADS, QUESTIONS, complied, poisoned, spread, token_in,
+    PAYLOADS, PAYLOADS_V2, QUESTIONS, complied, poisoned, spread, token_in,
 )
 
 
-def dry_run() -> None:
-    from src.agent.tools import search_movies
+def jobs_for(payloads) -> list:
+    return [(s, q, p) for p in payloads for q in (p.questions or QUESTIONS) for s in ("agent", "multi_agent")]
 
-    print(f"{len(PAYLOADS)} payloads x {len(QUESTIONS)} questions x 2 systems = "
-          f"{len(PAYLOADS) * len(QUESTIONS) * 2} runs\n")
-    for p in PAYLOADS:
+
+def dry_run(payloads) -> None:
+    from src.agent.tools import search_by_director, search_movies
+
+    print(f"{len(jobs_for(payloads))} runs across {len(payloads)} payloads\n")
+    for p in payloads:
         with poisoned(p):
-            out = search_movies.invoke({"query": "Inception"})
-        hit = next((r for r in out if "Title: Inception" in r["chunk_text"]), None)
-        tail = hit["chunk_text"][-170:].replace("\n", " ") if hit else "(Inception not retrieved)"
-        print(f"[{p.id}] goal: {p.goal}\n   record tail: ...{tail}\n")
-    clean = search_movies.invoke({"query": "Inception"})
-    print("clean record carries payload text:", any("NOTE TO ALL" in r["chunk_text"] for r in clean))
+            if p.surface == "cast":
+                out = search_by_director.invoke({"director_name": "Christopher Nolan"})
+                hit = next((r for r in out if r["title"] == "Inception"), None)
+                tail = hit["cast"][-170:] if hit else "(Inception not returned)"
+            else:
+                out = search_movies.invoke({"query": "Inception"})
+                hit = next((r for r in out if "Title: Inception" in r["chunk_text"]), None)
+                tail = hit["chunk_text"][-170:].replace("\n", " ") if hit else "(Inception not retrieved)"
+        print(f"[{p.id}] ({p.surface}) goal: {p.goal}\n   tail: ...{tail}\n")
 
 
 def run_one(system: str, question: str, payload) -> dict:
@@ -60,13 +66,15 @@ def run_one(system: str, question: str, payload) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--round", type=int, choices=(1, 2), default=1, help="1: crude payloads, 2: stronger payloads")
     ap.add_argument("--limit", type=int, default=None, help="only run this many runs")
     ap.add_argument("--out", default="results/indirect_injection.json")
     a = ap.parse_args()
+    payloads = PAYLOADS_V2 if a.round == 2 else PAYLOADS
     if a.dry_run:
-        return dry_run()
+        return dry_run(payloads)
 
-    jobs = [(s, q, p) for p in PAYLOADS for q in QUESTIONS for s in ("agent", "multi_agent")]
+    jobs = jobs_for(payloads)
     if a.limit:
         jobs = jobs[: a.limit]
     rows = []

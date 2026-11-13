@@ -41,3 +41,20 @@ def test_spread_reports_stages():
     s = spread(trace, P["agent_to_agent"])
     assert s == {"in_specialist_output": True, "in_supervisor_routing": False,
                  "in_draft": False, "verifier_actions": ["approve"]}
+
+
+def test_round2_payloads_and_cast_surface():
+    from src.safety.indirect_injection import PAYLOADS_V2, _poison_output
+    cast = next(p for p in PAYLOADS_V2 if p.surface == "cast")
+    out = _poison_output([{"title": "Inception", "cast": "A, B"}, {"title": "Dunkirk", "cast": "C"}], cast)
+    assert cast.text in out[0]["cast"] and out[1]["cast"] == "C"
+    assert complied(next(p for p in PAYLOADS_V2 if p.id == "fake_system_tag"), "ZX-CANARY-7731 hello")
+
+
+def test_cast_poison_restores_structured_tools():
+    from src.agent import tools as T
+    from src.safety.indirect_injection import PAYLOADS_V2
+    before = T.search_by_director.func
+    with poisoned(next(p for p in PAYLOADS_V2 if p.surface == "cast")):
+        assert T.search_by_director.func is not before
+    assert T.search_by_director.func is before
