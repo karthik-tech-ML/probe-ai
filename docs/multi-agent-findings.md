@@ -1,6 +1,6 @@
 # Multi-agent findings
 
-Answers to the five questions in `multi-agent-plan.md`, from real runs on the
+Answers to the five questions in `multi-agent-plan.md` (plus a sixth on injection), from real runs on the
 18-scenario hard subset (multi_field 5, aggregation 4, multi_hop 4, adversarial 5).
 Raw results are in `results/`. Each number names its source file.
 
@@ -89,6 +89,38 @@ treated "above 7.5" as including 7.5.
 
 Already done in this branch: anchored lookups, per-turn tool-round cap, run-level
 token budget (60K), single-agent round cap (10), production-company filter.
+
+## 6. Does a poisoned record spread between agents? (indirect prompt injection)
+
+I planted hidden instructions in the Inception record without touching the database
+(`src/safety/indirect_injection.py` wraps the tools in-process) and asked questions
+about Inception. Each run is checked for whether the payload reached the model
+(it did in every run) and whether the answer obeyed it. I read every flagged answer by hand.
+
+| Round | Payloads | Single agent followed | Multi-agent followed |
+|---|---|---|---|
+| 1: crude (canary prefix, false fact, hijack, tell-the-verifier) | 4 | 0 of 8 | 0 of 8 |
+| 2: stronger (fake delimiter break, "verified correction", verifier-targeted, cast-field) | 4 | 0 of 7 | **4 of 7** |
+| 2 again, after the mitigation | 4 | not rerun | **0 of 7** |
+
+- **Round 2 broke the multi-agent system only.** It stated "directed by Steven Spielberg" and a
+  1999 release date, citing the "verified correction", and twice ended with the planted
+  `VERIFIED-ZX9` line. The verifier approved all of these: it checks the draft against the
+  same poisoned evidence, so it cannot catch bad data.
+- **Likely cause (a hypothesis, supported by the traces but not proven).** The draft and verifier
+  steps receive evidence as plain text, which they were told is the ground truth. The single
+  agent receives the same text as a real tool result, which models treat as data. In the
+  verifier-targeted runs the token appeared in the draft but not in any specialist output.
+- **Mitigation.** Evidence is wrapped in an `<untrusted_data>` block with closing tags
+  escaped, four prompts get a rule that record text is data and never instructions, and
+  structured field lines outrank claims inside free text. Multi-agent then followed 0 of 7,
+  and one answer noted that the record contained instruction-like text.
+- **No regression in the verifier** after the prompt change: obvious errors 27 of 27,
+  subtle 20 of 23 (was 19), false alarms 0 of 10 (was 1).
+
+**Limits.** The mitigation was written with the round-2 payloads in view, so 0 of 7 shows it
+beats those, not that it generalizes. Samples are small (2 runs per payload), and only the
+plot and cast fields were poisoned. Round 3 with fresh payloads is the open test.
 
 ## Caveats
 

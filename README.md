@@ -87,12 +87,15 @@ The repo includes a multi-agent variant (supervisor, retrieval/structured/analys
 - Following its failure attributions exposed a real tool bug, which fixing cut tokens 40% to 50% on director and cast lookups.
 - A verifier tested with planted errors caught 27 of 27 obvious ones and 19 of 23 subtle ones, with 1 of 10 clean drafts falsely flagged. It is weakest on omissions and counts.
 
+- **Indirect prompt injection:** a poisoned record with a hidden instruction was followed by the multi-agent system in 4 of 7 stronger-payload runs and by the single agent in 0 of 7. Wrapping evidence as untrusted data and adding a data-not-instructions rule brought it to 0 of 7, tested on the same payloads the fix was written against.
+
 Small sample (18 scenarios, one run each) and a noisy judge: read the caveats in [docs/multi-agent-findings.md](docs/multi-agent-findings.md).
 
 ```bash
 python scripts/evaluate.py --multi-agent --category multi_hop
 python scripts/compare_modes.py --limit 3        # cheap trial first
 python scripts/planted_errors.py evaluate --dry-run
+python scripts/indirect_injection.py --round 2 --dry-run
 ```
 
 ## Bring Your Own System
