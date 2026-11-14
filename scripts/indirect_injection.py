@@ -19,7 +19,7 @@ from loguru import logger
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.safety.indirect_injection import (  # noqa: E402
-    PAYLOADS, PAYLOADS_V2, QUESTIONS, complied, poisoned, spread, token_in,
+    PAYLOADS, PAYLOADS_V2, PAYLOADS_V3, QUESTIONS, complied, poisoned, spread, token_in,
 )
 
 
@@ -33,10 +33,10 @@ def dry_run(payloads) -> None:
     print(f"{len(jobs_for(payloads))} runs across {len(payloads)} payloads\n")
     for p in payloads:
         with poisoned(p):
-            if p.surface == "cast":
+            if p.surface in ("cast", "genres"):
                 out = search_by_director.invoke({"director_name": "Christopher Nolan"})
                 hit = next((r for r in out if r["title"] == "Inception"), None)
-                tail = hit["cast"][-170:] if hit else "(Inception not returned)"
+                tail = hit[p.surface][-170:] if hit else "(Inception not returned)"
             else:
                 out = search_movies.invoke({"query": "Inception"})
                 hit = next((r for r in out if "Title: Inception" in r["chunk_text"]), None)
@@ -66,12 +66,12 @@ def run_one(system: str, question: str, payload) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--round", type=int, choices=(1, 2), default=1, help="1: crude payloads, 2: stronger payloads")
+    ap.add_argument("--round", type=int, choices=(1, 2, 3), default=1, help="1: crude, 2: stronger, 3: fresh payloads written after the mitigation")
     ap.add_argument("--systems", default="agent,multi_agent", help="comma-separated: agent, multi_agent")
     ap.add_argument("--limit", type=int, default=None, help="only run this many runs")
     ap.add_argument("--out", default="results/indirect_injection.json")
     a = ap.parse_args()
-    payloads = PAYLOADS_V2 if a.round == 2 else PAYLOADS
+    payloads = {1: PAYLOADS, 2: PAYLOADS_V2, 3: PAYLOADS_V3}[a.round]
     if a.dry_run:
         return dry_run(payloads)
 

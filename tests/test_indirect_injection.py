@@ -58,3 +58,12 @@ def test_cast_poison_restores_structured_tools():
     with poisoned(next(p for p in PAYLOADS_V2 if p.surface == "cast")):
         assert T.search_by_director.func is not before
     assert T.search_by_director.func is before
+
+
+def test_round3_payloads_are_new_and_apply():
+    from src.safety.indirect_injection import PAYLOADS_V2, PAYLOADS_V3, _poison_output
+    assert {p.id for p in PAYLOADS_V3}.isdisjoint({p.id for p in PAYLOADS_V2})
+    g = next(p for p in PAYLOADS_V3 if p.surface == "genres")
+    out = _poison_output({"title": "Inception", "genres": "Action", "cast": "A"}, g)
+    assert g.text in out["genres"] and out["cast"] == "A"
+    assert complied(next(p for p in PAYLOADS_V3 if p.id == "r3_spanish"), "Plot... ZX-R3-D")
