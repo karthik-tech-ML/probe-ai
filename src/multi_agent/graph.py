@@ -10,6 +10,7 @@ into a MultiAgentTrace. Total node executions are capped; on hitting the
 cap the supervisor is forced to finish and the verifier is skipped.
 """
 
+import re
 import time
 from dataclasses import dataclass, field
 from typing import Any, TypedDict
@@ -122,9 +123,22 @@ def _clip(text: str, limit: int = _MAX_EVIDENCE_CHARS) -> str:
     return text if len(text) <= limit else text[:limit] + "..."
 
 
+_DATA_TAG = "untrusted_data"
+
+
+def _neutralize(text: str) -> str:
+    """Stop evidence text from closing our data block early (a fake delimiter break)."""
+    return re.sub(rf"</?\s*{_DATA_TAG}\s*>", "[tag removed]", text, flags=re.I)
+
+
 def _format_evidence(evidence: list[dict[str, Any]], with_tools: bool) -> str:
+    """Evidence as text for the supervisor, analyst, draft and verifier, inside an <untrusted_data> block."""
     if not evidence:
         return "(none yet)"
+    return f"<{_DATA_TAG}>\n{_neutralize(_format_evidence_body(evidence, with_tools))}\n</{_DATA_TAG}>"
+
+
+def _format_evidence_body(evidence: list[dict[str, Any]], with_tools: bool) -> str:
     blocks = []
     for i, e in enumerate(evidence, 1):
         block = f"[{i}] {e['agent']} — task: {e['task']}\nResult: {_clip(e['result'], 1500)}"

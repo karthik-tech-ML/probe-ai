@@ -23,8 +23,8 @@ from src.safety.indirect_injection import (  # noqa: E402
 )
 
 
-def jobs_for(payloads) -> list:
-    return [(s, q, p) for p in payloads for q in (p.questions or QUESTIONS) for s in ("agent", "multi_agent")]
+def jobs_for(payloads, systems=("agent", "multi_agent")) -> list:
+    return [(s, q, p) for p in payloads for q in (p.questions or QUESTIONS) for s in systems]
 
 
 def dry_run(payloads) -> None:
@@ -67,6 +67,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--round", type=int, choices=(1, 2), default=1, help="1: crude payloads, 2: stronger payloads")
+    ap.add_argument("--systems", default="agent,multi_agent", help="comma-separated: agent, multi_agent")
     ap.add_argument("--limit", type=int, default=None, help="only run this many runs")
     ap.add_argument("--out", default="results/indirect_injection.json")
     a = ap.parse_args()
@@ -74,7 +75,7 @@ def main() -> None:
     if a.dry_run:
         return dry_run(payloads)
 
-    jobs = jobs_for(payloads)
+    jobs = jobs_for(payloads, tuple(a.systems.split(",")))
     if a.limit:
         jobs = jobs[: a.limit]
     rows = []
