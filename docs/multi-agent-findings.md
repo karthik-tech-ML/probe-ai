@@ -24,6 +24,11 @@ Both agent modes beat RAG by about 27 points. Multi-agent tied the single agent
 overall and was one scenario worse on multi_hop. After the later prompt and budget
 changes, multi-agent scored 0.89 overall (`mode_comparison_v3.json`), and the two
 dropped scenarios were a wrong expected answer (sc_010, since fixed) and judge variance.
+After the injection mitigation (section 6), a fresh 18-scenario run (`mode_comparison_v5_mitigated.json`)
+scored 0.94 again (16 of 18 fully correct), with faithfulness 0.94 and hallucination 0.05. That run is
+the regression check for the mitigation: the only refusals were on two adversarial scenarios where
+refusing is correct. The two scenarios that changed from v3 are explained by the sc_010 fix and by
+sc_015's runaway not recurring.
 
 ## 2. What did it cost?
 
@@ -38,9 +43,15 @@ later multi-agent code):
 | Cost per query | $0.041 | $0.12 to $0.13 |
 
 About **3x the calls, tokens and cost, and 3x to 4x the latency**, for no accuracy gain here.
-The token figure includes runaway runs. Before the cap, one scenario (sc_012) used
+That multiple depends heavily on runaway runs. Before the cap, one scenario (sc_012) used
 394K tokens; after the fix it used 12.8K. Excluding that runaway, multi-agent averaged
 15.7K tokens against 8.0K for the single agent, roughly 2x.
+
+The latest run (`v5`, after the injection mitigation, no runaways) used **7.1 calls, 15.4K tokens,
+20 s and $0.059 per query**: about 2.8x the single agent's calls and latency, but only about 1.3x
+its tokens and 1.4x its cost. So the honest range for multi-agent cost is roughly **1.4x to 3x**,
+depending on whether a run spirals. The runs are single samples, and the token drop is mostly the
+absence of runaways, not evidence that the mitigation made anything cheaper.
 
 ## 3. Which agent caused most failures, and what type?
 

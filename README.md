@@ -80,10 +80,10 @@ The repo includes a multi-agent variant (supervisor, retrieval/structured/analys
 |---|---|---|---|
 | Accuracy (task success) | 0.67 | 0.94 | 0.94 |
 | LLM calls per query | 1 | 2.5 | 8.1 |
-| Tokens per query | 1.3K | 12.3K | 32K to 37K |
-| Cost per query | $0.005 | $0.041 | $0.12 to $0.13 |
+| Tokens per query | 1.3K | 12.3K | 15K to 37K |
+| Cost per query | $0.005 | $0.041 | $0.06 to $0.13 |
 
-- Multi-agent matched the single agent's accuracy at roughly 3x the cost and latency.
+- Multi-agent matched the single agent's accuracy at roughly 1.4x to 3x the cost (the low end when no run spirals) and about 3x the latency.
 - Following its failure attributions exposed a real tool bug, which fixing cut tokens 40% to 50% on director and cast lookups.
 - A verifier tested with planted errors caught 27 of 27 obvious ones and 19 of 23 subtle ones, with 1 of 10 clean drafts falsely flagged. It is weakest on omissions and counts.
 
