@@ -24,9 +24,34 @@ def load(name: str) -> dict:
     return json.loads((R / name).read_text())
 
 
+def injection_rows() -> list[dict]:
+    """Followed/total per system for each indirect-injection round, from the saved result files."""
+    def tally(name: str) -> dict:
+        out: dict = {}
+        for r in load(name)["rows"]:
+            d = out.setdefault(r["system"], [0, 0])
+            d[0] += bool(r["complied"])
+            d[1] += 1
+        return out
+
+    spec = [
+        ("Round 1: crude payloads", "indirect_injection.json", False),
+        ("Round 2: stronger payloads", "indirect_injection_round2.json", False),
+        ("Round 2 after mitigation", "indirect_injection_round2_mitigated.json", True),
+        ("Round 3: fresh payloads", "indirect_injection_round3.json", True),
+    ]
+    rows = []
+    for label, name, mitigated in spec:
+        t = tally(name)
+        rows.append({"label": label, "mitigated": mitigated,
+                     "agent": t.get("agent"), "multi_agent": t.get("multi_agent")})
+    return rows
+
+
 def build_data() -> dict:
     three = load("mode_comparison_fixed_tools.json")
     v3 = load("mode_comparison_v3.json")
+    v5 = load("mode_comparison_v5_mitigated.json")
     planted = load("planted_errors.json")
     hard = load("planted_errors_hard.json")
 
@@ -39,7 +64,7 @@ def build_data() -> dict:
         return {c: round(sum(v) / len(v), 3) for c, v in t.items()}
 
     rows = []
-    for x in v3["runs"]["multi_agent"]["results"]:
+    for x in v5["runs"]["multi_agent"]["results"]:
         s, u = x["scores"], x["token_usage"]
         rows.append({
             "id": x["scenario_id"], "category": x["category"], "q": x["question"],
@@ -59,8 +84,11 @@ def build_data() -> dict:
     return {
         "modes": {m: three["summary"][m] for m in ("rag", "agent", "multi_agent")},
         "multi_v3": v3["summary"]["multi_agent"],
+        "multi_v5": v5["summary"]["multi_agent"],
+        "injection": injection_rows(),
         "categories": {m: by_cat(three, m) for m in ("rag", "agent", "multi_agent")},
         "categories_v3": by_cat(v3, "multi_agent"),
+        "categories_v5": by_cat(v5, "multi_agent"),
         "rows": rows,
         "culprits_v3": dict(culprits),
         "culprits_first": {"structured_agent / bad_tool_args": 3, "data / other": 1,
@@ -93,6 +121,8 @@ CSS = """
 .ma-ok{background:var(--green-bg);color:var(--green)}.ma-mid{background:var(--yellow-bg);color:var(--yellow)}
 .ma-bad{background:var(--red-bg);color:var(--red)}
 @media(max-width:700px){.ma-bar-row{grid-template-columns:110px 1fr 48px}}
+@media(max-width:900px){#page-multi .hero{flex-direction:column;align-items:flex-start;gap:16px}
+#ma-kpis{flex-wrap:wrap;width:100%}#ma-kpis .kpi{border-left:none;padding:8px 20px 8px 0}}
 """
 
 PAGE = """
@@ -107,7 +137,7 @@ PAGE = """
   </div>
 
   <div class="ma-sec"><h2>Three-way comparison</h2>
-    <p>Task success from the tool-fixed run. Green marks the best value in each row. Multi-agent costs about 3x the single agent for the same accuracy.</p></div>
+    <p>RAG, single agent and multi-agent from the tool-fixed run, plus the latest multi-agent run after the injection mitigation. Green marks the best value in each row. Multi-agent costs roughly 1.4x to 3x the single agent for the same accuracy, depending on whether a run spirals.</p></div>
   <div class="table-wrap"><div class="table-scroll" id="ma-compare"></div></div>
 
   <div class="ma-sec"><h2>Accuracy by category</h2><p>Mean task success. 4 to 5 scenarios per category, so one scenario moves a bar by 20 to 25 points.</p></div>
@@ -121,10 +151,14 @@ PAGE = """
     <p>Deterministic corruptions planted into correct drafts, then shown to the verifier with the original evidence.</p></div>
   <div class="table-wrap"><div class="ma-bars" id="ma-planted"></div></div>
 
+  <div class="ma-sec"><h2>Indirect prompt injection</h2>
+    <p>A poisoned movie record carries a hidden instruction. Shows runs where the answer followed it, out of total runs. The mitigation (untrusted-data wrapper and a data-not-instructions rule) was applied to the multi-agent prompts only, and was written with the round-2 payloads in view.</p></div>
+  <div class="table-wrap"><div class="table-scroll" id="ma-inject"></div></div>
+
   <div class="ma-sec"><h2>Per scenario (latest multi-agent run)</h2><p>Routes show the specialists used. S structured, R retrieval, A analyst.</p></div>
   <div class="table-wrap"><div class="table-scroll" id="ma-rows"></div></div>
 
-  <div class="ma-note"><strong>Read with care.</strong> 18 scenarios, one run each. The same answer was scored 1.0 and 0.5 by the judge on different runs, and the token budget is only tested with mocks. See docs/multi-agent-findings.md.</div>
+  <div class="ma-note"><strong>Read with care.</strong> 18 scenarios, one run each. The same answer was scored 1.0 and 0.5 by the judge on different runs, the token budget is only tested with mocks, and injection rounds have 1 to 2 runs per payload. See docs/multi-agent-findings.md.</div>
 </div>
 </div>
 """
@@ -143,7 +177,8 @@ function renderMA() {
   el('ma-kpis').innerHTML = [
     ['kpi-blue', f1(M.agent.accuracy), 'Single agent'],
     ['kpi-purple', f1(M.multi_agent.accuracy), 'Multi-agent'],
-    ['kpi-yellow', (M.multi_agent.avg_cost_usd / M.agent.avg_cost_usd).toFixed(1) + 'x', 'Cost vs single'],
+    ['kpi-yellow', (D.multi_v5.avg_cost_usd / M.agent.avg_cost_usd).toFixed(1) + 'x to ' +
+      (M.multi_agent.avg_cost_usd / M.agent.avg_cost_usd).toFixed(1) + 'x', 'Cost vs single'],
     ['kpi-green', easyAll + '/' + easyN, 'Obvious errors caught'],
     ['kpi-green', hardAll + '/' + hardN, 'Subtle errors caught'],
   ].map(k => `<div class="kpi ${k[0]}"><div class="kpi-val">${k[1]}</div><div class="kpi-lbl">${k[2]}</div></div>`).join('');
@@ -158,19 +193,20 @@ function renderMA() {
   ];
   const modes = ['rag', 'agent', 'multi_agent'];
   el('ma-compare').innerHTML = `<table class="ma-table"><thead><tr><th>Metric</th><th class="n">RAG</th>
-    <th class="n">Single agent</th><th class="n">Multi-agent</th></tr></thead><tbody>` +
+    <th class="n">Single agent</th><th class="n">Multi-agent</th><th class="n">Multi-agent (latest)</th></tr></thead><tbody>` +
     defs.map(([label, key, fmt, dir]) => {
-      const vals = modes.map(m => M[m][key]);
+      const vals = [...modes.map(m => M[m][key]), D.multi_v5[key]];
       const best = dir > 0 ? Math.max(...vals) : Math.min(...vals);
       return `<tr><td>${label}</td>` + vals.map(v =>
         `<td class="n ${v === best ? 'ma-best' : ''}">${fmt(v)}</td>`).join('') + '</tr>';
     }).join('') + '</tbody></table>';
 
   const cats = ['multi_field', 'aggregation', 'multi_hop', 'adversarial'];
-  const colors = {rag: 'var(--orange)', agent: 'var(--blue)', multi_agent: 'var(--purple)'};
-  const names = {rag: 'RAG', agent: 'Single agent', multi_agent: 'Multi-agent'};
+  const colors = {rag: 'var(--orange)', agent: 'var(--blue)', multi_agent: 'var(--purple)', latest: 'var(--teal)'};
+  const names = {rag: 'RAG', agent: 'Single agent', multi_agent: 'Multi-agent', latest: 'Multi (latest)'};
+  const catVal = (m, c) => m === 'latest' ? D.categories_v5[c] : D.categories[m][c];
   el('ma-cats').innerHTML = cats.map(c => `<div class="ma-card"><h3>${c.replace('_', ' ')}</h3>` +
-    modes.map(m => { const v = D.categories[m][c]; return `<div class="ma-bar-row" style="grid-template-columns:96px 1fr 40px;margin-bottom:8px">
+    [...modes, 'latest'].map(m => { const v = catVal(m, c); return `<div class="ma-bar-row" style="grid-template-columns:110px 1fr 40px;margin-bottom:8px">
       <span>${names[m]}</span><div class="ma-bar"><i style="width:${v * 100}%;background:${colors[m]}"></i></div><b>${v.toFixed(2)}</b></div>`; }).join('') +
     '</div>').join('');
 
@@ -179,7 +215,7 @@ function renderMA() {
       <span>${k}</span><div class="ma-bar"><i style="width:${v / mx * 100}%;background:${color}"></i></div><b>${v}</b></div>`).join(''); };
   el('ma-culprits').innerHTML =
     `<div class="ma-card"><h3>First run (before the lookup fix)</h3>${bars(D.culprits_first, 'var(--orange)')}</div>` +
-    `<div class="ma-card"><h3>Latest full run</h3>${bars(D.culprits_v3, 'var(--purple)')}</div>`;
+    `<div class="ma-card"><h3>Latest full run (after the injection mitigation)</h3>${bars(D.culprits_v3, 'var(--purple)')}</div>`;
 
   const lab = {swap_entity: 'Swapped director', change_number: 'Changed number', add_unsupported_claim: 'Unsupported claim',
     swap_years: 'Swapped years', near_miss_number: 'Near-miss number', drop_list_item: 'Dropped list item', clean: 'Clean drafts flagged (false alarms)'};
@@ -189,6 +225,12 @@ function renderMA() {
   el('ma-planted').innerHTML =
     Object.entries(D.planted.easy).filter(([k]) => k !== 'clean').map(([k, s]) => bar(k, s)).join('') +
     Object.entries(D.planted.hard).map(([k, s]) => bar(k, s)).join('') + bar('clean', D.planted.easy.clean);
+
+  const cell = (t, warn) => !t ? '<span style="color:var(--text3)">not run</span>' :
+    `<span class="ma-tag ${t[0] === 0 ? 'ma-ok' : warn ? 'ma-bad' : 'ma-mid'}">${t[0]} of ${t[1]} followed</span>`;
+  el('ma-inject').innerHTML = `<table class="ma-table"><thead><tr><th>Round</th><th>Single agent</th><th>Multi-agent</th></tr></thead><tbody>` +
+    D.injection.map(r => `<tr><td>${r.label}</td><td>${cell(r.agent, true)}</td><td>${cell(r.multi_agent, true)}</td></tr>`).join('') +
+    '</tbody></table>';
 
   const short = r => (r || []).map(a => a[0].toUpperCase()).join('→') || '–';
   const tag = (v) => v == null ? '–' : `<span class="ma-tag ${v >= 1 ? 'ma-ok' : v >= 0.5 ? 'ma-mid' : 'ma-bad'}">${v.toFixed(1)}</span>`;
