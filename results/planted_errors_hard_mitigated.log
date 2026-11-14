@@ -1,0 +1,45 @@
+/opt/homebrew/lib/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+2026-11-13 22:46:59.824 | INFO     | __main__:evaluate:85 - sc_008 near_miss_number: approve
+2026-11-13 22:47:02.424 | INFO     | __main__:evaluate:85 - sc_008 swap_years: revise
+2026-11-13 22:47:04.775 | INFO     | __main__:evaluate:85 - sc_009 near_miss_number: revise
+2026-11-13 22:47:06.925 | INFO     | __main__:evaluate:85 - sc_009 swap_years: revise
+2026-11-13 22:47:08.974 | INFO     | __main__:evaluate:85 - sc_010 near_miss_number: revise
+2026-11-13 22:47:12.416 | INFO     | __main__:evaluate:85 - sc_010 drop_list_item: revise
+2026-11-13 22:47:14.815 | INFO     | __main__:evaluate:85 - sc_010 swap_years: revise
+2026-11-13 22:47:18.458 | INFO     | __main__:evaluate:85 - sc_011 near_miss_number: revise
+2026-11-13 22:47:23.212 | INFO     | __main__:evaluate:85 - sc_011 drop_list_item: revise
+2026-11-13 22:47:28.130 | INFO     | __main__:evaluate:85 - sc_011 swap_years: revise
+2026-11-13 22:47:30.477 | INFO     | __main__:evaluate:85 - sc_012 near_miss_number: revise
+2026-11-13 22:47:35.089 | INFO     | __main__:evaluate:85 - sc_012 drop_list_item: approve
+2026-11-13 22:47:39.184 | INFO     | __main__:evaluate:85 - sc_012 swap_years: revise
+2026-11-13 22:47:41.028 | INFO     | __main__:evaluate:85 - sc_013 near_miss_number: revise
+2026-11-13 22:47:43.338 | INFO     | __main__:evaluate:85 - sc_014 near_miss_number: revise
+2026-11-13 22:47:45.537 | INFO     | __main__:evaluate:85 - sc_014 swap_years: revise
+2026-11-13 22:47:48.073 | INFO     | __main__:evaluate:85 - sc_016 near_miss_number: revise
+2026-11-13 22:47:51.985 | INFO     | __main__:evaluate:85 - sc_016 drop_list_item: revise
+2026-11-13 22:47:54.135 | INFO     | __main__:evaluate:85 - sc_027 near_miss_number: revise
+2026-11-13 22:47:56.595 | INFO     | __main__:evaluate:85 - sc_027 swap_years: revise
+2026-11-13 22:47:58.641 | INFO     | __main__:evaluate:85 - sc_030 near_miss_number: revise
+2026-11-13 22:48:02.540 | INFO     | __main__:evaluate:85 - sc_030 drop_list_item: approve
+2026-11-13 22:48:05.192 | INFO     | __main__:evaluate:85 - sc_030 swap_years: revise
+23 verifier calls: {'near_miss_number': 10, 'swap_years': 8, 'drop_list_item': 5}
+{
+  "near_miss_number": {
+    "n": 10,
+    "flagged": 9,
+    "rate": 0.9
+  },
+  "swap_years": {
+    "n": 8,
+    "flagged": 8,
+    "rate": 1.0
+  },
+  "drop_list_item": {
+    "n": 5,
+    "flagged": 3,
+    "rate": 0.6
+  },
+  "catch_rate_overall": 0.87,
+  "false_alarm_rate": null
+}

@@ -1,0 +1,207 @@
+{
+  "summary": {
+    "near_miss_number": {
+      "n": 10,
+      "flagged": 9,
+      "rate": 0.9
+    },
+    "swap_years": {
+      "n": 8,
+      "flagged": 8,
+      "rate": 1.0
+    },
+    "drop_list_item": {
+      "n": 5,
+      "flagged": 3,
+      "rate": 0.6
+    },
+    "catch_rate_overall": 0.87,
+    "false_alarm_rate": null
+  },
+  "rows": [
+    {
+      "scenario_id": "sc_008",
+      "kind": "near_miss_number",
+      "detail": "2 -> 3",
+      "action": "approve",
+      "reason": "The draft correctly identifies the two Christopher Nolan science fiction movies based on the evidence. The raw tool output shows 8 Christopher Nolan films, and only Interstellar (genres: 'Adventure, Drama, Science Fiction') and Inception (genres: 'Action, Thriller, Science Fiction, Mystery, Adventure') include 'Science Fiction' in their genres field. The draft accurately lists both films with their correct release years.",
+      "tokens": 1419
+    },
+    {
+      "scenario_id": "sc_008",
+      "kind": "swap_years",
+      "detail": "2014 <-> 2010",
+      "action": "revise",
+      "reason": "The draft contains incorrect release years. According to the raw tool outputs, Interstellar was released in 2014 (not 2010) and Inception was released in 2010 (not 2014). The years are swapped in the draft answer.",
+      "tokens": 1384
+    },
+    {
+      "scenario_id": "sc_009",
+      "kind": "near_miss_number",
+      "detail": "2010 -> 2011",
+      "action": "revise",
+      "reason": "The draft states Inception was released in 2011, but the evidence clearly shows in the structured field 'release_year: 2010' for movie_id 27205. The correct release year is 2010, not 2011.",
+      "tokens": 2918
+    },
+    {
+      "scenario_id": "sc_009",
+      "kind": "swap_years",
+      "detail": "2010 <-> 2015",
+      "action": "revise",
+      "reason": "The draft contains incorrect release years for both movies. According to the evidence, Inception was released in 2010 (not 2015) and The Revenant was released in 2015 (not 2010). The years are swapped in the draft answer.",
+      "tokens": 2923
+    },
+    {
+      "scenario_id": "sc_010",
+      "kind": "near_miss_number",
+      "detail": "2009 -> 2010",
+      "action": "revise",
+      "reason": "The draft states Avatar was released in 2010, but the evidence shows it was released in 2009 (release_year: 2009). All other movies and information are correctly stated.",
+      "tokens": 1647
+    },
+    {
+      "scenario_id": "sc_010",
+      "kind": "drop_list_item",
+      "detail": "dropped: 4. **The Abyss** (1989)",
+      "action": "revise",
+      "reason": "The draft is missing 'The Abyss' (1989), which is listed in the evidence as an Action movie directed by James Cameron (Movie ID: 2756, genres include 'Adventure, Action, Thriller, Science Fiction'). The evidence shows 6 action movies but the draft only lists 5 titles. Additionally, the numbering in the draft skips from 4 to 5, suggesting an accidental omission.",
+      "tokens": 1688
+    },
+    {
+      "scenario_id": "sc_010",
+      "kind": "swap_years",
+      "detail": "2009 <-> 1991",
+      "action": "revise",
+      "reason": "The draft contains incorrect release years for two movies. According to the evidence, Avatar was released in 2009 (not 1991) and Terminator 2: Judgment Day was released in 1991 (not 2009). The years are swapped between these two films.",
+      "tokens": 1668
+    },
+    {
+      "scenario_id": "sc_011",
+      "kind": "near_miss_number",
+      "detail": "7.5 -> 7.6",
+      "action": "revise",
+      "reason": "The draft answer states 'rating above 7.6' in the introduction, but the question asks for 'rating above 7.5'. Additionally, the draft excludes two movies from the evidence that meet the criteria: 'The Lego Movie' (2014, rating 7.5) and 'Instructions Not Included' (2013, rating 7.5). Since the question asks for ratings ABOVE 7.5, these two movies with exactly 7.5 should not be included, but the draft's threshold statement of 'above 7.6' is incorrect and inconsistent with the question.",
+      "tokens": 2182
+    },
+    {
+      "scenario_id": "sc_011",
+      "kind": "drop_list_item",
+      "detail": "dropped: 7. **Ernest & Celestine** (2012) - Rating: 7.6",
+      "action": "revise",
+      "reason": "The draft omits two movies that appear in the evidence and meet the criteria: 'The Lego Movie' (2014) with rating 7.5 and 'Ernest & Celestine' (2012) with rating 7.6. The question asks for movies with rating ABOVE 7.5, so 'The Lego Movie' with exactly 7.5 and 'Instructions Not Included' with exactly 7.5 should be excluded. The draft correctly excludes 'The Lego Movie' and 'Instructions Not Included' but incorrectly omits 'Ernest & Celestine' which has a 7.6 rating (above 7.5). The draft should include 'Ernest & Celestine' in the list.",
+      "tokens": 2197
+    },
+    {
+      "scenario_id": "sc_011",
+      "kind": "swap_years",
+      "detail": "2010 <-> 2015",
+      "action": "revise",
+      "reason": "The draft contains multiple errors: (1) It states movies were 'released after 2015' but the question asks for movies released after 2010, (2) Inside Out's release year is listed as 2010 in the draft but the evidence shows it was released in 2015, (3) The Lego Movie (2014, rating 7.5) and Instructions Not Included (2013, rating 7.5) are missing from the draft despite meeting the criteria of rating above 7.5 (the question asks for 'above 7.5' which should include 7.6+ only, but the evidence includes movies with exactly 7.5 rating, suggesting the tool interpreted this as >= 7.5).",
+      "tokens": 2210
+    },
+    {
+      "scenario_id": "sc_012",
+      "kind": "near_miss_number",
+      "detail": "2012 -> 2013",
+      "action": "revise",
+      "reason": "The draft contains a factual error: 'The Dark Knight Rises' is listed as 2013, but the evidence clearly shows it was released in 2012 (release_year: 2012). All other movies and the total count of 23 appear consistent with the evidence provided.",
+      "tokens": 2290
+    },
+    {
+      "scenario_id": "sc_012",
+      "kind": "drop_list_item",
+      "detail": "dropped: 12. **Watchmen** (2009)",
+      "action": "approve",
+      "reason": "The draft answer accurately lists 23 movies produced by both Warner Bros. and Legendary Pictures, matching the evidence provided. The evidence shows structured data confirming both production companies are listed for each movie (e.g., 'production': 'Legendary Pictures, Warner Bros., ...'). The draft correctly includes the first 8 movies explicitly detailed in the evidence, and the evidence summary states '23 movies' total were found. While the full details of movies 9-23 are truncated in the evidence display, the agent's task result confirms finding 23 movies meeting the criteria, and the draft's list is consistent with this finding.",
+      "tokens": 2350
+    },
+    {
+      "scenario_id": "sc_012",
+      "kind": "swap_years",
+      "detail": "2012 <-> 2006",
+      "action": "revise",
+      "reason": "The draft contains incorrect release years for two movies: 'The Dark Knight Rises' is listed as 2006 but the evidence shows it was released in 2012, and 'Superman Returns' is listed as 2012 but the evidence shows it was released in 2006. These years appear to be swapped. The evidence only provides complete details for the first 8 movies, so while the draft lists 23 total movies (matching the count in the evidence summary), the release years for items 1 and 2 contradict the structured data provided.",
+      "tokens": 2349
+    },
+    {
+      "scenario_id": "sc_013",
+      "kind": "near_miss_number",
+      "detail": "2009 -> 2010",
+      "action": "revise",
+      "reason": "The draft states Avatar was released in 2010, but the evidence shows the Release Year field is 2009. The revenue and director are correct.",
+      "tokens": 676
+    },
+    {
+      "scenario_id": "sc_014",
+      "kind": "near_miss_number",
+      "detail": "2009 -> 2010",
+      "action": "revise",
+      "reason": "The draft states Avatar was released in 2010, but the evidence clearly shows Avatar's Release Year as 2009. The budget figures and comparison are correct, but the year must be corrected to 2009.",
+      "tokens": 2565
+    },
+    {
+      "scenario_id": "sc_014",
+      "kind": "swap_years",
+      "detail": "2009 <-> 1997",
+      "action": "revise",
+      "reason": "The draft contains incorrect release years for both films. According to the evidence, Avatar was released in 2009 (not 1997) and Titanic was released in 1997 (not 2009). The budget figures and comparison calculations are correct, but the year information must be corrected.",
+      "tokens": 2584
+    },
+    {
+      "scenario_id": "sc_016",
+      "kind": "near_miss_number",
+      "detail": "8 -> 9",
+      "action": "revise",
+      "reason": "The draft states Christopher Nolan has directed 9 films but only lists 8 films. The evidence shows exactly 8 Christopher Nolan films. The calculation and average of 7.8 are correct, but the statement about '9 films' is inaccurate and should be corrected to '8 films'.",
+      "tokens": 1675
+    },
+    {
+      "scenario_id": "sc_016",
+      "kind": "drop_list_item",
+      "detail": "dropped: 5. Batman Begins - 7.5",
+      "action": "revise",
+      "reason": "The draft lists 8 films but omits 'Batman Begins' (rating 7.5) from the numbered list, jumping from item 4 to item 6. However, the calculation does correctly include all 8 ratings including Batman Begins' 7.5, and the average of 7.8 is mathematically correct. The draft should be revised to fix the numbering error in the list to include item 5 (Batman Begins - 7.5).",
+      "tokens": 1697
+    },
+    {
+      "scenario_id": "sc_027",
+      "kind": "near_miss_number",
+      "detail": "2010 -> 2011",
+      "action": "revise",
+      "reason": "The draft incorrectly states that Inception was released in 2011. According to the evidence, Inception was released in 2010 (as shown in evidence [1] and [3]).",
+      "tokens": 4096
+    },
+    {
+      "scenario_id": "sc_027",
+      "kind": "swap_years",
+      "detail": "2010 <-> 2012",
+      "action": "revise",
+      "reason": "The draft contains factual errors about the release years. According to the evidence, Inception was released in 2010 (not 2012) and Django Unchained was released in 2012 (not 2010). The years are reversed in the draft answer.",
+      "tokens": 4112
+    },
+    {
+      "scenario_id": "sc_030",
+      "kind": "near_miss_number",
+      "detail": "2002 -> 2003",
+      "action": "revise",
+      "reason": "The draft states 'My Big Fat Greek Wedding' was released in 2003, but the evidence shows it was released in 2002 (release_year: 2002). This is a factual error that contradicts the structured data provided.",
+      "tokens": 2503
+    },
+    {
+      "scenario_id": "sc_030",
+      "kind": "drop_list_item",
+      "detail": "dropped: 4. **The Devil Wears Prada** (2006) - Budget: $35M, Revenue: $326.6M",
+      "action": "approve",
+      "reason": "The draft answer accurately reflects the evidence provided. It correctly identifies drama movies from 2000-2009 with budgets under $50 million and revenue over $200 million. The budget and revenue figures match the structured data from the tool results. 'My Big Fat Greek Wedding' is appropriately highlighted as having the lowest budget ($5M) with exceptional returns ($368.7M). All nine movies listed meet the specified criteria, and the financial figures are accurate to the source data.",
+      "tokens": 2520
+    },
+    {
+      "scenario_id": "sc_030",
+      "kind": "swap_years",
+      "detail": "2002 <-> 2004",
+      "action": "revise",
+      "reason": "The draft states 'My Big Fat Greek Wedding' was released in 2004, but the evidence shows it was released in 2002 (release_year: 2002). Additionally, the draft states 'The Passion of the Christ' was released in 2002, but the evidence shows it was released in 2004 (release_year: 2004). These are factual errors that contradict the structured data provided.",
+      "tokens": 2544
+    }
+  ]
+}

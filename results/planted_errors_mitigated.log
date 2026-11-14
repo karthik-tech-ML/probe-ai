@@ -1,0 +1,64 @@
+/opt/homebrew/lib/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+2026-11-13 22:45:05.864 | INFO     | __main__:evaluate:85 - sc_008 clean: approve
+2026-11-13 22:45:08.513 | INFO     | __main__:evaluate:85 - sc_008 swap_entity: revise
+2026-11-13 22:45:11.664 | INFO     | __main__:evaluate:85 - sc_008 change_number: revise
+2026-11-13 22:45:14.317 | INFO     | __main__:evaluate:85 - sc_008 add_unsupported_claim: revise
+2026-11-13 22:45:17.984 | INFO     | __main__:evaluate:85 - sc_009 clean: approve
+2026-11-13 22:45:19.754 | INFO     | __main__:evaluate:85 - sc_009 swap_entity: revise
+2026-11-13 22:45:22.822 | INFO     | __main__:evaluate:85 - sc_009 change_number: revise
+2026-11-13 22:45:25.386 | INFO     | __main__:evaluate:85 - sc_009 add_unsupported_claim: revise
+2026-11-13 22:45:29.648 | INFO     | __main__:evaluate:85 - sc_010 clean: approve
+2026-11-13 22:45:32.626 | INFO     | __main__:evaluate:85 - sc_010 swap_entity: revise
+2026-11-13 22:45:34.766 | INFO     | __main__:evaluate:85 - sc_010 change_number: revise
+2026-11-13 22:45:37.532 | INFO     | __main__:evaluate:85 - sc_010 add_unsupported_claim: revise
+2026-11-13 22:45:46.748 | INFO     | __main__:evaluate:85 - sc_011 clean: approve
+2026-11-13 22:45:52.292 | INFO     | __main__:evaluate:85 - sc_011 change_number: revise
+2026-11-13 22:45:55.930 | INFO     | __main__:evaluate:85 - sc_011 add_unsupported_claim: revise
+2026-11-13 22:45:59.586 | INFO     | __main__:evaluate:85 - sc_012 clean: approve
+2026-11-13 22:46:01.854 | INFO     | __main__:evaluate:85 - sc_012 change_number: revise
+2026-11-13 22:46:05.316 | INFO     | __main__:evaluate:85 - sc_012 add_unsupported_claim: revise
+2026-11-13 22:46:07.433 | INFO     | __main__:evaluate:85 - sc_013 clean: approve
+2026-11-13 22:46:09.551 | INFO     | __main__:evaluate:85 - sc_013 swap_entity: revise
+2026-11-13 22:46:11.351 | INFO     | __main__:evaluate:85 - sc_013 change_number: revise
+2026-11-13 22:46:14.089 | INFO     | __main__:evaluate:85 - sc_013 add_unsupported_claim: revise
+2026-11-13 22:46:16.855 | INFO     | __main__:evaluate:85 - sc_014 clean: approve
+2026-11-13 22:46:18.850 | INFO     | __main__:evaluate:85 - sc_014 swap_entity: revise
+2026-11-13 22:46:21.154 | INFO     | __main__:evaluate:85 - sc_014 change_number: revise
+2026-11-13 22:46:24.024 | INFO     | __main__:evaluate:85 - sc_014 add_unsupported_claim: revise
+2026-11-13 22:46:26.760 | INFO     | __main__:evaluate:85 - sc_016 clean: approve
+2026-11-13 22:46:28.969 | INFO     | __main__:evaluate:85 - sc_016 swap_entity: revise
+2026-11-13 22:46:31.064 | INFO     | __main__:evaluate:85 - sc_016 change_number: revise
+2026-11-13 22:46:33.854 | INFO     | __main__:evaluate:85 - sc_016 add_unsupported_claim: revise
+2026-11-13 22:46:36.366 | INFO     | __main__:evaluate:85 - sc_027 clean: approve
+2026-11-13 22:46:39.106 | INFO     | __main__:evaluate:85 - sc_027 swap_entity: revise
+2026-11-13 22:46:42.271 | INFO     | __main__:evaluate:85 - sc_027 change_number: revise
+2026-11-13 22:46:45.399 | INFO     | __main__:evaluate:85 - sc_027 add_unsupported_claim: revise
+2026-11-13 22:46:48.772 | INFO     | __main__:evaluate:85 - sc_030 clean: approve
+2026-11-13 22:46:51.156 | INFO     | __main__:evaluate:85 - sc_030 change_number: revise
+2026-11-13 22:46:53.719 | INFO     | __main__:evaluate:85 - sc_030 add_unsupported_claim: revise
+37 verifier calls: {'clean': 10, 'swap_entity': 7, 'change_number': 10, 'add_unsupported_claim': 10}
+{
+  "clean": {
+    "n": 10,
+    "flagged": 0,
+    "rate": 0.0
+  },
+  "swap_entity": {
+    "n": 7,
+    "flagged": 7,
+    "rate": 1.0
+  },
+  "change_number": {
+    "n": 10,
+    "flagged": 10,
+    "rate": 1.0
+  },
+  "add_unsupported_claim": {
+    "n": 10,
+    "flagged": 10,
+    "rate": 1.0
+  },
+  "catch_rate_overall": 1.0,
+  "false_alarm_rate": 0.0
+}
