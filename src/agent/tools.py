@@ -16,6 +16,7 @@ import re
 from typing import Any
 
 from langchain_core.tools import tool
+from langgraph.prebuilt import ToolNode
 from loguru import logger
 
 from src.database.connection import get_session
@@ -302,3 +303,16 @@ ALL_TOOLS = [
     filter_movies,
     get_movie_details,
 ]
+
+
+def tool_error_message(exc: Exception) -> str:
+    """What the model sees when a tool raises: a plain error, so it can retry, switch tools or say so."""
+    logger.warning(f"tool error: {type(exc).__name__}: {exc}")
+    return (f"TOOL ERROR ({type(exc).__name__}: {exc}). The tool returned no data. "
+            "This is not an answer: retry once if the error may be temporary, otherwise try a "
+            "different tool, and if nothing works say which tool failed and that the answer may be incomplete.")
+
+
+def make_tool_node(tools: list) -> ToolNode:
+    """A ToolNode that turns tool exceptions into error messages instead of crashing the run."""
+    return ToolNode(tools, handle_tool_errors=tool_error_message)

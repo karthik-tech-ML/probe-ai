@@ -89,6 +89,8 @@ The repo includes a multi-agent variant (supervisor, retrieval/structured/analys
 
 - **Indirect prompt injection:** a poisoned record with a hidden instruction was followed by the multi-agent system in 4 of 7 stronger-payload runs and by the single agent in 0 of 7. Wrapping evidence as untrusted data and adding a data-not-instructions rule brought it to 0 of 7, tested on the same payloads the fix was written against.
 
+- **Tool failures:** before a fix, any tool exception crashed the run in both systems (12 of 16 injected-failure runs). Surfacing tool errors to the model and adding a retry-or-disclose rule brought crashes to 0; the best runs retried, fell back to another tool and said the answer might be incomplete.
+
 Small sample (18 scenarios, one run each) and a noisy judge: read the caveats in [docs/multi-agent-findings.md](docs/multi-agent-findings.md).
 
 ```bash
@@ -96,6 +98,7 @@ python scripts/evaluate.py --multi-agent --category multi_hop
 python scripts/compare_modes.py --limit 3        # cheap trial first
 python scripts/planted_errors.py evaluate --dry-run
 python scripts/indirect_injection.py --round 2 --dry-run
+python scripts/tool_failure.py --dry-run
 ```
 
 ## Bring Your Own System

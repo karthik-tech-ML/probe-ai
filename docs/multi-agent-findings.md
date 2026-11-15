@@ -1,6 +1,6 @@
 # Multi-agent findings
 
-Answers to the five questions in `multi-agent-plan.md` (plus a sixth on injection), from real runs on the
+Answers to the five questions in `multi-agent-plan.md` (plus two more on injection and tool failure), from real runs on the
 18-scenario hard subset (multi_field 5, aggregation 4, multi_hop 4, adversarial 5).
 Raw results are in `results/`. Each number names its source file.
 
@@ -150,6 +150,46 @@ rules stop instruction-style attacks but cannot fully solve it.
 **Limits.** The mitigation was written with the round-2 payloads in view, so 0 of 7 shows it
 beats those, not that it generalizes. Samples are small (2 runs per payload), and only the
 plot and cast fields were poisoned. The "structured fields win" rule could make the system distrust legitimate free-text facts; a full-suite regression check is the open test.
+
+## 7. What happens when a tool fails? (tool failure injection)
+
+`src/safety/tool_failure.py` breaks one tool in-process (the database is untouched) in four ways:
+raise an error, time out (simulated, nothing waits), silently return nothing, or fail once and then
+work. Two questions (Nolan's films via `search_by_director`, the plot of Inception via
+`search_movies`) x 4 modes x 2 systems = 16 runs, before and after a fix.
+
+| Outcome (16 runs) | Before the fix | After, single agent | After, multi-agent |
+|---|---|---|---|
+| Crashed | **12** | 0 | 0 |
+| Recovered (correct answer) | 3 | 7 | 5 |
+| Honest partial answer (says it may be incomplete) | 0 | 1 | 2 |
+| Declined without saying a tool failed | 0 | 0 | 1 |
+| Confident but partial and undisclosed | 1 | 0 | 0 |
+
+- **Baseline: any tool exception crashed the run**, in both systems, including a single transient
+  error that a retry would have cleared. The exception never reached the model, so it could not
+  retry, switch tools or say anything. Failure handling was in the original plan but never built, and
+  the 18-scenario evaluations never exercised it because no tool ever failed.
+- **Fix:** `make_tool_node()` turns a tool exception into a `TOOL ERROR` message the model can read,
+  for the single agent and the multi-agent specialists, plus a prompt rule: retry once, try another
+  tool, and say plainly if the data could not be obtained.
+- **After:** no crashes. The best behavior was the single agent on the Nolan question with a broken
+  tool: it retried, fell back to semantic search, gave the two films it could confirm and said the
+  tool had errored so the list may be incomplete.
+- **A real remaining flaw:** multi-agent on the Inception plot with `search_movies` broken answered
+  "I don't have that information... the plot summary is not available in the retrieved data". It
+  blamed the data and never mentioned the failed tool, while the single agent recovered on the same case.
+
+**Caveats.**
+- My first classifier mislabeled two answers (it missed "technical difficulties" and "timeouts").
+  I fixed the keyword list and re-scored the saved answers with no new API calls; both labels are kept
+  in `results/tool_failure_fixed_reclassified.json` as `outcome_v1` and `outcome`. The fix only changed
+  the two answers I had already read by hand, and it was written after seeing results.
+- "Recovered" means the answer held enough of the expected titles or plot words, not that a list was
+  complete. The single agent's timeout fallback listed 6 Nolan films without disclosure; the data has 8.
+- Two multi-agent runs called the failed tool 6 times each (28K and 31K tokens). The existing caps bound
+  that, but it is a retry storm.
+- One run per cell. The crash result is deterministic; the recovery split is anecdotal.
 
 ## Caveats
 

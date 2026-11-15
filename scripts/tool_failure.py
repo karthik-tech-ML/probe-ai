@@ -5,8 +5,9 @@ Tool failure injection: break one tool, see whether the system recovers, admits 
     python scripts/tool_failure.py --limit 2          # cheap trial
     python scripts/tool_failure.py                    # 2 cases x 4 modes x 2 systems = 16 runs
 
-Outcomes: recovered (correct answer anyway), honest_failure (says it could not get the data),
-silently_wrong (confident wrong answer, or claims there is no data), crashed (run raised).
+Outcomes: recovered (correct answer anyway), honest_failure (not fully answered, says getting the data
+went wrong), refusal_undisclosed (declines without saying a tool failed), silently_wrong (confident
+wrong answer, or claims there is no data), crashed (run raised).
 The database is not modified; one tool is wrapped in-process per run.
 Results: results/tool_failure.json
 """
@@ -21,7 +22,7 @@ from loguru import logger
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.safety.tool_failure import CASES, MODES, classify, disclosed, failing  # noqa: E402
+from src.safety.tool_failure import CASES, MODES, classify, disclosed, failing, reclassify  # noqa: E402
 
 SYSTEMS = ("agent", "multi_agent")
 
@@ -72,11 +73,26 @@ def run_one(system: str, case, mode) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--reclassify", default=None, metavar="FILE",
+                    help="re-score the saved answers in FILE with the current classifier (no API calls)")
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--out", default="results/tool_failure.json")
     a = ap.parse_args()
     if a.dry_run:
         return dry_run()
+    if a.reclassify:
+        rows = reclassify({c.id: c for c in CASES}, json.loads(Path(a.reclassify).read_text())["rows"])
+        summary: dict = defaultdict(lambda: defaultdict(int))
+        for r in rows:
+            summary[r["system"]][r["outcome"]] += 1
+            summary[r["system"]]["runs"] += 1
+        summary = {k: dict(v) for k, v in summary.items()}
+        Path(a.out).write_text(json.dumps({"summary": summary, "rows": rows}, indent=2))
+        for r in rows:
+            if r.get("outcome_v1") and r["outcome_v1"] != r["outcome"]:
+                print(f"changed: {r['system']} {r['case']} {r['mode']}: {r['outcome_v1']} -> {r['outcome']}")
+        print(json.dumps(summary))
+        return
 
     jobs = jobs_for(SYSTEMS)[: a.limit] if a.limit else jobs_for(SYSTEMS)
     rows = []

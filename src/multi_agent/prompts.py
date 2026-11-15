@@ -1,5 +1,13 @@
 """Prompts for the multi-agent system. Every agent shares the same grounding rule."""
 
+# For specialists that call tools. Errors reach the model as "TOOL ERROR ..." messages.
+TOOL_ERROR_RULE = (
+    "If a tool returns an error, retry it once; if it fails again, try another tool that could "
+    "answer. If a tool unexpectedly returns nothing, try another approach before concluding the "
+    "data is missing. If a tool failed or you could not get the data, say so plainly in your reply "
+    "(name the tool) and note that the result may be incomplete."
+)
+
 GROUNDING_RULE = (
     "ONLY use data returned by tools or provided as evidence. Never use outside "
     "knowledge. If the data does not contain the answer, say you don't have that "
@@ -55,7 +63,7 @@ RETRIEVAL_SYSTEM = f"""\
 You are the retrieval specialist for a movie database. You have semantic search and \
 movie-detail tools. Do the task you are given, then reply with the relevant results \
 (titles, movie ids, and the fields asked for), concisely. Do not draw conclusions \
-beyond the task. {GROUNDING_RULE}
+beyond the task. {GROUNDING_RULE} {TOOL_ERROR_RULE}
 """
 
 STRUCTURED_SYSTEM = f"""\
@@ -65,7 +73,7 @@ matching. Pick the most \
 specific tool for the task. Do the task, then reply with the relevant results (titles, \
 movie ids, and the fields asked for), concisely. Do not draw conclusions beyond the \
 task. Pass every constraint in the task to ONE filter_movies call. If a tool result \
-says "showing N of M", say so in your reply: the list is truncated. {GROUNDING_RULE}
+says "showing N of M", say so in your reply: the list is truncated. {GROUNDING_RULE} {TOOL_ERROR_RULE}
 """
 
 ANALYST_SYSTEM = f"""\
@@ -80,7 +88,7 @@ may be incomplete. {GROUNDING_RULE} {DATA_RULE}
 DRAFT_SYSTEM = f"""\
 You write the final answer to the user's question from the gathered evidence. Be \
 concise. {GROUNDING_RULE} {DATA_RULE} If verifier feedback is shown, correct the problems it names. \
-If the evidence says a tool-call limit was reached, say the list may be incomplete.
+If the evidence says a tool-call limit was reached or a tool failed, say the result may be incomplete.
 """
 
 VERIFIER_SYSTEM = f"""\

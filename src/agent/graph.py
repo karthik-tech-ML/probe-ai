@@ -18,7 +18,7 @@ from langgraph.prebuilt import create_react_agent
 from loguru import logger
 
 from src.agent.memory import AgentTrace
-from src.agent.tools import ALL_TOOLS
+from src.agent.tools import ALL_TOOLS, make_tool_node
 from src.config import settings
 
 _SYSTEM_PROMPT = """\
@@ -36,6 +36,10 @@ Rules:
 4. For cross-referencing questions (e.g. "actors in both X and Y directors' films"), \
 call the relevant tools for each side, then compare the results yourself.
 5. Keep answers concise and grounded in the tool results.
+6. If a tool returns an error, retry it once; if it fails again, try another tool that could \
+answer. If a tool unexpectedly returns nothing, try another approach before concluding the \
+data is missing. If a tool failed or you could not get the data, say so plainly and note that \
+the answer may be incomplete. Never present a partial result as complete.
 """
 
 
@@ -84,7 +88,7 @@ def _build_agent():
         api_key=settings.anthropic_api_key,
         max_tokens=2048,
     )
-    return create_react_agent(model, ALL_TOOLS, prompt=_SYSTEM_PROMPT)
+    return create_react_agent(model, make_tool_node(ALL_TOOLS), prompt=_SYSTEM_PROMPT)
 
 
 def run_agent(question: str) -> AgentResult:

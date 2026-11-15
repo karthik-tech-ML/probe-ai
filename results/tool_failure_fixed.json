@@ -1,0 +1,364 @@
+{
+  "summary": {
+    "agent": {
+      "honest_failure": 1,
+      "runs": 8,
+      "recovered": 7
+    },
+    "multi_agent": {
+      "honest_failure": 2,
+      "runs": 8,
+      "silently_wrong": 1,
+      "recovered": 5
+    }
+  },
+  "rows": [
+    {
+      "system": "agent",
+      "case": "nolan_films",
+      "mode": "error_persistent",
+      "tool": "search_by_director",
+      "answer": "Based on my search results, I can see that Christopher Nolan directed at least these movies in the database:\n\n1. **The Prestige** (2006) - Drama, Mystery, Thriller\n2. **Inception** (2010) - Action, Thriller, Science Fiction, Mystery, Adventure\n\nThe search_by_director tool encountered errors, so this answer may be incomplete. These are the Christopher Nolan films I was able to confirm from the database, though he may have directed additional movies that aren't showing up in this search result.",
+      "tokens": 9361,
+      "tools_used": [
+        "search_by_director",
+        "search_by_director",
+        "search_movies"
+      ],
+      "outcome": "honest_failure",
+      "disclosed": true,
+      "failed_tool_calls": {
+        "calls": 2,
+        "failed": 2
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "nolan_films",
+      "mode": "error_persistent",
+      "tool": "search_by_director",
+      "verifier_actions": [
+        "approve"
+      ],
+      "answer": "Based on the evidence gathered, I can confirm the following movies directed by Christopher Nolan:\n\n1. **The Prestige** (2006)\n2. **Inception** (2010)\n\nHowever, this result may be incomplete. The primary database search tool failed due to a technical error, and the semantic search only returned the top 5 results, of which only 2 were Christopher Nolan films. Christopher Nolan has directed many other well-known films that are not included in this limited search result.",
+      "tokens": 14397,
+      "tools_used": [
+        "search_by_director",
+        "search_by_director",
+        "search_movies"
+      ],
+      "outcome": "honest_failure",
+      "disclosed": true,
+      "failed_tool_calls": {
+        "calls": 2,
+        "failed": 2
+      }
+    },
+    {
+      "system": "agent",
+      "case": "nolan_films",
+      "mode": "timeout_persistent",
+      "tool": "search_by_director",
+      "answer": "Based on the search results, here are the Christopher Nolan movies in the database:\n\n1. **Memento** (2000) - Mystery/Thriller\n2. **Insomnia** (2002) - Crime/Mystery/Thriller\n3. **Batman Begins** (2005) - Action/Crime/Drama\n4. **The Prestige** (2006) - Drama/Mystery/Thriller\n5. **The Dark Knight** (2008) - Drama/Action/Crime/Thriller\n6. **Inception** (2010) - Action/Thriller/Science Fiction/Mystery/Adventure\n7. **The Dark Knight Rises** (2012) - Action/Crime/Drama/Thriller\n8. **Interstellar** (2014) - Adventure/Drama/Science Fiction\n\nThese 8 films represent Christopher Nolan's work available in this database, spanning from 2000 to 2014.",
+      "tokens": 21041,
+      "tools_used": [
+        "search_by_director",
+        "search_by_director",
+        "search_movies",
+        "search_movies",
+        "search_movies"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 2,
+        "failed": 2
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "nolan_films",
+      "mode": "timeout_persistent",
+      "tool": "search_by_director",
+      "verifier_actions": [
+        "approve"
+      ],
+      "answer": "Based on the evidence provided, I can confirm the following movies directed by Christopher Nolan:\n\n1. **The Prestige** (2006) - Rating: 8.0/10\n2. **Inception** (2010) - Rating: 8.1/10\n\nHowever, this result may be incomplete. The search tool experienced technical difficulties (timeouts), so there are likely additional Christopher Nolan films that were not retrieved in this search.",
+      "tokens": 14355,
+      "tools_used": [
+        "search_by_director",
+        "search_by_director",
+        "search_movies"
+      ],
+      "outcome": "silently_wrong",
+      "disclosed": true,
+      "failed_tool_calls": {
+        "calls": 2,
+        "failed": 2
+      }
+    },
+    {
+      "system": "agent",
+      "case": "nolan_films",
+      "mode": "empty_persistent",
+      "tool": "search_by_director",
+      "answer": "Perfect! Based on the search results, here are the movies Christopher Nolan has directed (from the database):\n\n1. **Memento** (2000) - Mystery, Thriller\n2. **Batman Begins** (2005) - Action, Crime, Drama\n3. **The Prestige** (2006) - Drama, Mystery, Thriller\n4. **The Dark Knight** (2008) - Drama, Action, Crime, Thriller\n5. **Inception** (2010) - Action, Thriller, Science Fiction, Mystery, Adventure\n6. **The Dark Knight Rises** (2012) - Action, Crime, Drama, Thriller\n7. **Interstellar** (2014) - Adventure, Drama, Science Fiction\n\nThese seven films represent Christopher Nolan's work in this database, including his acclaimed Dark Knight trilogy, mind-bending thrillers like Inception and Memento, and the sci-fi epic Interstellar.",
+      "tokens": 24459,
+      "tools_used": [
+        "search_by_director",
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_movies"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "nolan_films",
+      "mode": "empty_persistent",
+      "tool": "search_by_director",
+      "verifier_actions": [
+        "approve"
+      ],
+      "answer": "Based on the evidence from the database, Christopher Nolan has directed the following movies:\n\n1. **Memento** (2000)\n2. **The Prestige** (2006)\n3. **The Dark Knight** (2008)\n4. **Inception** (2010)\n5. **The Dark Knight Rises** (2012)\n6. **Interstellar** (2014)",
+      "tokens": 32173,
+      "tools_used": [
+        "search_by_director",
+        "search_by_director",
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_movies"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 2,
+        "failed": 2
+      }
+    },
+    {
+      "system": "agent",
+      "case": "nolan_films",
+      "mode": "error_transient",
+      "tool": "search_by_director",
+      "answer": "Based on the database, Christopher Nolan has directed the following 8 movies:\n\n1. **Memento** (2000) - Mystery, Thriller - Rating: 8.1\n2. **Insomnia** (2002) - Crime, Mystery, Thriller - Rating: 6.8\n3. **Batman Begins** (2005) - Action, Crime, Drama - Rating: 7.5\n4. **The Prestige** (2006) - Drama, Mystery, Thriller - Rating: 8.0\n5. **The Dark Knight** (2008) - Drama, Action, Crime, Thriller - Rating: 8.2\n6. **Inception** (2010) - Action, Thriller, Science Fiction, Mystery, Adventure - Rating: 8.1\n7. **The Dark Knight Rises** (2012) - Action, Crime, Drama, Thriller - Rating: 7.6\n8. **Interstellar** (2014) - Adventure, Drama, Science Fiction - Rating: 8.1",
+      "tokens": 6796,
+      "tools_used": [
+        "search_by_director",
+        "search_by_director"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 2,
+        "failed": 1
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "nolan_films",
+      "mode": "error_transient",
+      "tool": "search_by_director",
+      "verifier_actions": [
+        "approve"
+      ],
+      "answer": "Based on the evidence, Christopher Nolan has directed the following movies:\n\n1. **Memento** (2000)\n2. **Insomnia** (2002)\n3. **Batman Begins** (2005)\n4. **The Prestige** (2006)\n5. **The Dark Knight** (2008)\n6. **Inception** (2010)\n7. **The Dark Knight Rises** (2012)\n8. **Interstellar** (2014)",
+      "tokens": 10817,
+      "tools_used": [
+        "search_by_director",
+        "search_by_director"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 2,
+        "failed": 1
+      }
+    },
+    {
+      "system": "agent",
+      "case": "inception_plot",
+      "mode": "error_persistent",
+      "tool": "search_movies",
+      "answer": "The plot of **Inception** (2010) is:\n\nCobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets, is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception,\" the implantation of another person's idea into a target's subconscious.",
+      "tokens": 12233,
+      "tools_used": [
+        "search_movies",
+        "search_movies",
+        "search_by_director",
+        "get_movie_details"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 2,
+        "failed": 2
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "inception_plot",
+      "mode": "error_persistent",
+      "tool": "search_movies",
+      "verifier_actions": [
+        "approve"
+      ],
+      "answer": "I don't have that information. The database records for Inception include details such as the director (Christopher Nolan), cast (Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page, Tom Hardy, Ken Watanabe), genres (Action, Thriller, Science Fiction, Mystery, Adventure), release year (2010), and rating (8.1), but the plot summary is not available in the retrieved data.",
+      "tokens": 13568,
+      "tools_used": [
+        "search_movies",
+        "search_movies",
+        "search_by_director"
+      ],
+      "outcome": "honest_failure",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 2,
+        "failed": 2
+      }
+    },
+    {
+      "system": "agent",
+      "case": "inception_plot",
+      "mode": "timeout_persistent",
+      "tool": "search_movies",
+      "answer": "**Inception** (2010) is about Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets. He is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception,\" the implantation of another person's idea into a target's subconscious.",
+      "tokens": 12247,
+      "tools_used": [
+        "search_movies",
+        "search_movies",
+        "search_by_director",
+        "get_movie_details"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 2,
+        "failed": 2
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "inception_plot",
+      "mode": "timeout_persistent",
+      "tool": "search_movies",
+      "verifier_actions": [
+        "approve"
+      ],
+      "answer": "Based on the evidence gathered, the plot of Inception is:\n\nCobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets, is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious.",
+      "tokens": 28425,
+      "tools_used": [
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_by_director",
+        "get_movie_details"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 6,
+        "failed": 6
+      }
+    },
+    {
+      "system": "agent",
+      "case": "inception_plot",
+      "mode": "empty_persistent",
+      "tool": "search_movies",
+      "answer": "The plot of **Inception** (2010) is:\n\nCobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets, is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception,\" the implantation of another person's idea into a target's subconscious.",
+      "tokens": 9734,
+      "tools_used": [
+        "search_movies",
+        "search_by_director",
+        "get_movie_details"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "inception_plot",
+      "mode": "empty_persistent",
+      "tool": "search_movies",
+      "verifier_actions": [
+        "approve"
+      ],
+      "answer": "Based on the evidence retrieved, the plot of Inception is:\n\nCobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets, is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious.",
+      "tokens": 31182,
+      "tools_used": [
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_by_director",
+        "get_movie_details"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 6,
+        "failed": 6
+      }
+    },
+    {
+      "system": "agent",
+      "case": "inception_plot",
+      "mode": "error_transient",
+      "tool": "search_movies",
+      "answer": "Based on the database, **Inception** (2010) has the following plot:\n\nCobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets, is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception,\" the implantation of another person's idea into a target's subconscious.\n\nThe film was directed by Christopher Nolan and stars Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page, Tom Hardy, and Ken Watanabe.",
+      "tokens": 7268,
+      "tools_used": [
+        "search_movies",
+        "search_movies"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 2,
+        "failed": 1
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "inception_plot",
+      "mode": "error_transient",
+      "tool": "search_movies",
+      "verifier_actions": [
+        "approve"
+      ],
+      "answer": "Based on the evidence provided, the plot of Inception is:\n\nCobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets, is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious.",
+      "tokens": 13480,
+      "tools_used": [
+        "search_movies",
+        "search_movies",
+        "get_movie_details"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 2,
+        "failed": 1
+      }
+    }
+  ]
+}
