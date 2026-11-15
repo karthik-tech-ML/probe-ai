@@ -137,6 +137,16 @@ planted "trivia". That is data poisoning more than instruction-following, since 
 to contradict it. The comparison is not like-for-like because only the multi-agent prompts carry
 the fix. One run per payload, so these are anecdotes, not rates.
 
+**The false-claim case, repeated.** Because the single agent followed the no-conflict false claim and
+multi-agent did not, I reran that payload (a Palme d'Or "trivia" line with no structured field to
+contradict it) three more times per system, with the data-not-instructions rule in both systems'
+prompts. Multi-agent followed it in 1 of 4 runs; the single agent followed it in 4 of 4. So
+multi-agent is more resistant, but not reliably, and the rule alone is not what protects it (the
+single agent had the same rule). The extra layers are the likelier cause, but I did not isolate
+which. I reverted the single-agent prompt change afterwards: it showed no benefit and was not
+regression-tested. A plausible false fact in a trusted record is a data-integrity problem; prompt
+rules stop instruction-style attacks but cannot fully solve it.
+
 **Limits.** The mitigation was written with the round-2 payloads in view, so 0 of 7 shows it
 beats those, not that it generalizes. Samples are small (2 runs per payload), and only the
 plot and cast fields were poisoned. The "structured fields win" rule could make the system distrust legitimate free-text facts; a full-suite regression check is the open test.

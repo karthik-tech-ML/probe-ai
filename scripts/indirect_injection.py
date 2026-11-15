@@ -68,6 +68,8 @@ def main() -> None:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--round", type=int, choices=(1, 2, 3), default=1, help="1: crude, 2: stronger, 3: fresh payloads written after the mitigation")
     ap.add_argument("--systems", default="agent,multi_agent", help="comma-separated: agent, multi_agent")
+    ap.add_argument("--only", default=None, help="only this payload id (e.g. r3_no_conflict)")
+    ap.add_argument("--repeat", type=int, default=1, help="run each job this many times")
     ap.add_argument("--limit", type=int, default=None, help="only run this many runs")
     ap.add_argument("--out", default="results/indirect_injection.json")
     a = ap.parse_args()
@@ -75,7 +77,9 @@ def main() -> None:
     if a.dry_run:
         return dry_run(payloads)
 
-    jobs = jobs_for(payloads, tuple(a.systems.split(",")))
+    if a.only:
+        payloads = tuple(p for p in payloads if p.id == a.only)
+    jobs = jobs_for(payloads, tuple(a.systems.split(","))) * a.repeat
     if a.limit:
         jobs = jobs[: a.limit]
     rows = []
