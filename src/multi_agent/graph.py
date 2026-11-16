@@ -25,6 +25,7 @@ from loguru import logger
 from src.agent.tools import (
     filter_movies,
     get_movie_details,
+    make_tool_node,
     search_by_cast,
     search_by_director,
     search_by_genre,
@@ -194,7 +195,7 @@ def run_react_with_limit(agent: Any, task: str, max_rounds: int = MAX_TOOL_ROUND
 def _build_graph(trace: MultiAgentTrace, max_steps: int):
     """Compile the graph. Built per run so nodes can write to this run's trace."""
     specialists = {
-        name: create_react_agent(_llm(2048), tools, prompt=_SYSTEM_BY_AGENT[name])
+        name: create_react_agent(_llm(2048), make_tool_node(tools), prompt=_SYSTEM_BY_AGENT[name])
         for name, tools in _TOOLS_BY_AGENT.items()
     }
 

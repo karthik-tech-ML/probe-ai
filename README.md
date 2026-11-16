@@ -80,12 +80,16 @@ The repo includes a multi-agent variant (supervisor, retrieval/structured/analys
 |---|---|---|---|
 | Accuracy (task success) | 0.67 | 0.94 | 0.94 |
 | LLM calls per query | 1 | 2.5 | 8.1 |
-| Tokens per query | 1.3K | 12.3K | 32K to 37K |
-| Cost per query | $0.005 | $0.041 | $0.12 to $0.13 |
+| Tokens per query | 1.3K | 12.3K | 15K to 37K |
+| Cost per query | $0.005 | $0.041 | $0.06 to $0.13 |
 
-- Multi-agent matched the single agent's accuracy at roughly 3x the cost and latency.
+- Multi-agent matched the single agent's accuracy at roughly 1.4x to 3x the cost (the low end when no run spirals) and about 3x the latency.
 - Following its failure attributions exposed a real tool bug, which fixing cut tokens 40% to 50% on director and cast lookups.
 - A verifier tested with planted errors caught 27 of 27 obvious ones and 19 of 23 subtle ones, with 1 of 10 clean drafts falsely flagged. It is weakest on omissions and counts.
+
+- **Indirect prompt injection:** a poisoned record with a hidden instruction was followed by the multi-agent system in 4 of 7 stronger-payload runs and by the single agent in 0 of 7. Wrapping evidence as untrusted data and adding a data-not-instructions rule brought it to 0 of 7, tested on the same payloads the fix was written against.
+
+- **Tool failures:** before a fix, any tool exception crashed the run in both systems (12 of 16 injected-failure runs). Surfacing tool errors to the model and adding a retry-or-disclose rule brought crashes to 0; the best runs retried, fell back to another tool and said the answer might be incomplete.
 
 Small sample (18 scenarios, one run each) and a noisy judge: read the caveats in [docs/multi-agent-findings.md](docs/multi-agent-findings.md).
 
@@ -93,6 +97,8 @@ Small sample (18 scenarios, one run each) and a noisy judge: read the caveats in
 python scripts/evaluate.py --multi-agent --category multi_hop
 python scripts/compare_modes.py --limit 3        # cheap trial first
 python scripts/planted_errors.py evaluate --dry-run
+python scripts/indirect_injection.py --round 2 --dry-run
+python scripts/tool_failure.py --dry-run
 ```
 
 ## Bring Your Own System

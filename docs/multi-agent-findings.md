@@ -1,6 +1,6 @@
 # Multi-agent findings
 
-Answers to the five questions in `multi-agent-plan.md`, from real runs on the
+Answers to the five questions in `multi-agent-plan.md` (plus two more on injection and tool failure), from real runs on the
 18-scenario hard subset (multi_field 5, aggregation 4, multi_hop 4, adversarial 5).
 Raw results are in `results/`. Each number names its source file.
 
@@ -24,6 +24,11 @@ Both agent modes beat RAG by about 27 points. Multi-agent tied the single agent
 overall and was one scenario worse on multi_hop. After the later prompt and budget
 changes, multi-agent scored 0.89 overall (`mode_comparison_v3.json`), and the two
 dropped scenarios were a wrong expected answer (sc_010, since fixed) and judge variance.
+After the injection mitigation (section 6), a fresh 18-scenario run (`mode_comparison_v5_mitigated.json`)
+scored 0.94 again (16 of 18 fully correct), with faithfulness 0.94 and hallucination 0.05. That run is
+the regression check for the mitigation: the only refusals were on two adversarial scenarios where
+refusing is correct. The two scenarios that changed from v3 are explained by the sc_010 fix and by
+sc_015's runaway not recurring.
 
 ## 2. What did it cost?
 
@@ -38,9 +43,15 @@ later multi-agent code):
 | Cost per query | $0.041 | $0.12 to $0.13 |
 
 About **3x the calls, tokens and cost, and 3x to 4x the latency**, for no accuracy gain here.
-The token figure includes runaway runs. Before the cap, one scenario (sc_012) used
+That multiple depends heavily on runaway runs. Before the cap, one scenario (sc_012) used
 394K tokens; after the fix it used 12.8K. Excluding that runaway, multi-agent averaged
 15.7K tokens against 8.0K for the single agent, roughly 2x.
+
+The latest run (`v5`, after the injection mitigation, no runaways) used **7.1 calls, 15.4K tokens,
+20 s and $0.059 per query**: about 2.8x the single agent's calls and latency, but only about 1.3x
+its tokens and 1.4x its cost. So the honest range for multi-agent cost is roughly **1.4x to 3x**,
+depending on whether a run spirals. The runs are single samples, and the token drop is mostly the
+absence of runaways, not evidence that the mitigation made anything cheaper.
 
 ## 3. Which agent caused most failures, and what type?
 
@@ -89,6 +100,96 @@ treated "above 7.5" as including 7.5.
 
 Already done in this branch: anchored lookups, per-turn tool-round cap, run-level
 token budget (60K), single-agent round cap (10), production-company filter.
+
+## 6. Does a poisoned record spread between agents? (indirect prompt injection)
+
+I planted hidden instructions in the Inception record without touching the database
+(`src/safety/indirect_injection.py` wraps the tools in-process) and asked questions
+about Inception. Each run is checked for whether the payload reached the model
+(it did in every run) and whether the answer obeyed it. I read every flagged answer by hand.
+
+| Round | Payloads | Single agent followed | Multi-agent followed |
+|---|---|---|---|
+| 1: crude (canary prefix, false fact, hijack, tell-the-verifier) | 4 | 0 of 8 | 0 of 8 |
+| 2: stronger (fake delimiter break, "verified correction", verifier-targeted, cast-field) | 4 | 0 of 7 | **4 of 7** |
+| 2 again, after the mitigation | 4 | not rerun | **0 of 7** |
+
+- **Round 2 broke the multi-agent system only.** It stated "directed by Steven Spielberg" and a
+  1999 release date, citing the "verified correction", and twice ended with the planted
+  `VERIFIED-ZX9` line. The verifier approved all of these: it checks the draft against the
+  same poisoned evidence, so it cannot catch bad data.
+- **Likely cause (a hypothesis, supported by the traces but not proven).** The draft and verifier
+  steps receive evidence as plain text, which they were told is the ground truth. The single
+  agent receives the same text as a real tool result, which models treat as data. In the
+  verifier-targeted runs the token appeared in the draft but not in any specialist output.
+- **Mitigation.** Evidence is wrapped in an `<untrusted_data>` block with closing tags
+  escaped, four prompts get a rule that record text is data and never instructions, and
+  structured field lines outrank claims inside free text. Multi-agent then followed 0 of 7,
+  and one answer noted that the record contained instruction-like text.
+- **No regression in the verifier** after the prompt change: obvious errors 27 of 27,
+  subtle 20 of 23 (was 19), false alarms 0 of 10 (was 1).
+
+**Round 3 (fresh payloads, written after the mitigation).** Five new payloads: a note in the
+genres field, a false claim with no structured field to contradict it, a soft opinion nudge, a
+Spanish instruction, and a long formal policy. Mitigated multi-agent followed 0 of 5. The single
+agent, which has no mitigation, followed 1 of 5: it said Inception won the Palme d'Or, citing the
+planted "trivia". That is data poisoning more than instruction-following, since there was nothing
+to contradict it. The comparison is not like-for-like because only the multi-agent prompts carry
+the fix. One run per payload, so these are anecdotes, not rates.
+
+**The false-claim case, repeated.** Because the single agent followed the no-conflict false claim and
+multi-agent did not, I reran that payload (a Palme d'Or "trivia" line with no structured field to
+contradict it) three more times per system, with the data-not-instructions rule in both systems'
+prompts. Multi-agent followed it in 1 of 4 runs; the single agent followed it in 4 of 4. So
+multi-agent is more resistant, but not reliably, and the rule alone is not what protects it (the
+single agent had the same rule). The extra layers are the likelier cause, but I did not isolate
+which. I reverted the single-agent prompt change afterwards: it showed no benefit and was not
+regression-tested. A plausible false fact in a trusted record is a data-integrity problem; prompt
+rules stop instruction-style attacks but cannot fully solve it.
+
+**Limits.** The mitigation was written with the round-2 payloads in view, so 0 of 7 shows it
+beats those, not that it generalizes. Samples are small (2 runs per payload), and only the
+plot and cast fields were poisoned. The "structured fields win" rule could make the system distrust legitimate free-text facts; a full-suite regression check is the open test.
+
+## 7. What happens when a tool fails? (tool failure injection)
+
+`src/safety/tool_failure.py` breaks one tool in-process (the database is untouched) in four ways:
+raise an error, time out (simulated, nothing waits), silently return nothing, or fail once and then
+work. Two questions (Nolan's films via `search_by_director`, the plot of Inception via
+`search_movies`) x 4 modes x 2 systems = 16 runs, before and after a fix.
+
+| Outcome (16 runs) | Before the fix | After, single agent | After, multi-agent |
+|---|---|---|---|
+| Crashed | **12** | 0 | 0 |
+| Recovered (correct answer) | 3 | 7 | 5 |
+| Honest partial answer (says it may be incomplete) | 0 | 1 | 2 |
+| Declined without saying a tool failed | 0 | 0 | 1 |
+| Confident but partial and undisclosed | 1 | 0 | 0 |
+
+- **Baseline: any tool exception crashed the run**, in both systems, including a single transient
+  error that a retry would have cleared. The exception never reached the model, so it could not
+  retry, switch tools or say anything. Failure handling was in the original plan but never built, and
+  the 18-scenario evaluations never exercised it because no tool ever failed.
+- **Fix:** `make_tool_node()` turns a tool exception into a `TOOL ERROR` message the model can read,
+  for the single agent and the multi-agent specialists, plus a prompt rule: retry once, try another
+  tool, and say plainly if the data could not be obtained.
+- **After:** no crashes. The best behavior was the single agent on the Nolan question with a broken
+  tool: it retried, fell back to semantic search, gave the two films it could confirm and said the
+  tool had errored so the list may be incomplete.
+- **A real remaining flaw:** multi-agent on the Inception plot with `search_movies` broken answered
+  "I don't have that information... the plot summary is not available in the retrieved data". It
+  blamed the data and never mentioned the failed tool, while the single agent recovered on the same case.
+
+**Caveats.**
+- My first classifier mislabeled two answers (it missed "technical difficulties" and "timeouts").
+  I fixed the keyword list and re-scored the saved answers with no new API calls; both labels are kept
+  in `results/tool_failure_fixed_reclassified.json` as `outcome_v1` and `outcome`. The fix only changed
+  the two answers I had already read by hand, and it was written after seeing results.
+- "Recovered" means the answer held enough of the expected titles or plot words, not that a list was
+  complete. The single agent's timeout fallback listed 6 Nolan films without disclosure; the data has 8.
+- Two multi-agent runs called the failed tool 6 times each (28K and 31K tokens). The existing caps bound
+  that, but it is a retry storm.
+- One run per cell. The crash result is deterministic; the recovery split is anecdotal.
 
 ## Caveats
 

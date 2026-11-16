@@ -1,0 +1,293 @@
+{
+  "summary": {
+    "agent": {
+      "crashed": 6,
+      "runs": 8,
+      "silently_wrong": 1,
+      "recovered": 1
+    },
+    "multi_agent": {
+      "crashed": 6,
+      "runs": 8,
+      "recovered": 2
+    }
+  },
+  "rows": [
+    {
+      "system": "agent",
+      "case": "nolan_films",
+      "mode": "error_persistent",
+      "tool": "search_by_director",
+      "answer": "",
+      "tokens": 0,
+      "tools_used": [],
+      "outcome": "crashed",
+      "disclosed": false,
+      "error": "RuntimeError: database connection lost",
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "nolan_films",
+      "mode": "error_persistent",
+      "tool": "search_by_director",
+      "answer": "",
+      "tokens": 0,
+      "tools_used": [],
+      "outcome": "crashed",
+      "disclosed": false,
+      "error": "RuntimeError: database connection lost",
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "agent",
+      "case": "nolan_films",
+      "mode": "timeout_persistent",
+      "tool": "search_by_director",
+      "answer": "",
+      "tokens": 0,
+      "tools_used": [],
+      "outcome": "crashed",
+      "disclosed": false,
+      "error": "TimeoutError: tool timed out after 30s",
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "nolan_films",
+      "mode": "timeout_persistent",
+      "tool": "search_by_director",
+      "answer": "",
+      "tokens": 0,
+      "tools_used": [],
+      "outcome": "crashed",
+      "disclosed": false,
+      "error": "TimeoutError: tool timed out after 30s",
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "agent",
+      "case": "nolan_films",
+      "mode": "empty_persistent",
+      "tool": "search_by_director",
+      "answer": "Based on the search results, I found at least 2 Christopher Nolan movies in the database:\n\n1. **The Prestige** (2006) - Starring Hugh Jackman, Christian Bale, and Michael Caine\n2. **Inception** (2010) - Starring Leonardo DiCaprio, Joseph Gordon-Levitt, and Ellen Page\n\nBoth are highly rated films, with Inception receiving an 8.1/10 rating and The Prestige an 8.0/10 rating. The database may contain other Christopher Nolan films as well, but these are the ones that appeared in the search results.",
+      "tokens": 6808,
+      "tools_used": [
+        "search_by_director",
+        "search_movies"
+      ],
+      "outcome": "silently_wrong",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "nolan_films",
+      "mode": "empty_persistent",
+      "tool": "search_by_director",
+      "verifier_actions": [
+        "approve"
+      ],
+      "answer": "Based on the evidence provided, Christopher Nolan has directed the following movies:\n\n1. **Inception** (2010)\n2. **The Prestige** (2006)\n3. **Interstellar** (2014)\n4. **The Dark Knight** (2008)\n5. **The Dark Knight Rises** (2012)\n6. **Memento** (2000)",
+      "tokens": 30226,
+      "tools_used": [
+        "search_by_director",
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_movies",
+        "search_movies"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "agent",
+      "case": "nolan_films",
+      "mode": "error_transient",
+      "tool": "search_by_director",
+      "answer": "",
+      "tokens": 0,
+      "tools_used": [],
+      "outcome": "crashed",
+      "disclosed": false,
+      "error": "RuntimeError: database connection lost",
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "nolan_films",
+      "mode": "error_transient",
+      "tool": "search_by_director",
+      "answer": "",
+      "tokens": 0,
+      "tools_used": [],
+      "outcome": "crashed",
+      "disclosed": false,
+      "error": "RuntimeError: database connection lost",
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "agent",
+      "case": "inception_plot",
+      "mode": "error_persistent",
+      "tool": "search_movies",
+      "answer": "",
+      "tokens": 0,
+      "tools_used": [],
+      "outcome": "crashed",
+      "disclosed": false,
+      "error": "RuntimeError: database connection lost",
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "inception_plot",
+      "mode": "error_persistent",
+      "tool": "search_movies",
+      "answer": "",
+      "tokens": 0,
+      "tools_used": [],
+      "outcome": "crashed",
+      "disclosed": false,
+      "error": "RuntimeError: database connection lost",
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "agent",
+      "case": "inception_plot",
+      "mode": "timeout_persistent",
+      "tool": "search_movies",
+      "answer": "",
+      "tokens": 0,
+      "tools_used": [],
+      "outcome": "crashed",
+      "disclosed": false,
+      "error": "TimeoutError: tool timed out after 30s",
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "inception_plot",
+      "mode": "timeout_persistent",
+      "tool": "search_movies",
+      "answer": "",
+      "tokens": 0,
+      "tools_used": [],
+      "outcome": "crashed",
+      "disclosed": false,
+      "error": "TimeoutError: tool timed out after 30s",
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "agent",
+      "case": "inception_plot",
+      "mode": "empty_persistent",
+      "tool": "search_movies",
+      "answer": "**Inception** (2010) is about Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets. He is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception,\" which is the implantation of another person's idea into a target's subconscious.",
+      "tokens": 9420,
+      "tools_used": [
+        "search_movies",
+        "search_by_director",
+        "get_movie_details"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "inception_plot",
+      "mode": "empty_persistent",
+      "tool": "search_movies",
+      "verifier_actions": [
+        "approve"
+      ],
+      "answer": "The plot of Inception is: Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets, is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious.",
+      "tokens": 6879,
+      "tools_used": [
+        "search_movies",
+        "get_movie_details"
+      ],
+      "outcome": "recovered",
+      "disclosed": false,
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "agent",
+      "case": "inception_plot",
+      "mode": "error_transient",
+      "tool": "search_movies",
+      "answer": "",
+      "tokens": 0,
+      "tools_used": [],
+      "outcome": "crashed",
+      "disclosed": false,
+      "error": "RuntimeError: database connection lost",
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    },
+    {
+      "system": "multi_agent",
+      "case": "inception_plot",
+      "mode": "error_transient",
+      "tool": "search_movies",
+      "answer": "",
+      "tokens": 0,
+      "tools_used": [],
+      "outcome": "crashed",
+      "disclosed": false,
+      "error": "RuntimeError: database connection lost",
+      "failed_tool_calls": {
+        "calls": 1,
+        "failed": 1
+      }
+    }
+  ]
+}

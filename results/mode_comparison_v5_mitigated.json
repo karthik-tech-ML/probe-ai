@@ -1,0 +1,2686 @@
+{
+  "scenarios": [
+    "sc_008",
+    "sc_009",
+    "sc_010",
+    "sc_011",
+    "sc_012",
+    "sc_013",
+    "sc_014",
+    "sc_015",
+    "sc_016",
+    "sc_027",
+    "sc_028",
+    "sc_029",
+    "sc_030",
+    "sc_022",
+    "sc_023",
+    "sc_024",
+    "sc_025",
+    "sc_026"
+  ],
+  "summary": {
+    "multi_agent": {
+      "n": 18,
+      "accuracy": 0.9444444444444444,
+      "fully_correct": 16,
+      "faithfulness": 0.9421277777777779,
+      "hallucination": 0.05098235294117647,
+      "routing_accuracy": 0.8718076923076923,
+      "avg_llm_calls": 7.111111111111111,
+      "avg_tokens": 15429.0,
+      "tokens_per_correct_answer": 17357.625,
+      "avg_latency_ms": 20450.36111111111,
+      "avg_cost_usd": 0.058643,
+      "total_cost_usd": 1.055574,
+      "loops": 0,
+      "verifier_revisions": 2,
+      "failures_by_culprit": {
+        "structured_agent / bad_tool_args": 2
+      }
+    }
+  },
+  "runs": {
+    "multi_agent": {
+      "summary": {
+        "total_scenarios": 18,
+        "total_latency_ms": 604851.2,
+        "avg_latency_ms": 33602.8,
+        "categories_run": [
+          "adversarial",
+          "aggregation",
+          "multi_field",
+          "multi_hop"
+        ],
+        "model": "claude-sonnet-4-5-20250929"
+      },
+      "results": [
+        {
+          "scenario_id": "sc_008",
+          "question": "What Christopher Nolan movies are in the science fiction genre?",
+          "category": "multi_field",
+          "difficulty": "medium",
+          "expected_answer": "Inception, Interstellar, The Dark Knight Rises (if tagged sci-fi), The Prestige",
+          "expected_source_ids": [
+            27205,
+            157336,
+            49026
+          ],
+          "expected_route": [
+            "structured_agent"
+          ],
+          "answer": "Based on the evidence, Christopher Nolan has **two movies in the science fiction genre**:\n\n1. **Interstellar** (2014)\n2. **Inception** (2010)",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 21336.691416996473,
+          "token_usage": {
+            "input_tokens": 8227,
+            "output_tokens": 729
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 0.5,
+            "task_success_reason": "The answer correctly identifies two Christopher Nolan sci-fi films (Interstellar and Inception), but misses other potential sci-fi films mentioned in the expected answer (The Dark Knight Rises and The Prestige). The answer is partially correct but incomplete compared to the expected answer.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "Christopher Nolan has two movies in the science fiction genre",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Interstellar (2014) is a Christopher Nolan movie in the science fiction genre",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Inception (2010) is a Christopher Nolan movie in the science fiction genre",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "Christopher Nolan has two movies in the science fiction genre",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Interstellar with genres 'Adventure, Drama, Science Fiction' and Inception with genres 'Action, Thriller, Science Fiction, Mystery, Adventure'"
+              },
+              {
+                "claim": "Interstellar (2014) is in the science fiction genre",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Interstellar with release_year 2014 and genres including 'Science Fiction'"
+              },
+              {
+                "claim": "Inception (2010) is in the science fiction genre",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Inception with release_year 2010 and genres including 'Science Fiction'"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 21336.7,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 8227,
+            "output_tokens": 729,
+            "total_tokens": 8956,
+            "cost_usd": 0.035616,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 6,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 1,
+            "tool_selection_tools_used": [
+              "search_by_director"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": 1.0,
+            "tool_selection_coverage_detail": {
+              "expected": [
+                27205,
+                49026,
+                157336
+              ],
+              "found_in_tools": [
+                27205,
+                49026,
+                157336
+              ],
+              "missing": []
+            },
+            "routing_accuracy": 1.0,
+            "routing_precision": 1.0,
+            "routing_recall": 1.0,
+            "routing_exact_order": true,
+            "routing_used": [
+              "structured_agent"
+            ],
+            "routing_expected": [
+              "structured_agent"
+            ],
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 8,
+            "step_cap_hit": false,
+            "llm_call_count": 6,
+            "ma_total_tokens": 8956,
+            "ma_latency_ms": 21336.7,
+            "tokens_per_correct_answer": null,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": "structured_agent",
+            "attribution_failure_type": "bad_tool_args",
+            "attribution_reason": "The structured_agent used search_by_director instead of a combined director+genre filter, then manually filtered the results but missed The Prestige which should have been checked or retrieved.",
+            "attribution_error_propagated": true,
+            "attribution_cached": false
+          }
+        },
+        {
+          "scenario_id": "sc_009",
+          "question": "Which movies star both Leonardo DiCaprio and Tom Hardy?",
+          "category": "multi_field",
+          "difficulty": "medium",
+          "expected_answer": "Inception, The Revenant",
+          "expected_source_ids": [
+            27205,
+            281957
+          ],
+          "expected_route": [
+            "structured_agent",
+            "analyst_agent"
+          ],
+          "answer": "Based on the evidence, **two movies** star both Leonardo DiCaprio and Tom Hardy:\n\n1. **Inception** (2010) - Directed by Christopher Nolan\n2. **The Revenant** (2015) - Directed by Alejandro Gonz\u00e1lez I\u00f1\u00e1rritu",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 18801.573500000814,
+          "token_usage": {
+            "input_tokens": 13789,
+            "output_tokens": 830
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly identifies both movies (Inception and The Revenant) that star both Leonardo DiCaprio and Tom Hardy, matching the expected answer. The additional context about directors and years doesn't detract from the correctness.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "Two movies star both Leonardo DiCaprio and Tom Hardy",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Inception (2010) stars both Leonardo DiCaprio and Tom Hardy",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Inception was directed by Christopher Nolan",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Revenant (2015) stars both Leonardo DiCaprio and Tom Hardy",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Revenant was directed by Alejandro Gonz\u00e1lez I\u00f1\u00e1rritu",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "Two movies star both Leonardo DiCaprio and Tom Hardy",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 and Tool Call 2 both return Inception (movie_id 27205) and The Revenant (movie_id 281957), showing both actors in the cast fields"
+              },
+              {
+                "claim": "Inception was released in 2010",
+                "verdict": "SUPPORTED",
+                "reason": "Both tool results show Inception with release_year: 2010"
+              },
+              {
+                "claim": "Inception was directed by Christopher Nolan",
+                "verdict": "SUPPORTED",
+                "reason": "Both tool results show Inception with director: 'Christopher Nolan'"
+              },
+              {
+                "claim": "The Revenant was released in 2015",
+                "verdict": "SUPPORTED",
+                "reason": "Both tool results show The Revenant with release_year: 2015"
+              },
+              {
+                "claim": "The Revenant was directed by Alejandro Gonz\u00e1lez I\u00f1\u00e1rritu",
+                "verdict": "SUPPORTED",
+                "reason": "Both tool results show The Revenant with director: 'Alejandro Gonz\u00e1lez I\u00f1\u00e1rritu'"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 18801.6,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 13789,
+            "output_tokens": 830,
+            "total_tokens": 14619,
+            "cost_usd": 0.053817,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 6,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 2,
+            "tool_selection_tools_used": [
+              "search_by_cast",
+              "search_by_cast"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": 1.0,
+            "tool_selection_coverage_detail": {
+              "expected": [
+                27205,
+                281957
+              ],
+              "found_in_tools": [
+                27205,
+                281957
+              ],
+              "missing": []
+            },
+            "routing_accuracy": 0.6667,
+            "routing_precision": 1.0,
+            "routing_recall": 0.5,
+            "routing_exact_order": false,
+            "routing_used": [
+              "structured_agent"
+            ],
+            "routing_expected": [
+              "structured_agent",
+              "analyst_agent"
+            ],
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 9,
+            "step_cap_hit": false,
+            "llm_call_count": 6,
+            "ma_total_tokens": 14619,
+            "ma_latency_ms": 18801.6,
+            "tokens_per_correct_answer": 14619,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_010",
+          "question": "What are the action movies directed by James Cameron?",
+          "category": "multi_field",
+          "difficulty": "medium",
+          "expected_answer": "Avatar, Aliens, Terminator 2: Judgment Day, The Terminator, True Lies, The Abyss",
+          "expected_source_ids": [
+            19995,
+            597,
+            280,
+            218
+          ],
+          "expected_route": [
+            "structured_agent"
+          ],
+          "answer": "Based on the search results, the action movies directed by James Cameron are:\n\n1. **Avatar** (2009)\n2. **Terminator 2: Judgment Day** (1991)\n3. **True Lies** (1994)\n4. **The Abyss** (1989)\n5. **Aliens** (1986)\n6. **The Terminator** (1984)",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 13865.88570800086,
+          "token_usage": {
+            "input_tokens": 7597,
+            "output_tokens": 638
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly identifies all 6 action movies directed by James Cameron that are listed in the expected answer. All films match exactly, just presented in reverse chronological order rather than the order in the expected answer. The substance is completely correct.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "Avatar (2009) is an action movie directed by James Cameron",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Terminator 2: Judgment Day (1991) is an action movie directed by James Cameron",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "True Lies (1994) is an action movie directed by James Cameron",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Abyss (1989) is an action movie directed by James Cameron",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Aliens (1986) is an action movie directed by James Cameron",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Terminator (1984) is an action movie directed by James Cameron",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "Avatar (2009) is an action movie directed by James Cameron",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows Avatar with director 'James Cameron', release_year 2009, and genres including 'Action'"
+              },
+              {
+                "claim": "Terminator 2: Judgment Day (1991) is an action movie directed by James Cameron",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows Terminator 2: Judgment Day with director 'James Cameron', release_year 1991, and genres including 'Action'"
+              },
+              {
+                "claim": "True Lies (1994) is an action movie directed by James Cameron",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows True Lies with director 'James Cameron', release_year 1994, and genres including 'Action'"
+              },
+              {
+                "claim": "The Abyss (1989) is an action movie directed by James Cameron",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows The Abyss with director 'James Cameron', release_year 1989, and genres including 'Action'"
+              },
+              {
+                "claim": "Aliens (1986) is an action movie directed by James Cameron",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows Aliens with director 'James Cameron', release_year 1986, and genres including 'Action'"
+              },
+              {
+                "claim": "The Terminator (1984) is an action movie directed by James Cameron",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows The Terminator with director 'James Cameron', release_year 1984, and genres including 'Action'"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 13865.9,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 7597,
+            "output_tokens": 638,
+            "total_tokens": 8235,
+            "cost_usd": 0.032361,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 6,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 1,
+            "tool_selection_tools_used": [
+              "search_by_director"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": 1.0,
+            "tool_selection_coverage_detail": {
+              "expected": [
+                218,
+                280,
+                597,
+                19995
+              ],
+              "found_in_tools": [
+                218,
+                280,
+                597,
+                19995
+              ],
+              "missing": []
+            },
+            "routing_accuracy": 1.0,
+            "routing_precision": 1.0,
+            "routing_recall": 1.0,
+            "routing_exact_order": true,
+            "routing_used": [
+              "structured_agent"
+            ],
+            "routing_expected": [
+              "structured_agent"
+            ],
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 8,
+            "step_cap_hit": false,
+            "llm_call_count": 6,
+            "ma_total_tokens": 8235,
+            "ma_latency_ms": 13865.9,
+            "tokens_per_correct_answer": 8235,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_011",
+          "question": "Which comedy movies have a rating above 7.5 and were released after 2010?",
+          "category": "multi_field",
+          "difficulty": "hard",
+          "expected_answer": "Varies based on dataset \u2014 requires genre=comedy, vote_average>7.5, release_date>2010",
+          "expected_source_ids": [],
+          "expected_route": [
+            "structured_agent"
+          ],
+          "answer": "Based on the evidence provided, here are the comedy movies with a rating above 7.5 released after 2010:\n\n1. **Inside Out** (2015) - Rating: 8.0\n2. **Big Hero 6** (2014) - Rating: 7.8\n3. **How to Train Your Dragon 2** (2014) - Rating: 7.6\n4. **The Wolf of Wall Street** (2013) - Rating: 7.9\n5. **The Grand Budapest Hotel** (2014) - Rating: 8.0\n6. **Moonrise Kingdom** (2012) - Rating: 7.6\n7. **Ernest & Celestine** (2012) - Rating: 7.6\n8. **About Time** (2013) - Rating: 7.8\n9. **Me You and Five Bucks** (2015) - Rating: 10.0\n10. **Karachi se Lahore** (2015) - Rating: 8.0\n11. **Kevin Hart: Laugh at My Pain** (2011) - Rating: 7.7\n12. **Along the Roadside** (2013) - Rating: 7.7\n\nNote: The Lego Movie (2014) with a rating of 7.5 is not included in this list as it does not meet the \"above 7.5\" criterion (it equals 7.5). Similarly, Instructions Not Included (2013) with a rating of 7.5 is excluded for the same reason.\n\nA total of 12 comedy movies meet your criteria.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 22784.435917004885,
+          "token_usage": {
+            "input_tokens": 10327,
+            "output_tokens": 1322
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly addresses the question by identifying comedy movies with ratings above 7.5 released after 2010. It demonstrates proper application of all three criteria (genre=comedy, vote_average>7.5, release_date>2010), provides a comprehensive list of 12 movies meeting these requirements, and even explicitly notes that movies with exactly 7.5 ratings were excluded since the question asked for 'above 7.5'. The answer format and completeness align well with what would be expected from a dataset query with these filters.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "Inside Out (2015) has a rating of 8.0",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Big Hero 6 (2014) has a rating of 7.8",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "How to Train Your Dragon 2 (2014) has a rating of 7.6",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Wolf of Wall Street (2013) has a rating of 7.9",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Grand Budapest Hotel (2014) has a rating of 8.0",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Moonrise Kingdom (2012) has a rating of 7.6",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Ernest & Celestine (2012) has a rating of 7.6",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "About Time (2013) has a rating of 7.8",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Me You and Five Bucks (2015) has a rating of 10.0",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Karachi se Lahore (2015) has a rating of 8.0",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Kevin Hart: Laugh at My Pain (2011) has a rating of 7.7",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Along the Roadside (2013) has a rating of 7.7",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Lego Movie (2014) has a rating of 7.5",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Lego Movie does not meet the 'above 7.5' criterion because it equals 7.5",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Instructions Not Included (2013) has a rating of 7.5",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Instructions Not Included is excluded because its rating equals 7.5 rather than being above 7.5",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "A total of 12 comedy movies meet the criteria of rating above 7.5 and released after 2010",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "Inside Out (2015) has a rating of 8.0",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows movie_id 150540 'Inside Out' with release_year 2015 and rating 8.0"
+              },
+              {
+                "claim": "Big Hero 6 (2014) has a rating of 7.8",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows movie_id 177572 'Big Hero 6' with release_year 2014 and rating 7.8"
+              },
+              {
+                "claim": "How to Train Your Dragon 2 (2014) has a rating of 7.6",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows movie_id 82702 'How to Train Your Dragon 2' with release_year 2014 and rating 7.6"
+              },
+              {
+                "claim": "The Wolf of Wall Street (2013) has a rating of 7.9",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows movie_id 106646 'The Wolf of Wall Street' with release_year 2013 and rating 7.9"
+              },
+              {
+                "claim": "The Grand Budapest Hotel (2014) has a rating of 8.0",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows movie_id 120467 'The Grand Budapest Hotel' with release_year 2014 and rating 8.0"
+              },
+              {
+                "claim": "Moonrise Kingdom (2012) has a rating of 7.6",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows movie_id 83666 'Moonrise Kingdom' with release_year 2012 and rating 7.6"
+              },
+              {
+                "claim": "Ernest & Celestine (2012) has a rating of 7.6",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows movie_id 126319 'Ernest & Celestine' with release_year 2012 and rating 7.6"
+              },
+              {
+                "claim": "About Time (2013) has a rating of 7.8",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows movie_id 122906 'About Time' with release_year 2013 and rating 7.8"
+              },
+              {
+                "claim": "Me You and Five Bucks (2015) has a rating of 10.0",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows movie_id 361505 'Me You and Five Bucks' with release_year 2015 and rating 10.0"
+              },
+              {
+                "claim": "Karachi se Lahore (2015) has a rating of 8.0",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows movie_id 357441 'Karachi se Lahore' with release_year 2015 and rating 8.0"
+              },
+              {
+                "claim": "Kevin Hart: Laugh at My Pain (2011) has a rating of 7.7",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows movie_id 74510 'Kevin Hart: Laugh at My Pain' with release_year 2011 and rating 7.7"
+              },
+              {
+                "claim": "Along the Roadside (2013) has a rating of 7.7",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows movie_id 173224 'Along the Roadside' with release_year 2013 and rating 7.7"
+              },
+              {
+                "claim": "The Lego Movie (2014) has a rating of 7.5",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows movie_id 137106 'The Lego Movie' with release_year 2014 and rating 7.5"
+              },
+              {
+                "claim": "Instructions Not Included (2013) has a rating of 7.5",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows movie_id 211954 'Instructions Not Included' with release_year 2013 and rating 7.5"
+              },
+              {
+                "claim": "A total of 12 comedy movies meet the criteria",
+                "verdict": "SUPPORTED",
+                "reason": "The answer lists 12 movies and excludes the two with exactly 7.5 rating, which matches the tool results for movies with rating above 7.5"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 22784.4,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 10327,
+            "output_tokens": 1322,
+            "total_tokens": 11649,
+            "cost_usd": 0.050811,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 6,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 1,
+            "tool_selection_tools_used": [
+              "filter_movies"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": null,
+            "tool_selection_coverage_detail": "no expected_source_ids for this scenario",
+            "routing_accuracy": 1.0,
+            "routing_precision": 1.0,
+            "routing_recall": 1.0,
+            "routing_exact_order": true,
+            "routing_used": [
+              "structured_agent"
+            ],
+            "routing_expected": [
+              "structured_agent"
+            ],
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 8,
+            "step_cap_hit": false,
+            "llm_call_count": 6,
+            "ma_total_tokens": 11649,
+            "ma_latency_ms": 22784.4,
+            "tokens_per_correct_answer": 11649,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_012",
+          "question": "What movies were produced by both Warner Bros. and Legendary Pictures?",
+          "category": "multi_field",
+          "difficulty": "hard",
+          "expected_answer": "Inception, The Dark Knight, The Dark Knight Rises, Interstellar, and others",
+          "expected_source_ids": [
+            27205,
+            155,
+            49026,
+            157336
+          ],
+          "expected_route": [
+            "structured_agent"
+          ],
+          "answer": "Based on the evidence provided, **23 movies** were produced by both Warner Bros. and Legendary Pictures:\n\n1. The Dark Knight Rises (2012)\n2. Superman Returns (2006)\n3. Man of Steel (2013)\n4. Jack the Giant Slayer (2013)\n5. Pacific Rim (2013)\n6. The Dark Knight (2008)\n7. Interstellar (2014)\n8. Inception (2010)\n9. Batman Begins (2005)\n10. Wrath of the Titans (2012)\n11. Watchmen (2009)\n12. Clash of the Titans (2010)\n13. 300: Rise of an Empire (2014)\n14. Where the Wild Things Are (2009)\n15. The Hangover Part II (2011)\n16. Sucker Punch (2011)\n17. Lady in the Water (2006)\n18. Due Date (2010)\n19. We Are Marshall (2006)\n20. 300 (2006)\n21. Ninja Assassin (2009)\n22. The Town (2010)\n23. The Hangover (2009)",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 22269.916416000342,
+          "token_usage": {
+            "input_tokens": 12098,
+            "output_tokens": 1313
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly identifies movies produced by both Warner Bros. and Legendary Pictures, including all the specific titles mentioned in the expected answer (Inception, The Dark Knight, The Dark Knight Rises, Interstellar). The actual answer provides a comprehensive list of 23 films, which exceeds the expected answer's 'and others' indication, demonstrating thorough and accurate information that fully addresses the question.",
+            "faithfulness_score": 0.9583,
+            "faithfulness_claims": [
+              {
+                "claim": "23 movies were produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "UNSUPPORTED"
+              },
+              {
+                "claim": "The Dark Knight Rises (2012) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Superman Returns (2006) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Man of Steel (2013) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Jack the Giant Slayer (2013) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Pacific Rim (2013) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Dark Knight (2008) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Interstellar (2014) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Inception (2010) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Batman Begins (2005) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Wrath of the Titans (2012) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Watchmen (2009) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Clash of the Titans (2010) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "300: Rise of an Empire (2014) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Where the Wild Things Are (2009) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Hangover Part II (2011) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Sucker Punch (2011) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Lady in the Water (2006) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Due Date (2010) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "We Are Marshall (2006) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "300 (2006) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Ninja Assassin (2009) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Town (2010) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Hangover (2009) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "23 movies were produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "The tool result shows a list that can be counted. Examining the truncated output shows multiple movies with both production companies listed."
+              },
+              {
+                "claim": "The Dark Knight Rises (2012) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "Tool output shows movie_id 49026 with production field containing 'Legendary Pictures, Warner Bros.'"
+              },
+              {
+                "claim": "Superman Returns (2006) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "Tool output shows movie_id 1452 with production field containing 'Legendary Pictures, Warner Bros.'"
+              },
+              {
+                "claim": "Man of Steel (2013) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "Tool output shows movie_id 49521 with production field containing 'Legendary Pictures, Warner Bros.'"
+              },
+              {
+                "claim": "Jack the Giant Slayer (2013) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "Tool output shows movie_id 81005 with production field containing 'Legendary Pictures, Warner Bros.'"
+              },
+              {
+                "claim": "Pacific Rim (2013) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "Tool output shows movie_id 68726 with production field containing 'Legendary Pictures, Warner Bros.'"
+              },
+              {
+                "claim": "The Dark Knight (2008) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "Tool output shows movie_id 155 with production field containing 'Legendary Pictures, Warner Bros.'"
+              },
+              {
+                "claim": "Interstellar (2014) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "Tool output shows movie_id 157336 with production field containing 'Legendary Pictures, Warner Bros.'"
+              },
+              {
+                "claim": "Inception (2010) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "Tool output shows movie_id 27205 with production field containing 'Legendary Pictures, Warner Bros.'"
+              },
+              {
+                "claim": "Batman Begins (2005) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "Tool output shows movie_id 272 with production field containing 'Legendary Pictures, Warner Bros.'"
+              },
+              {
+                "claim": "Wrath of the Titans (2012) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "Tool output shows movie_id 57165 with production field containing 'Legendary Pictures, Warner Bros.'"
+              },
+              {
+                "claim": "Watchmen (2009) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "Tool output shows movie_id 13183 (visible in truncated portion) with production companies including both"
+              },
+              {
+                "claim": "Clash of the Titans (2010) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "This movie appears in the tool results based on the filter for both production companies"
+              },
+              {
+                "claim": "300: Rise of an Empire (2014) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "This movie appears in the tool results based on the filter for both production companies"
+              },
+              {
+                "claim": "Where the Wild Things Are (2009) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "This movie appears in the tool results based on the filter for both production companies"
+              },
+              {
+                "claim": "The Hangover Part II (2011) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "This movie appears in the tool results based on the filter for both production companies"
+              },
+              {
+                "claim": "Sucker Punch (2011) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "This movie appears in the tool results based on the filter for both production companies"
+              },
+              {
+                "claim": "Lady in the Water (2006) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "This movie appears in the tool results based on the filter for both production companies"
+              },
+              {
+                "claim": "Due Date (2010) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "This movie appears in the tool results based on the filter for both production companies"
+              },
+              {
+                "claim": "We Are Marshall (2006) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "This movie appears in the tool results based on the filter for both production companies"
+              },
+              {
+                "claim": "300 (2006) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "This movie appears in the tool results based on the filter for both production companies"
+              },
+              {
+                "claim": "Ninja Assassin (2009) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "This movie appears in the tool results based on the filter for both production companies"
+              },
+              {
+                "claim": "The Town (2010) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "This movie appears in the tool results based on the filter for both production companies"
+              },
+              {
+                "claim": "The Hangover (2009) was produced by both Warner Bros. and Legendary Pictures",
+                "verdict": "SUPPORTED",
+                "reason": "This movie appears in the tool results based on the filter for both production companies"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 22269.9,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 12098,
+            "output_tokens": 1313,
+            "total_tokens": 13411,
+            "cost_usd": 0.055989,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 6,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 1,
+            "tool_selection_tools_used": [
+              "filter_movies"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": 1.0,
+            "tool_selection_coverage_detail": {
+              "expected": [
+                155,
+                27205,
+                49026,
+                157336
+              ],
+              "found_in_tools": [
+                155,
+                27205,
+                49026,
+                157336
+              ],
+              "missing": []
+            },
+            "routing_accuracy": 1.0,
+            "routing_precision": 1.0,
+            "routing_recall": 1.0,
+            "routing_exact_order": true,
+            "routing_used": [
+              "structured_agent"
+            ],
+            "routing_expected": [
+              "structured_agent"
+            ],
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 8,
+            "step_cap_hit": false,
+            "llm_call_count": 6,
+            "ma_total_tokens": 13411,
+            "ma_latency_ms": 22269.9,
+            "tokens_per_correct_answer": 13411,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_013",
+          "question": "What is the highest-grossing movie in the dataset?",
+          "category": "aggregation",
+          "difficulty": "medium",
+          "expected_answer": "Avatar with approximately $2.787 billion in revenue",
+          "expected_source_ids": [
+            19995
+          ],
+          "expected_route": [
+            "structured_agent"
+          ],
+          "answer": "Based on the evidence, the highest-grossing movie in the dataset is **Avatar** (2009), which earned $2,787,965,087 in revenue.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 11987.355459001265,
+          "token_usage": {
+            "input_tokens": 5815,
+            "output_tokens": 567
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly identifies Avatar as the highest-grossing movie and provides the exact revenue figure of $2,787,965,087, which matches the expected answer of approximately $2.787 billion. The answer is accurate and complete.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "The highest-grossing movie in the dataset is Avatar",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Avatar was released in 2009",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Avatar earned $2,787,965,087 in revenue",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "The highest-grossing movie in the dataset is Avatar",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 filtered movies by revenue in descending order with limit 1, returning Avatar with movie_id 19995, confirming it as the highest-grossing movie"
+              },
+              {
+                "claim": "Avatar was released in 2009",
+                "verdict": "SUPPORTED",
+                "reason": "The tool result shows 'release_year': 2009 for Avatar"
+              },
+              {
+                "claim": "Avatar earned $2,787,965,087 in revenue",
+                "verdict": "SUPPORTED",
+                "reason": "The tool result shows 'revenue': 2787965087 for Avatar, which matches the stated dollar amount"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 11987.4,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 5815,
+            "output_tokens": 567,
+            "total_tokens": 6382,
+            "cost_usd": 0.02595,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 6,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 1,
+            "tool_selection_tools_used": [
+              "filter_movies"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": 1.0,
+            "tool_selection_coverage_detail": {
+              "expected": [
+                19995
+              ],
+              "found_in_tools": [
+                19995
+              ],
+              "missing": []
+            },
+            "routing_accuracy": 1.0,
+            "routing_precision": 1.0,
+            "routing_recall": 1.0,
+            "routing_exact_order": true,
+            "routing_used": [
+              "structured_agent"
+            ],
+            "routing_expected": [
+              "structured_agent"
+            ],
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 8,
+            "step_cap_hit": false,
+            "llm_call_count": 6,
+            "ma_total_tokens": 6382,
+            "ma_latency_ms": 11987.4,
+            "tokens_per_correct_answer": 6382,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_014",
+          "question": "Compare the budgets of Avatar and Titanic.",
+          "category": "aggregation",
+          "difficulty": "medium",
+          "expected_answer": "Avatar had a budget of approximately $237M, Titanic approximately $200M",
+          "expected_source_ids": [
+            19995,
+            597
+          ],
+          "expected_route": [
+            "retrieval_agent",
+            "analyst_agent"
+          ],
+          "answer": "Based on the evidence provided:\n\n**Avatar (2009)** had a budget of **$237,000,000**\n\n**Titanic (1997)** had a budget of **$200,000,000**\n\nAvatar's budget was $37 million higher than Titanic's budget. Both films were directed by James Cameron.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 26009.134250001807,
+          "token_usage": {
+            "input_tokens": 21919,
+            "output_tokens": 1421
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly provides the budgets for both Avatar ($237M) and Titanic ($200M), matching the expected answer in substance. It also adds useful context by calculating the difference and noting both were directed by James Cameron, which enhances rather than contradicts the expected answer.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "Avatar (2009) had a budget of $237,000,000",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Titanic (1997) had a budget of $200,000,000",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Avatar's budget was $37 million higher than Titanic's budget",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Both films were directed by James Cameron",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "Avatar (2009) had a budget of $237,000,000",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 2 shows Avatar's budget as $237,000,000"
+              },
+              {
+                "claim": "Titanic (1997) had a budget of $200,000,000",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 4 shows Titanic's budget as $200,000,000"
+              },
+              {
+                "claim": "Avatar's budget was $37 million higher than Titanic's budget",
+                "verdict": "SUPPORTED",
+                "reason": "Mathematical calculation based on the budgets shown in tool results: $237,000,000 - $200,000,000 = $37,000,000"
+              },
+              {
+                "claim": "Both films were directed by James Cameron",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 2 shows Avatar directed by James Cameron, and Tool Call 4 shows Titanic directed by James Cameron"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 26009.1,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 21919,
+            "output_tokens": 1421,
+            "total_tokens": 23340,
+            "cost_usd": 0.087072,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 11,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 4,
+            "tool_selection_tools_used": [
+              "search_movies",
+              "get_movie_details",
+              "search_movies",
+              "get_movie_details"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": 1.0,
+            "tool_selection_coverage_detail": {
+              "expected": [
+                597,
+                19995
+              ],
+              "found_in_tools": [
+                597,
+                19995
+              ],
+              "missing": []
+            },
+            "routing_accuracy": 0.6667,
+            "routing_precision": 1.0,
+            "routing_recall": 0.5,
+            "routing_exact_order": false,
+            "routing_used": [
+              "retrieval_agent"
+            ],
+            "routing_expected": [
+              "retrieval_agent",
+              "analyst_agent"
+            ],
+            "handoff_count": 4,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 15,
+            "step_cap_hit": false,
+            "llm_call_count": 11,
+            "ma_total_tokens": 23340,
+            "ma_latency_ms": 26009.1,
+            "tokens_per_correct_answer": 23340,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_015",
+          "question": "Which director has the most movies in the dataset?",
+          "category": "aggregation",
+          "difficulty": "hard",
+          "expected_answer": "Varies \u2014 likely Steven Spielberg or Woody Allen based on typical TMDB data",
+          "expected_source_ids": [],
+          "expected_route": [
+            "structured_agent",
+            "analyst_agent"
+          ],
+          "answer": "Based on the evidence provided, **Steven Spielberg** has the most movies in the dataset with **27 movies**.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 19708.506666000176,
+          "token_usage": {
+            "input_tokens": 52727,
+            "output_tokens": 972
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly identifies Steven Spielberg as the director with the most movies (27), which matches one of the likely candidates mentioned in the expected answer. The response directly addresses the question with specific data.",
+            "faithfulness_score": 0.5,
+            "faithfulness_claims": [
+              {
+                "claim": "Steven Spielberg has the most movies in the dataset",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Steven Spielberg has 27 movies",
+                "verdict": "UNSUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.5,
+            "hallucination_claims": [
+              {
+                "claim": "Steven Spielberg has the most movies in the dataset",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 returned results for Steven Spielberg showing multiple movies. By counting the visible entries in each director's results, Spielberg appears to have more movies than the other directors searched."
+              },
+              {
+                "claim": "Steven Spielberg has 27 movies",
+                "verdict": "HALLUCINATED",
+                "reason": "The tool results for Steven Spielberg (Tool Call 1) show 14 visible movie entries in the truncated output. The exact total count of 27 is not stated anywhere in the tool results. While the results are marked as truncated, no total count is provided in the tool output."
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 19708.5,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 52727,
+            "output_tokens": 972,
+            "total_tokens": 53699,
+            "cost_usd": 0.172761,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 7,
+            "tool_selection_score": 0.95,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 9,
+            "tool_selection_tools_used": [
+              "search_by_director",
+              "search_by_director",
+              "search_by_director",
+              "search_by_director",
+              "search_by_director",
+              "search_by_director",
+              "search_by_director",
+              "search_by_director",
+              "search_by_director"
+            ],
+            "tool_selection_reasonable_score": 0.88,
+            "tool_selection_coverage_score": null,
+            "tool_selection_coverage_detail": "no expected_source_ids for this scenario",
+            "routing_accuracy": 0.6667,
+            "routing_precision": 1.0,
+            "routing_recall": 0.5,
+            "routing_exact_order": false,
+            "routing_used": [
+              "structured_agent"
+            ],
+            "routing_expected": [
+              "structured_agent",
+              "analyst_agent"
+            ],
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 16,
+            "step_cap_hit": false,
+            "llm_call_count": 7,
+            "ma_total_tokens": 53699,
+            "ma_latency_ms": 19708.5,
+            "tokens_per_correct_answer": 53699,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": "structured_agent",
+            "attribution_failure_type": "bad_tool_args",
+            "attribution_reason": "The structured_agent manually searched individual directors one-by-one instead of using a proper aggregation query to find the director with the most movies across the entire dataset.",
+            "attribution_error_propagated": true,
+            "attribution_cached": false
+          }
+        },
+        {
+          "scenario_id": "sc_016",
+          "question": "What is the average rating of Christopher Nolan films?",
+          "category": "aggregation",
+          "difficulty": "hard",
+          "expected_answer": "Approximately 7.5-8.0 depending on films in dataset",
+          "expected_source_ids": [
+            27205,
+            155,
+            49026,
+            157336,
+            1124
+          ],
+          "expected_route": [
+            "structured_agent",
+            "analyst_agent"
+          ],
+          "answer": "Based on the evidence gathered, the average rating of Christopher Nolan films is **7.8**.\n\nThis is calculated from 8 films:\n- The Dark Knight (8.2)\n- Interstellar (8.1)\n- Inception (8.1)\n- Memento (8.1)\n- The Prestige (8.0)\n- The Dark Knight Rises (7.6)\n- Batman Begins (7.5)\n- Insomnia (6.8)\n\nTotal: 62.4 \u00f7 8 = 7.8",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 19988.334124995163,
+          "token_usage": {
+            "input_tokens": 11414,
+            "output_tokens": 1109
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer provides a specific average of 7.8, which falls within the expected range of 7.5-8.0. It also shows the calculation methodology and lists the individual films with their ratings, demonstrating correctness and transparency in arriving at the answer.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "The average rating of Christopher Nolan films is 7.8",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Dark Knight has a rating of 8.2",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Interstellar has a rating of 8.1",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Inception has a rating of 8.1",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Memento has a rating of 8.1",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Prestige has a rating of 8.0",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Dark Knight Rises has a rating of 7.6",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Batman Begins has a rating of 7.5",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Insomnia has a rating of 6.8",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The calculation is based on 8 films",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The total of ratings is 62.4",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "62.4 divided by 8 equals 7.8",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "The average rating of Christopher Nolan films is 7.8",
+                "verdict": "SUPPORTED",
+                "reason": "Calculated from the 8 films returned in Tool Call 1. Sum of ratings (8.2+8.1+8.1+8.1+8.0+7.6+7.5+6.8) = 62.4, divided by 8 = 7.8"
+              },
+              {
+                "claim": "This is calculated from 8 films",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 returned exactly 8 Christopher Nolan films"
+              },
+              {
+                "claim": "The Dark Knight has rating 8.2",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows The Dark Knight with rating: 8.2"
+              },
+              {
+                "claim": "Interstellar has rating 8.1",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Interstellar with rating: 8.1"
+              },
+              {
+                "claim": "Inception has rating 8.1",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Inception with rating: 8.1"
+              },
+              {
+                "claim": "Memento has rating 8.1",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Memento with rating: 8.1"
+              },
+              {
+                "claim": "The Prestige has rating 8.0",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows The Prestige with rating: 8.0"
+              },
+              {
+                "claim": "The Dark Knight Rises has rating 7.6",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows The Dark Knight Rises with rating: 7.6"
+              },
+              {
+                "claim": "Batman Begins has rating 7.5",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Batman Begins with rating: 7.5"
+              },
+              {
+                "claim": "Insomnia has rating 6.8",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Insomnia with rating: 6.8"
+              },
+              {
+                "claim": "Total is 62.4",
+                "verdict": "SUPPORTED",
+                "reason": "Correct sum of the 8 ratings listed: 8.2+8.1+8.1+8.1+8.0+7.6+7.5+6.8 = 62.4"
+              },
+              {
+                "claim": "62.4 \u00f7 8 = 7.8",
+                "verdict": "SUPPORTED",
+                "reason": "Correct arithmetic calculation"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 19988.3,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 11414,
+            "output_tokens": 1109,
+            "total_tokens": 12523,
+            "cost_usd": 0.050877,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 8,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 1,
+            "tool_selection_tools_used": [
+              "search_by_director"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": 1.0,
+            "tool_selection_coverage_detail": {
+              "expected": [
+                155,
+                1124,
+                27205,
+                49026,
+                157336
+              ],
+              "found_in_tools": [
+                155,
+                1124,
+                27205,
+                49026,
+                157336
+              ],
+              "missing": []
+            },
+            "routing_accuracy": 1.0,
+            "routing_precision": 1.0,
+            "routing_recall": 1.0,
+            "routing_exact_order": true,
+            "routing_used": [
+              "structured_agent",
+              "analyst_agent"
+            ],
+            "routing_expected": [
+              "structured_agent",
+              "analyst_agent"
+            ],
+            "handoff_count": 4,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 12,
+            "step_cap_hit": false,
+            "llm_call_count": 8,
+            "ma_total_tokens": 12523,
+            "ma_latency_ms": 19988.3,
+            "tokens_per_correct_answer": 12523,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_027",
+          "question": "Which actors appeared in both a Christopher Nolan film and a Quentin Tarantino film?",
+          "category": "multi_hop",
+          "difficulty": "hard",
+          "expected_answer": "Varies \u2014 requires cross-referencing cast lists across Nolan and Tarantino films in dataset",
+          "expected_source_ids": [],
+          "expected_route": [
+            "structured_agent",
+            "analyst_agent"
+          ],
+          "answer": "Based on the evidence gathered from the database, **Leonardo DiCaprio** is the actor who appeared in both a Christopher Nolan film and a Quentin Tarantino film.\n\nSpecifically:\n- **Christopher Nolan film:** Inception (2010)\n- **Quentin Tarantino film:** Django Unchained (2012)",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 39108.89079199842,
+          "token_usage": {
+            "input_tokens": 24313,
+            "output_tokens": 2472
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 0.5,
+            "task_success_reason": "The answer correctly identifies Leonardo DiCaprio as an actor who appeared in both a Nolan film (Inception) and a Tarantino film (Django Unchained), which is factually accurate. However, the question asks 'Which actors' (plural) and the expected answer indicates this 'requires cross-referencing cast lists' suggesting multiple actors should be found. The answer only provides one actor when there are likely others (e.g., Tom Berenger appeared in Inception and Inglourious Basterds). The answer is partially correct but incomplete.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "Leonardo DiCaprio appeared in both a Christopher Nolan film and a Quentin Tarantino film",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Leonardo DiCaprio appeared in Inception (2010), a Christopher Nolan film",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Leonardo DiCaprio appeared in Django Unchained (2012), a Quentin Tarantino film",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "Leonardo DiCaprio appeared in both a Christopher Nolan film and a Quentin Tarantino film",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Leonardo DiCaprio in Inception (Nolan), Tool Call 2 shows Leonardo DiCaprio in Django Unchained (Tarantino)"
+              },
+              {
+                "claim": "Leonardo DiCaprio appeared in Inception (2010)",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Inception directed by Christopher Nolan with cast including Leonardo DiCaprio, release year 2010"
+              },
+              {
+                "claim": "Inception is a Christopher Nolan film",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Inception with director Christopher Nolan"
+              },
+              {
+                "claim": "Leonardo DiCaprio appeared in Django Unchained (2012)",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 2 shows Django Unchained directed by Quentin Tarantino with cast including Leonardo DiCaprio, release year 2012"
+              },
+              {
+                "claim": "Django Unchained is a Quentin Tarantino film",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 2 shows Django Unchained with director Quentin Tarantino"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 39108.9,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 24313,
+            "output_tokens": 2472,
+            "total_tokens": 26785,
+            "cost_usd": 0.110019,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 11,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 2,
+            "tool_selection_tools_used": [
+              "search_by_director",
+              "search_by_director"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": null,
+            "tool_selection_coverage_detail": "no expected_source_ids for this scenario",
+            "routing_accuracy": 1.0,
+            "routing_precision": 1.0,
+            "routing_recall": 1.0,
+            "routing_exact_order": true,
+            "routing_used": [
+              "structured_agent",
+              "analyst_agent"
+            ],
+            "routing_expected": [
+              "structured_agent",
+              "analyst_agent"
+            ],
+            "handoff_count": 6,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 17,
+            "step_cap_hit": false,
+            "llm_call_count": 11,
+            "ma_total_tokens": 26785,
+            "ma_latency_ms": 39108.9,
+            "tokens_per_correct_answer": null,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "unparseable judge response",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_028",
+          "question": "Name a movie where the director also acted in it.",
+          "category": "multi_hop",
+          "difficulty": "hard",
+          "expected_answer": "Varies \u2014 requires cross-referencing cast and crew for same person across films",
+          "expected_source_ids": [],
+          "expected_route": [
+            "structured_agent",
+            "analyst_agent"
+          ],
+          "answer": "Based on the evidence provided, here's an example:\n\n**Gran Torino** (2008) - Directed by and starring Clint Eastwood.\n\nOther examples include:\n- **Braveheart** (1995) - Directed by and starring Mel Gibson\n- **Argo** (2012) - Directed by and starring Ben Affleck\n- **Million Dollar Baby** (2004) - Directed by and starring Clint Eastwood",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 19662.394083003164,
+          "token_usage": {
+            "input_tokens": 12507,
+            "output_tokens": 1108
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly addresses the question by providing multiple valid examples of movies where the director also acted in them. The examples given (Gran Torino, Braveheart, Argo, Million Dollar Baby) are all accurate instances of director-actors. The expected answer indicates this requires cross-referencing cast and crew data, which the assistant successfully demonstrates by identifying people who appear in both roles across multiple films.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "Gran Torino was released in 2008",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Gran Torino was directed by Clint Eastwood",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Gran Torino starred Clint Eastwood",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Braveheart was released in 1995",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Braveheart was directed by Mel Gibson",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Braveheart starred Mel Gibson",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Argo was released in 2012",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Argo was directed by Ben Affleck",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Argo starred Ben Affleck",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Million Dollar Baby was released in 2004",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Million Dollar Baby was directed by Clint Eastwood",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Million Dollar Baby starred Clint Eastwood",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": null,
+            "hallucination_claims": [],
+            "error": "judge returned unparseable response",
+            "raw_response": "I'll analyze each factual claim in the answer against the tool results.\n\n**Claim 1: Gran Torino (2008) - Directed by and starring Clint Eastwood**\n- Tool Call 1 shows: `{\"movie_id\": 13223, \"title\": \"Gran Torino\", \"director\": \"Clint Eastwood\", \"cast\": \"Clint Eastwood, Christopher Carley, Bee Vang, Ahney Her, Brian Haley\", \"genres\": \"Drama\", \"release_year\": 2008...}`\n- Director: Clint Eastwood \u2713\n- Cast includes: Clint Eastwood \u2713\n- Year: 2008 \u2713\n- **SUPPORTED**\n\n**Claim 2: Braveheart (1995) - Directed by and starring Mel Gibson**\n- Tool Call 2 shows: `{\"movie_id\": 197, \"title\": \"Braveheart\", \"director\": \"Mel Gibson\", \"cast\": \"Mel Gibson, Catherine McCormack, Sophie Marceau, Patrick McGoohan, Angus Macfadyen\", \"genres\": \"Action, Drama, History, War\", \"release_year\": 1995...}`\n- Director: Mel Gibson \u2713\n- Cast includes: Mel Gibson \u2713\n- Year: 1995 \u2713\n- **SUPPORTED**\n\n**Claim 3: Argo (2012) - Directed by and starring Ben Affleck**\n- Tool Call 3 shows: `{\"movie_id\": 68734, \"title\": \"Argo\", \"director\": \"Ben Affleck\", \"cast\": \"Ben Affleck, Bryan Cranston, Alan Arkin, John Goodman, Victor Garber\", \"genres\": \"Drama, Thriller\", \"release_year\": 2012...}`\n- Director: Ben Affleck \u2713\n- Cast includes: Ben Affleck \u2713\n- Year: 2012 \u2713\n- **SUPPORTED**\n\n**Claim 4: Million Dollar Baby (2004) - Directed by and starring Clint Eastwood**\n- Tool Call 1 shows: `{\"movie_id\": 70, \"title\": \"Million Dollar Baby\", \"director\": \"Clint Eastwood\", \"cast\": \"Clint Eastwood, Hilary Swank, Morgan Freeman, Jay Baruchel, Mike Colter\", \"genres\": \"Drama\", \"release_year\": 2004...}`\n- Director: Clint Eastwood \u2713\n- Cast includes: Clint Eastwood \u2713\n- Year: 2004 \u2713\n- **SUPPORTED**\n\n```json\n{\n  \"claims\": [\n    {\n      \"claim\": \"Gran Torino (2008) - Directed by and starring Clint Eastwood\",\n      \"verdict\": \"SUPPORTED\",\n      \"reason\": \"Tool Call 1 confirms Clint Eastwood is both director and in the cast of Gran Torino (2008)\"\n    },\n    {\n      \"claim\": \"Braveheart (1995) - Directed by and starring Mel Gibson\",\n      \"verdict\": \"SUPPORTED\",\n      \"reason\": \"Tool Call 2 confirms Mel Gibson is both director and in the cast of Braveheart (1995)\"\n    },\n    {\n      \"claim\": \"Argo (2012) - Directed by and starring Ben Affleck\",\n      \"verdict\": \"SUPPORTED\",\n      \"reason\": \"Tool Call 3 confirms Ben Affleck is both director and in the cast of Argo (2012)\"\n    },\n    {\n      \"claim\": \"Million Dollar Baby (2004) - Directed by and starring Clint Eastwood\",\n      \"verdict\": \"SUPPORTED\",\n      \"reason\": \"Tool Call 1 confirms Clint Eastwood is both director and in the cast of Million Dollar Baby (2004)\"\n    }\n  ],\n  \"hallucination_score\": 0.0\n}\n```",
+            "latency_pass": false,
+            "latency_ms": 19662.4,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 12507,
+            "output_tokens": 1108,
+            "total_tokens": 13615,
+            "cost_usd": 0.054141,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 6,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 3,
+            "tool_selection_tools_used": [
+              "search_by_director",
+              "search_by_director",
+              "search_by_director"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": null,
+            "tool_selection_coverage_detail": "no expected_source_ids for this scenario",
+            "routing_accuracy": 0.6667,
+            "routing_precision": 1.0,
+            "routing_recall": 0.5,
+            "routing_exact_order": false,
+            "routing_used": [
+              "structured_agent"
+            ],
+            "routing_expected": [
+              "structured_agent",
+              "analyst_agent"
+            ],
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 10,
+            "step_cap_hit": false,
+            "llm_call_count": 6,
+            "ma_total_tokens": 13615,
+            "ma_latency_ms": 19662.4,
+            "tokens_per_correct_answer": 13615,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_029",
+          "question": "Which sci-fi movie had the best return on investment based on budget vs revenue?",
+          "category": "multi_hop",
+          "difficulty": "hard",
+          "expected_answer": "Varies \u2014 requires filtering sci-fi genre, computing revenue/budget ratio, finding maximum",
+          "expected_source_ids": [],
+          "expected_route": [
+            "structured_agent",
+            "analyst_agent"
+          ],
+          "answer": "Based on the evidence provided, **Avatar** had the best return on investment among sci-fi movies, with an ROI of **11.76x** (budget of $237,000,000 and revenue of $2,787,965,087).\n\nHowever, I note there is an inconsistency in the evidence: while the structured data clearly shows Avatar with the highest ROI at 11.76x, the agent's summary text contradictorily states \"Jurassic World has the highest ROI at 10.09x, followed by Avatar at 11.76x\" - which is mathematically incorrect since 11.76x is greater than 10.09x. Based on the actual numbers in the structured data, Avatar had the superior return on investment.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 32873.72087500262,
+          "token_usage": {
+            "input_tokens": 18080,
+            "output_tokens": 1580
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly identifies Avatar as the sci-fi movie with the best ROI (11.76x) by filtering the sci-fi genre, computing the revenue/budget ratio, and finding the maximum value. The answer even catches an inconsistency in the source data. This properly addresses the question as expected.",
+            "faithfulness_score": 0.6667,
+            "faithfulness_claims": [
+              {
+                "claim": "Avatar had the best return on investment among sci-fi movies",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Avatar had an ROI of 11.76x",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Avatar had a budget of $237,000,000",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Avatar had revenue of $2,787,965,087",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "There is an inconsistency in the evidence where the agent's summary text states 'Jurassic World has the highest ROI at 10.09x, followed by Avatar at 11.76x'",
+                "verdict": "UNSUPPORTED"
+              },
+              {
+                "claim": "Jurassic World had an ROI of 10.09x",
+                "verdict": "UNSUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.1667,
+            "hallucination_claims": [
+              {
+                "claim": "Avatar had the best return on investment among sci-fi movies",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Avatar with budget $237,000,000 and revenue $2,787,965,087, which yields the highest ROI ratio among the returned movies"
+              },
+              {
+                "claim": "Avatar had an ROI of 11.76x",
+                "verdict": "SUPPORTED",
+                "reason": "Calculating from the tool data: $2,787,965,087 / $237,000,000 = 11.76x"
+              },
+              {
+                "claim": "Avatar had a budget of $237,000,000",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Avatar with budget: 237000000"
+              },
+              {
+                "claim": "Avatar had revenue of $2,787,965,087",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Avatar with revenue: 2787965087"
+              },
+              {
+                "claim": "There is an inconsistency in the evidence where the agent's summary text states 'Jurassic World has the highest ROI at 10.09x, followed by Avatar at 11.76x'",
+                "verdict": "HALLUCINATED",
+                "reason": "The tool results do not contain any summary text or agent commentary stating this. The tool output only shows structured movie data without any ROI calculations or comparative statements"
+              },
+              {
+                "claim": "Jurassic World has an ROI of 10.09x",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows Jurassic World with budget $150,000,000 and revenue $1,513,528,810, which calculates to 10.09x ROI"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 32873.7,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 18080,
+            "output_tokens": 1580,
+            "total_tokens": 19660,
+            "cost_usd": 0.07794,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 8,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 1,
+            "tool_selection_tools_used": [
+              "filter_movies"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": null,
+            "tool_selection_coverage_detail": "no expected_source_ids for this scenario",
+            "routing_accuracy": 0.6667,
+            "routing_precision": 1.0,
+            "routing_recall": 0.5,
+            "routing_exact_order": false,
+            "routing_used": [
+              "structured_agent"
+            ],
+            "routing_expected": [
+              "structured_agent",
+              "analyst_agent"
+            ],
+            "handoff_count": 3,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 11,
+            "step_cap_hit": false,
+            "llm_call_count": 8,
+            "ma_total_tokens": 19660,
+            "ma_latency_ms": 32873.7,
+            "tokens_per_correct_answer": 19660,
+            "verifier_action": "revise",
+            "verifier_revision_changed_answer": true,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_030",
+          "question": "Find me a drama movie from the 2000s with a budget under $50 million that earned more than $200 million.",
+          "category": "multi_hop",
+          "difficulty": "hard",
+          "expected_answer": "Varies \u2014 requires genre + date + budget + revenue filtering across documents",
+          "expected_source_ids": [],
+          "expected_route": [
+            "structured_agent"
+          ],
+          "answer": "Based on the search results, here are drama movies from the 2000s with budgets under $50 million that earned more than $200 million:\n\n**The Passion of the Christ** (2004) is an excellent match:\n- Budget: $30 million\n- Revenue: $611.9 million\n- Director: Mel Gibson\n- Rating: 6.9\n\n**Slumdog Millionaire** (2008) is another strong example:\n- Budget: $15 million\n- Revenue: $377.9 million\n- Director: Danny Boyle\n- Rating: 7.6\n\n**My Big Fat Greek Wedding** (2002) also fits:\n- Budget: $5 million\n- Revenue: $368.7 million\n- Director: Joel Zwick\n- Rating: 6.2\n\nNote: The Twilight films also appear in the results as they contain drama as one of their genres, though they're primarily fantasy/romance films.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 21035.86679200089,
+          "token_usage": {
+            "input_tokens": 8049,
+            "output_tokens": 1159
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer successfully performs the required multi-criteria filtering (genre=drama, date=2000s, budget<$50M, revenue>$200M) and provides multiple valid examples with specific data points. The three main examples given (The Passion of the Christ, Slumdog Millionaire, My Big Fat Greek Wedding) all meet the specified criteria and include relevant details like budget, revenue, director, and rating. The answer demonstrates proper data filtering across multiple documents.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "The Passion of the Christ was released in 2004",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Passion of the Christ had a budget of $30 million",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Passion of the Christ earned revenue of $611.9 million",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Passion of the Christ was directed by Mel Gibson",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Passion of the Christ has a rating of 6.9",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Slumdog Millionaire was released in 2008",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Slumdog Millionaire had a budget of $15 million",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Slumdog Millionaire earned revenue of $377.9 million",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Slumdog Millionaire was directed by Danny Boyle",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Slumdog Millionaire has a rating of 7.6",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "My Big Fat Greek Wedding was released in 2002",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "My Big Fat Greek Wedding had a budget of $5 million",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "My Big Fat Greek Wedding earned revenue of $368.7 million",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "My Big Fat Greek Wedding was directed by Joel Zwick",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "My Big Fat Greek Wedding has a rating of 6.2",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Twilight films appear in the results",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Twilight films contain drama as one of their genres",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Twilight films are primarily fantasy/romance films",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "The Passion of the Christ (2004) has a budget of $30 million",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows budget: 30000000 for this movie"
+              },
+              {
+                "claim": "The Passion of the Christ has revenue of $611.9 million",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows revenue: 611899420 for this movie"
+              },
+              {
+                "claim": "The Passion of the Christ was directed by Mel Gibson",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows director: 'Mel Gibson'"
+              },
+              {
+                "claim": "The Passion of the Christ has a rating of 6.9",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows rating: 6.9"
+              },
+              {
+                "claim": "Slumdog Millionaire (2008) has a budget of $15 million",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows budget: 15000000 for this movie"
+              },
+              {
+                "claim": "Slumdog Millionaire has revenue of $377.9 million",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows revenue: 377910544 for this movie"
+              },
+              {
+                "claim": "Slumdog Millionaire was directed by Danny Boyle",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows director: 'Danny Boyle'"
+              },
+              {
+                "claim": "Slumdog Millionaire has a rating of 7.6",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows rating: 7.6"
+              },
+              {
+                "claim": "My Big Fat Greek Wedding (2002) has a budget of $5 million",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows budget: 5000000 for this movie"
+              },
+              {
+                "claim": "My Big Fat Greek Wedding has revenue of $368.7 million",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows revenue: 368744044 for this movie"
+              },
+              {
+                "claim": "My Big Fat Greek Wedding was directed by Joel Zwick",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows director: 'Joel Zwick'"
+              },
+              {
+                "claim": "My Big Fat Greek Wedding has a rating of 6.2",
+                "verdict": "SUPPORTED",
+                "reason": "Tool result shows rating: 6.2"
+              },
+              {
+                "claim": "The Twilight films contain drama as one of their genres",
+                "verdict": "SUPPORTED",
+                "reason": "Tool results show genres for Twilight include 'Drama' (genres: 'Adventure, Fantasy, Drama, Romance')"
+              },
+              {
+                "claim": "The Twilight films are primarily fantasy/romance films",
+                "verdict": "SUPPORTED",
+                "reason": "Tool results show genres include 'Fantasy' and 'Romance' listed before 'Drama' in the genre string"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 21035.9,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 8049,
+            "output_tokens": 1159,
+            "total_tokens": 9208,
+            "cost_usd": 0.041532,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 6,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 1,
+            "tool_selection_tools_used": [
+              "filter_movies"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": null,
+            "tool_selection_coverage_detail": "no expected_source_ids for this scenario",
+            "routing_accuracy": 1.0,
+            "routing_precision": 1.0,
+            "routing_recall": 1.0,
+            "routing_exact_order": true,
+            "routing_used": [
+              "structured_agent"
+            ],
+            "routing_expected": [
+              "structured_agent"
+            ],
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 8,
+            "step_cap_hit": false,
+            "llm_call_count": 6,
+            "ma_total_tokens": 9208,
+            "ma_latency_ms": 21035.9,
+            "tokens_per_correct_answer": 9208,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_022",
+          "question": "What Oscar did Inception win for Best Picture?",
+          "category": "adversarial",
+          "difficulty": "hard",
+          "expected_answer": "The available data does not contain award information. Inception did not win Best Picture at the Oscars.",
+          "expected_source_ids": [
+            27205
+          ],
+          "expected_route": [],
+          "answer": "I don't have that information. The database does not contain awards information for Inception.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 21531.96679100074,
+          "token_usage": {
+            "input_tokens": 14041,
+            "output_tokens": 927
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly states that award information is not available in the database, which matches the expected answer's substance. While the expected answer provides additional context that Inception didn't win Best Picture, the actual answer appropriately refuses to answer due to lack of data, which is the correct response for a 'no answer' scenario.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "The database does not contain awards information for Inception",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "The database does not contain awards information for Inception",
+                "verdict": "SUPPORTED",
+                "reason": "The tool results show movie details for Inception including director, cast, budget, revenue, runtime, rating, keywords, and plot, but no awards or Oscar information is present in any of the returned data"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 21532.0,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 14041,
+            "output_tokens": 927,
+            "total_tokens": 14968,
+            "cost_usd": 0.056028,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 9,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 2,
+            "tool_selection_tools_used": [
+              "search_movies",
+              "get_movie_details"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": 1.0,
+            "tool_selection_coverage_detail": {
+              "expected": [
+                27205
+              ],
+              "found_in_tools": [
+                27205
+              ],
+              "missing": []
+            },
+            "routing_accuracy": null,
+            "routing_precision": null,
+            "routing_recall": null,
+            "routing_exact_order": null,
+            "routing_reason": "scenario has no expected_route",
+            "handoff_count": 3,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 12,
+            "step_cap_hit": false,
+            "llm_call_count": 9,
+            "ma_total_tokens": 14968,
+            "ma_latency_ms": 21532.0,
+            "tokens_per_correct_answer": 14968,
+            "verifier_action": "revise",
+            "verifier_revision_changed_answer": true,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_023",
+          "question": "Did Leonardo DiCaprio direct any movies in the dataset?",
+          "category": "adversarial",
+          "difficulty": "medium",
+          "expected_answer": "No, Leonardo DiCaprio does not appear as a director in the dataset. He appears as an actor.",
+          "expected_source_ids": [],
+          "expected_route": [],
+          "answer": "Based on the evidence gathered from the database search, **no**, Leonardo DiCaprio did not direct any movies in the dataset. The search for movies directed by Leonardo DiCaprio returned no results.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 11912.104000002728,
+          "token_usage": {
+            "input_tokens": 5146,
+            "output_tokens": 461
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly states that Leonardo DiCaprio did not direct any movies in the dataset, which matches the expected answer's core claim. While the expected answer additionally mentions he appears as an actor, this extra detail doesn't make the actual answer incorrect\u2014it fully addresses the question asked.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "Leonardo DiCaprio did not direct any movies in the dataset",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The search for movies directed by Leonardo DiCaprio returned no results",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "Leonardo DiCaprio did not direct any movies in the dataset",
+                "verdict": "SUPPORTED",
+                "reason": "The tool search_by_director with parameter 'Leonardo DiCaprio' returned no output, which supports the conclusion that he did not direct any movies in the dataset"
+              },
+              {
+                "claim": "The search for movies directed by Leonardo DiCaprio returned no results",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 shows search_by_director for Leonardo DiCaprio returned '(no output)', confirming no results were found"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 11912.1,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 5146,
+            "output_tokens": 461,
+            "total_tokens": 5607,
+            "cost_usd": 0.022353,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 6,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 1,
+            "tool_selection_tools_used": [
+              "search_by_director"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": null,
+            "tool_selection_coverage_detail": "no expected_source_ids for this scenario",
+            "routing_accuracy": null,
+            "routing_precision": null,
+            "routing_recall": null,
+            "routing_exact_order": null,
+            "routing_reason": "scenario has no expected_route",
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 8,
+            "step_cap_hit": false,
+            "llm_call_count": 6,
+            "ma_total_tokens": 5607,
+            "ma_latency_ms": 11912.1,
+            "tokens_per_correct_answer": 5607,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_024",
+          "question": "Tell me about the sequel to Inception called Inception 2.",
+          "category": "adversarial",
+          "difficulty": "medium",
+          "expected_answer": "There is no movie called Inception 2 in the available data. Inception does not have a sequel.",
+          "expected_source_ids": [],
+          "expected_route": [],
+          "answer": "Based on the search results, I don't have information about a sequel to Inception called \"Inception 2\" because no such movie exists in the database. The only Inception film found is the original 2010 movie directed by Christopher Nolan and starring Leonardo DiCaprio. There is no sequel to Inception.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 14954.806292000285,
+          "token_usage": {
+            "input_tokens": 10843,
+            "output_tokens": 627
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly states that there is no sequel to Inception called 'Inception 2' and that no such movie exists in the database, which matches the expected answer that there is no Inception 2 and Inception has no sequel. The assistant appropriately rejects the false premise of the question.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "No such movie called 'Inception 2' exists in the database",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The only Inception film found is the original 2010 movie",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The original Inception was directed by Christopher Nolan",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The original Inception starred Leonardo DiCaprio",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "There is no sequel to Inception",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "No movie called 'Inception 2' exists in the database",
+                "verdict": "SUPPORTED",
+                "reason": "The search results for 'Inception 2 sequel' and 'Inception sequel continuation' only return the original Inception (2010) and unrelated sequels like 'The Ring Two', 'Now You See Me 2', etc. No 'Inception 2' is present in the results."
+              },
+              {
+                "claim": "The only Inception film found is the original 2010 movie",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 1 and Tool Call 2 both return movie_id 27205 'Inception' with Release Year: 2010 as the only Inception film."
+              },
+              {
+                "claim": "Inception was directed by Christopher Nolan",
+                "verdict": "SUPPORTED",
+                "reason": "Both tool results show 'Director: Christopher Nolan' for the Inception movie (movie_id 27205)."
+              },
+              {
+                "claim": "Inception starred Leonardo DiCaprio",
+                "verdict": "SUPPORTED",
+                "reason": "Both tool results list 'Leonardo DiCaprio' first in the cast for Inception (movie_id 27205)."
+              },
+              {
+                "claim": "There is no sequel to Inception",
+                "verdict": "SUPPORTED",
+                "reason": "The search results specifically looking for an Inception sequel return only the original 2010 film and other unrelated sequels, indicating no Inception sequel exists in the database."
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 14954.8,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 10843,
+            "output_tokens": 627,
+            "total_tokens": 11470,
+            "cost_usd": 0.041934,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 6,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 2,
+            "tool_selection_tools_used": [
+              "search_movies",
+              "search_movies"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": null,
+            "tool_selection_coverage_detail": "no expected_source_ids for this scenario",
+            "routing_accuracy": null,
+            "routing_precision": null,
+            "routing_recall": null,
+            "routing_exact_order": null,
+            "routing_reason": "scenario has no expected_route",
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 9,
+            "step_cap_hit": false,
+            "llm_call_count": 6,
+            "ma_total_tokens": 11470,
+            "ma_latency_ms": 14954.8,
+            "tokens_per_correct_answer": 11470,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_025",
+          "question": "Why was Avatar considered a box office failure?",
+          "category": "adversarial",
+          "difficulty": "hard",
+          "expected_answer": "Avatar was not a box office failure. It generated approximately $2.787 billion in revenue against a $237 million budget.",
+          "expected_source_ids": [
+            19995
+          ],
+          "expected_route": [],
+          "answer": "Based on the evidence provided, **Avatar was not considered a box office failure**. In fact, it was the opposite - a massive box office success.\n\nAccording to the data:\n- **Budget:** $237 million\n- **Revenue:** $2.79 billion worldwide\n- **Profit:** Over $2.5 billion\n\nThe film is described as \"one of the highest-grossing films of all time.\" There is no information in the evidence suggesting Avatar was a box office failure.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 16757.02275000367,
+          "token_usage": {
+            "input_tokens": 10997,
+            "output_tokens": 807
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly identifies and refutes the false premise in the question. It accurately states that Avatar was not a box office failure but rather a massive success, providing specific financial data (budget of $237 million, revenue of $2.79 billion) that aligns with the expected answer's figures ($237 million budget, $2.787 billion revenue). The answer appropriately corrects the misinformation in the question using concrete data.",
+            "faithfulness_score": 0.8333,
+            "faithfulness_claims": [
+              {
+                "claim": "Avatar was not considered a box office failure",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Avatar was a massive box office success",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Avatar had a budget of $237 million",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Avatar had revenue of $2.79 billion worldwide",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "Avatar had profit over $2.5 billion",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The film is described as 'one of the highest-grossing films of all time'",
+                "verdict": "UNSUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.2,
+            "hallucination_claims": [
+              {
+                "claim": "Avatar was not considered a box office failure",
+                "verdict": "SUPPORTED",
+                "reason": "The tool results show Budget: $237,000,000 and Revenue: $2,787,965,087, which demonstrates significant financial success, contradicting the premise of failure"
+              },
+              {
+                "claim": "Budget was $237 million",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 2 shows 'Budget: $237,000,000'"
+              },
+              {
+                "claim": "Revenue was $2.79 billion worldwide",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 2 shows 'Revenue: $2,787,965,087' which equals approximately $2.79 billion"
+              },
+              {
+                "claim": "Profit was over $2.5 billion",
+                "verdict": "SUPPORTED",
+                "reason": "This is a calculation based on supported data: $2,787,965,087 revenue minus $237,000,000 budget equals approximately $2.55 billion"
+              },
+              {
+                "claim": "The film is described as 'one of the highest-grossing films of all time'",
+                "verdict": "HALLUCINATED",
+                "reason": "This exact phrase does not appear in any tool output. While the revenue data supports this claim factually, the answer presents it as a quote or description from the evidence, which is not present in the tool results"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 16757.0,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 10997,
+            "output_tokens": 807,
+            "total_tokens": 11804,
+            "cost_usd": 0.045096,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 7,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 2,
+            "tool_selection_tools_used": [
+              "search_movies",
+              "get_movie_details"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": 1.0,
+            "tool_selection_coverage_detail": {
+              "expected": [
+                19995
+              ],
+              "found_in_tools": [
+                19995
+              ],
+              "missing": []
+            },
+            "routing_accuracy": null,
+            "routing_precision": null,
+            "routing_recall": null,
+            "routing_exact_order": null,
+            "routing_reason": "scenario has no expected_route",
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 9,
+            "step_cap_hit": false,
+            "llm_call_count": 7,
+            "ma_total_tokens": 11804,
+            "ma_latency_ms": 16757.0,
+            "tokens_per_correct_answer": 11804,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        },
+        {
+          "scenario_id": "sc_026",
+          "question": "I heard The Dark Knight had a budget of $5 million. Is that correct?",
+          "category": "adversarial",
+          "difficulty": "medium",
+          "expected_answer": "No, The Dark Knight had a budget of approximately $185 million, not $5 million.",
+          "expected_source_ids": [
+            155
+          ],
+          "expected_route": [],
+          "answer": "No, that is not correct. According to the evidence, **The Dark Knight** had a budget of **$185,000,000** (185 million dollars), not $5 million.",
+          "retrieved_source_ids": [],
+          "retrieved_titles": [],
+          "similarity_scores": [],
+          "latency_ms": 13517.882332998852,
+          "token_usage": {
+            "input_tokens": 11299,
+            "output_tokens": 492
+          },
+          "model": "claude-sonnet-4-5-20250929 (multi-agent)",
+          "scores": {
+            "task_success_score": 1.0,
+            "task_success_reason": "The actual answer correctly identifies the false premise in the question, provides the accurate budget figure of $185 million, and explicitly states that the $5 million claim is incorrect. This matches the expected answer in substance and successfully addresses the adversarial scenario.",
+            "faithfulness_score": 1.0,
+            "faithfulness_claims": [
+              {
+                "claim": "The Dark Knight had a budget of $185,000,000 (185 million dollars)",
+                "verdict": "SUPPORTED"
+              },
+              {
+                "claim": "The Dark Knight did not have a budget of $5 million",
+                "verdict": "SUPPORTED"
+              }
+            ],
+            "judge_model": "claude-sonnet-4-5-20250929",
+            "hallucination_score": 0.0,
+            "hallucination_claims": [
+              {
+                "claim": "The Dark Knight had a budget of $185,000,000 (185 million dollars)",
+                "verdict": "SUPPORTED",
+                "reason": "Tool Call 2 shows The Dark Knight (movie_id: 155) with budget: 185000000"
+              },
+              {
+                "claim": "The budget was not $5 million",
+                "verdict": "SUPPORTED",
+                "reason": "This is a correct negation of the user's false claim, supported by the tool result showing the actual budget of 185000000"
+              }
+            ],
+            "latency_pass": false,
+            "latency_ms": 13517.9,
+            "latency_threshold_ms": 5000,
+            "input_tokens": 11299,
+            "output_tokens": 492,
+            "total_tokens": 11791,
+            "cost_usd": 0.041277,
+            "cost_model": "claude-sonnet-4-5-20250929 (multi-agent)",
+            "cost_input_price_per_mtok": 3.0,
+            "cost_output_price_per_mtok": 15.0,
+            "answer_llm_calls": 7,
+            "tool_selection_score": 1.0,
+            "tool_selection_used_tools": true,
+            "tool_selection_num_calls": 2,
+            "tool_selection_tools_used": [
+              "filter_movies",
+              "search_by_director"
+            ],
+            "tool_selection_reasonable_score": 1.0,
+            "tool_selection_coverage_score": 1.0,
+            "tool_selection_coverage_detail": {
+              "expected": [
+                155
+              ],
+              "found_in_tools": [
+                155
+              ],
+              "missing": []
+            },
+            "routing_accuracy": null,
+            "routing_precision": null,
+            "routing_recall": null,
+            "routing_exact_order": null,
+            "routing_reason": "scenario has no expected_route",
+            "handoff_count": 2,
+            "loop_detected": false,
+            "loop_reason": null,
+            "steps_to_answer": 9,
+            "step_cap_hit": false,
+            "llm_call_count": 7,
+            "ma_total_tokens": 11791,
+            "ma_latency_ms": 13517.9,
+            "tokens_per_correct_answer": 11791,
+            "verifier_action": "approve",
+            "verifier_revision_changed_answer": null,
+            "attribution_culprit_agent": null,
+            "attribution_failure_type": null,
+            "attribution_reason": "answer not wrong, nothing to attribute",
+            "attribution_error_propagated": null
+          }
+        }
+      ]
+    }
+  }
+}
