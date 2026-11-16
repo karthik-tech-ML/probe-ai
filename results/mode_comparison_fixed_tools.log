@@ -1,0 +1,1178 @@
+2026-11-06 21:14:16.577 | INFO     | src.evaluation.runner:load_scenarios:96 - filtered to 5 scenarios in category='multi_field'
+2026-11-06 21:14:16.577 | INFO     | src.evaluation.runner:load_scenarios:96 - filtered to 4 scenarios in category='aggregation'
+2026-11-06 21:14:16.578 | INFO     | src.evaluation.runner:load_scenarios:96 - filtered to 4 scenarios in category='multi_hop'
+2026-11-06 21:14:16.578 | INFO     | src.evaluation.runner:load_scenarios:96 - filtered to 5 scenarios in category='adversarial'
+2026-11-06 21:14:16.578 | INFO     | __main__:main:192 - comparing ['rag', 'agent', 'multi_agent'] on 18 scenarios: ['sc_008', 'sc_009', 'sc_010', 'sc_011', 'sc_012', 'sc_013', 'sc_014', 'sc_015', 'sc_016', 'sc_027', 'sc_028', 'sc_029', 'sc_030', 'sc_022', 'sc_023', 'sc_024', 'sc_025', 'sc_026']
+2026-11-06 21:14:16.578 | INFO     | __main__:main:196 - ===== mode: rag =====
+2026-11-06 21:14:16.578 | INFO     | src.evaluation.runner:run:389 - starting RAG eval run: 18 scenarios, 7 metrics
+2026-11-06 21:14:16.578 | INFO     | src.evaluation.runner:run:401 - --- scenario 1/18 ---
+2026-11-06 21:14:16.578 | INFO     | src.evaluation.runner:_run_single:110 - [sc_008] What Christopher Nolan movies are in the science fiction genre?
+2026-11-06 21:14:16.579 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:14:16.579 | INFO     | src.ingestion.embedder:_get_model:19 - loading embedding model: all-MiniLM-L6-v2
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 7308.63it/s]
+[1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+2026-11-06 21:14:18.401 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:14:18.468 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Number 23 (0.4974)
+2026-11-06 21:14:18.468 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: The Number 23, sim=0.4974)
+2026-11-06 21:14:18.469 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:14:19.931 | INFO     | src.rag.generator:generate:83 - generated answer (1306in/71out tokens)
+2026-11-06 21:14:19.932 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 3353ms
+2026-11-06 21:14:22.859 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_008] task_success=1.0 — The actual answer correctly identifies Inception and Interstellar as Christopher Nolan sci-fi movies, which are the two definitive examples from the expected answer. The expected answer's inclusion of The Dark Knight Rises and The Prestige was conditional ('if tagged sci-fi'), and their absence from the actual answer doesn't make it incorrect - the assistant accurately reported what was in the provided context.
+2026-11-06 21:14:22.859 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_008] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:14:26.183 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_008] judge returned invalid JSON, attempting repair
+2026-11-06 21:14:26.184 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_008] faithfulness=1.0 (8 claims)
+2026-11-06 21:14:26.184 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_008] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:14:30.023 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_008] hallucination=0.0 (4 claims)
+2026-11-06 21:14:30.024 | INFO     | src.evaluation.runner:run:401 - --- scenario 2/18 ---
+2026-11-06 21:14:30.024 | INFO     | src.evaluation.runner:_run_single:110 - [sc_009] Which movies star both Leonardo DiCaprio and Tom Hardy?
+2026-11-06 21:14:30.024 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:14:30.130 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:14:30.152 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Revolutionary Road (0.4603)
+2026-11-06 21:14:30.152 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: Revolutionary Road, sim=0.4603)
+2026-11-06 21:14:30.152 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:14:32.657 | INFO     | src.rag.generator:generate:83 - generated answer (1214in/66out tokens)
+2026-11-06 21:14:32.657 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 2633ms
+2026-11-06 21:14:35.349 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_009] task_success=0.0 — The actual answer states there is insufficient information and fails to identify the two movies (Inception and The Revenant) that star both Leonardo DiCaprio and Tom Hardy. The answer incorrectly claims this information is not available when the expected answer clearly shows both films should be identifiable from the data.
+2026-11-06 21:14:35.350 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_009] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:14:37.789 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_009] judge returned invalid JSON, attempting repair
+2026-11-06 21:14:37.789 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_009] faithfulness=1.0 (4 claims)
+2026-11-06 21:14:37.789 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_009] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:14:41.800 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_009] hallucination=0.0 (3 claims)
+2026-11-06 21:14:41.800 | INFO     | src.evaluation.runner:run:401 - --- scenario 3/18 ---
+2026-11-06 21:14:41.801 | INFO     | src.evaluation.runner:_run_single:110 - [sc_010] What are the action movies directed by James Cameron?
+2026-11-06 21:14:41.801 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:14:41.903 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:14:41.924 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Knight and Day (0.5424)
+2026-11-06 21:14:41.925 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: Knight and Day, sim=0.5424)
+2026-11-06 21:14:41.925 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:14:43.754 | INFO     | src.rag.generator:generate:83 - generated answer (1247in/75out tokens)
+2026-11-06 21:14:43.755 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 1954ms
+2026-11-06 21:14:46.290 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_010] task_success=0.0 — The assistant incorrectly claims it doesn't have information about James Cameron's action movies, when the expected answer shows that Aliens, Terminator 2: Judgment Day, Titanic, and Avatar should have been available in the data. The assistant failed to retrieve and provide the correct information.
+2026-11-06 21:14:46.291 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_010] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:14:49.276 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_010] judge returned invalid JSON, attempting repair
+2026-11-06 21:14:49.277 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_010] faithfulness=1.0 (6 claims)
+2026-11-06 21:14:49.277 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_010] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:14:54.089 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_010] hallucination=0.0 (7 claims)
+2026-11-06 21:14:54.089 | INFO     | src.evaluation.runner:run:401 - --- scenario 4/18 ---
+2026-11-06 21:14:54.089 | INFO     | src.evaluation.runner:_run_single:110 - [sc_011] Which comedy movies have a rating above 7.5 and were released after 2010?
+2026-11-06 21:14:54.089 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:14:54.190 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:14:54.210 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Ten (0.4975)
+2026-11-06 21:14:54.211 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: The Ten, sim=0.4975)
+2026-11-06 21:14:54.211 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:14:56.025 | INFO     | src.rag.generator:generate:83 - generated answer (1034in/74out tokens)
+2026-11-06 21:14:56.025 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 1936ms
+2026-11-06 21:14:58.908 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_011] task_success=1.0 — The assistant correctly refuses to provide an answer when the data doesn't contain movies matching the criteria (comedy, rating>7.5, released after 2010). It explains that no movies in the available dataset meet these requirements, which is the appropriate response for a 'no answer' scenario where the requested information isn't available in the data.
+2026-11-06 21:14:58.909 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_011] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:15:01.870 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_011] judge returned invalid JSON, attempting repair
+2026-11-06 21:15:01.871 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_011] faithfulness=1.0 (4 claims)
+2026-11-06 21:15:01.871 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_011] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:15:06.803 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_011] hallucination=0.0 (3 claims)
+2026-11-06 21:15:06.804 | INFO     | src.evaluation.runner:run:401 - --- scenario 5/18 ---
+2026-11-06 21:15:06.804 | INFO     | src.evaluation.runner:_run_single:110 - [sc_012] What movies were produced by both Warner Bros. and Legendary Pictures?
+2026-11-06 21:15:06.804 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:15:06.906 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:15:06.930 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Gone with the Wind (0.4557)
+2026-11-06 21:15:06.930 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: Gone with the Wind, sim=0.4557)
+2026-11-06 21:15:06.931 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:15:08.691 | INFO     | src.rag.generator:generate:83 - generated answer (1297in/39out tokens)
+2026-11-06 21:15:08.692 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 1888ms
+2026-11-06 21:15:10.866 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_012] task_success=0.0 — The actual answer incorrectly states there is no information available when the expected answer clearly lists multiple movies co-produced by Warner Bros. and Legendary Pictures (Inception, The Dark Knight, The Dark Knight Rises, Interstellar). The assistant failed to identify this information in the database.
+2026-11-06 21:15:10.866 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_012] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:15:13.132 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_012] judge returned invalid JSON, attempting repair
+2026-11-06 21:15:13.132 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_012] faithfulness=1.0 (2 claims)
+2026-11-06 21:15:13.132 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_012] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:15:15.978 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_012] hallucination=0.0 (1 claims)
+2026-11-06 21:15:15.978 | INFO     | src.evaluation.runner:run:401 - --- scenario 6/18 ---
+2026-11-06 21:15:15.978 | INFO     | src.evaluation.runner:_run_single:110 - [sc_013] What is the highest-grossing movie in the dataset?
+2026-11-06 21:15:15.978 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:15:16.010 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:15:16.019 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Producers (0.4384)
+2026-11-06 21:15:16.019 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: The Producers, sim=0.4384)
+2026-11-06 21:15:16.019 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:15:17.396 | INFO     | src.rag.generator:generate:83 - generated answer (1312in/34out tokens)
+2026-11-06 21:15:17.397 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 1419ms
+2026-11-06 21:15:20.045 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_013] task_success=0.0 — The actual answer incorrectly identifies Money Monster ($93.3M) as the highest-grossing movie when the expected answer is Avatar with approximately $2.787 billion. This is completely wrong - Avatar's revenue is roughly 30 times higher than Money Monster's. The assistant appears to have failed to access or search the complete dataset.
+2026-11-06 21:15:20.045 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_013] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:15:21.940 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_013] judge returned invalid JSON, attempting repair
+2026-11-06 21:15:21.940 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_013] faithfulness=1.0 (2 claims)
+2026-11-06 21:15:21.940 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_013] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:15:27.909 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_013] hallucination=0.0 (2 claims)
+2026-11-06 21:15:27.909 | INFO     | src.evaluation.runner:run:401 - --- scenario 7/18 ---
+2026-11-06 21:15:27.909 | INFO     | src.evaluation.runner:_run_single:110 - [sc_014] Compare the budgets of Avatar and Titanic.
+2026-11-06 21:15:27.910 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:15:28.014 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:15:28.036 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Titanic (0.4856)
+2026-11-06 21:15:28.036 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: Titanic, sim=0.4856)
+2026-11-06 21:15:28.036 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:15:29.722 | INFO     | src.rag.generator:generate:83 - generated answer (1403in/56out tokens)
+2026-11-06 21:15:29.722 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 1813ms
+2026-11-06 21:15:31.976 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_014] task_success=1.0 — The actual answer correctly provides the budgets for both Avatar ($237M) and Titanic ($200M), matching the expected answer. It even goes beyond by calculating the difference ($37M), which adds value without contradicting the expected information.
+2026-11-06 21:15:31.977 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_014] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:15:33.923 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_014] judge returned invalid JSON, attempting repair
+2026-11-06 21:15:33.923 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_014] faithfulness=1.0 (3 claims)
+2026-11-06 21:15:33.923 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_014] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:15:37.660 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_014] hallucination=0.0 (3 claims)
+2026-11-06 21:15:37.661 | INFO     | src.evaluation.runner:run:401 - --- scenario 8/18 ---
+2026-11-06 21:15:37.661 | INFO     | src.evaluation.runner:_run_single:110 - [sc_015] Which director has the most movies in the dataset?
+2026-11-06 21:15:37.661 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:15:37.732 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:15:37.754 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: In Too Deep (0.5072)
+2026-11-06 21:15:37.754 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: In Too Deep, sim=0.5072)
+2026-11-06 21:15:37.754 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:15:39.908 | INFO     | src.rag.generator:generate:83 - generated answer (1142in/82out tokens)
+2026-11-06 21:15:39.908 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 2247ms
+2026-11-06 21:15:42.318 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_015] task_success=1.0 — The assistant correctly refuses to answer because it lacks access to the complete dataset needed to determine which director has the most movies. This is the appropriate response when the available information is insufficient, which aligns with 'no answer' scenarios where a correct refusal should score 1.0.
+2026-11-06 21:15:42.318 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_015] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:15:45.598 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_015] judge returned invalid JSON, attempting repair
+2026-11-06 21:15:45.598 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_015] faithfulness=1.0 (5 claims)
+2026-11-06 21:15:45.598 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_015] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:15:51.637 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_015] hallucination=0.0 (8 claims)
+2026-11-06 21:15:51.637 | INFO     | src.evaluation.runner:run:401 - --- scenario 9/18 ---
+2026-11-06 21:15:51.637 | INFO     | src.evaluation.runner:_run_single:110 - [sc_016] What is the average rating of Christopher Nolan films?
+2026-11-06 21:15:51.637 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:106 - title boost: extracted 'Christopher Nolan films' from query
+2026-11-06 21:15:51.742 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:15:51.761 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Prestige (0.5912)
+2026-11-06 21:15:51.761 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: The Prestige, sim=0.5912)
+2026-11-06 21:15:51.761 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:15:53.889 | INFO     | src.rag.generator:generate:83 - generated answer (1044in/78out tokens)
+2026-11-06 21:15:53.889 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 2252ms
+2026-11-06 21:15:56.654 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_016] task_success=1.0 — The assistant correctly refuses to answer because it lacks sufficient data (only has one Nolan film). This is appropriate when the expected answer requires data from multiple films the assistant doesn't have access to. The assistant accurately identifies it cannot calculate a meaningful average from a single data point.
+2026-11-06 21:15:56.654 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_016] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:15:59.959 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_016] judge returned invalid JSON, attempting repair
+2026-11-06 21:15:59.960 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_016] faithfulness=1.0 (6 claims)
+2026-11-06 21:15:59.960 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_016] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:16:04.122 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_016] hallucination=0.0 (3 claims)
+2026-11-06 21:16:04.122 | INFO     | src.evaluation.runner:run:401 - --- scenario 10/18 ---
+2026-11-06 21:16:04.123 | INFO     | src.evaluation.runner:_run_single:110 - [sc_027] Which actors appeared in both a Christopher Nolan film and a Quentin Tarantino film?
+2026-11-06 21:16:04.123 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:16:04.182 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:16:04.204 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Prestige (0.5525)
+2026-11-06 21:16:04.204 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: The Prestige, sim=0.5525)
+2026-11-06 21:16:04.205 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:16:07.657 | INFO     | src.rag.generator:generate:83 - generated answer (1187in/121out tokens)
+2026-11-06 21:16:07.658 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 3535ms
+2026-11-06 21:16:11.198 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_027] task_success=1.0 — The assistant correctly acknowledges the limitation of the available data and does not fabricate information. It accurately reports that based on the provided context (2 Nolan films and 1 Tarantino film), there is no overlap in the cast lists shown, while appropriately noting that other films by these directors may exist outside the provided dataset. This is the correct approach when working with limited data, matching the expected answer's acknowledgment that this requires cross-referencing across the full dataset.
+2026-11-06 21:16:11.198 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_027] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:16:14.165 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_027] judge returned invalid JSON, attempting repair
+2026-11-06 21:16:14.165 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_027] faithfulness=1.0 (5 claims)
+2026-11-06 21:16:14.165 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_027] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:16:20.308 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_027] hallucination=0.0 (5 claims)
+2026-11-06 21:16:20.308 | INFO     | src.evaluation.runner:run:401 - --- scenario 11/18 ---
+2026-11-06 21:16:20.309 | INFO     | src.evaluation.runner:_run_single:110 - [sc_028] Name a movie where the director also acted in it.
+2026-11-06 21:16:20.309 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:16:20.375 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:16:20.395 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Drive (0.5380)
+2026-11-06 21:16:20.395 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: Drive, sim=0.538)
+2026-11-06 21:16:20.395 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:16:22.931 | INFO     | src.rag.generator:generate:83 - generated answer (1207in/74out tokens)
+2026-11-06 21:16:22.931 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 2623ms
+2026-11-06 21:16:25.275 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_028] task_success=1.0 — The expected answer indicates this requires cross-referencing data that varies by what's available. The assistant correctly states it doesn't have enough information in the provided context to identify a director who also acted in their film, which is an appropriate response when the necessary data isn't available.
+2026-11-06 21:16:25.276 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_028] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:16:27.914 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_028] judge returned invalid JSON, attempting repair
+2026-11-06 21:16:27.914 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_028] faithfulness=1.0 (4 claims)
+2026-11-06 21:16:27.914 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_028] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:20:22.051 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_028] hallucination=0.0 (3 claims)
+2026-11-06 21:20:22.052 | INFO     | src.evaluation.runner:run:401 - --- scenario 12/18 ---
+2026-11-06 21:20:22.052 | INFO     | src.evaluation.runner:_run_single:110 - [sc_029] Which sci-fi movie had the best return on investment based on budget vs revenue?
+2026-11-06 21:20:22.052 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:20:22.173 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:20:22.198 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: I Want Your Money (0.4627)
+2026-11-06 21:20:22.198 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: I Want Your Money, sim=0.4627)
+2026-11-06 21:20:22.199 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:20:25.512 | INFO     | src.rag.generator:generate:83 - generated answer (1125in/140out tokens)
+2026-11-06 21:20:25.513 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 3461ms
+2026-11-06 21:20:29.449 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_029] task_success=0.0 — The expected answer indicates this requires filtering ALL sci-fi movies in the database, computing ROI for each, and finding the maximum. The actual answer only examines one movie (X-Men: Apocalypse) from limited context and claims it's the best 'by default' because it's the only one available. This fundamentally fails the task - the assistant should have queried the full database to find all sci-fi movies with budget/revenue data and calculated which had the highest ROI ratio, not just worked with whatever limited context was provided.
+2026-11-06 21:20:29.450 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_029] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:20:32.880 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_029] judge returned invalid JSON, attempting repair
+2026-11-06 21:20:32.880 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_029] faithfulness=1.0 (7 claims)
+2026-11-06 21:20:32.881 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_029] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:20:39.950 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_029] hallucination=0.2857 (7 claims)
+2026-11-06 21:20:39.950 | INFO     | src.evaluation.runner:run:401 - --- scenario 13/18 ---
+2026-11-06 21:20:39.950 | INFO     | src.evaluation.runner:_run_single:110 - [sc_030] Find me a drama movie from the 2000s with a budget under $50 million that earned more than $200 million.
+2026-11-06 21:20:39.950 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:20:39.998 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:20:40.017 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Mulholland Drive (0.5038)
+2026-11-06 21:20:40.018 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: Mulholland Drive, sim=0.5038)
+2026-11-06 21:20:40.018 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:20:43.681 | INFO     | src.rag.generator:generate:83 - generated answer (1272in/158out tokens)
+2026-11-06 21:20:43.681 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 3731ms
+2026-11-06 21:20:46.858 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_030] task_success=1.0 — The assistant correctly performed the required filtering across multiple criteria (genre=drama, date=2000s, budget<$50M, revenue>$200M) and accurately determined that none of the available movies meet all criteria. It provided a transparent breakdown of candidate films and why each falls short, particularly on the revenue requirement. This is the correct response when no matching results exist in the data.
+2026-11-06 21:20:46.859 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_030] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:20:52.249 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_030] judge returned invalid JSON, attempting repair
+2026-11-06 21:20:52.250 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_030] faithfulness=1.0 (18 claims)
+2026-11-06 21:20:52.250 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_030] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:20:57.712 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_030] hallucination=0.0 (5 claims)
+2026-11-06 21:20:57.713 | INFO     | src.evaluation.runner:run:401 - --- scenario 14/18 ---
+2026-11-06 21:20:57.713 | INFO     | src.evaluation.runner:_run_single:110 - [sc_022] What Oscar did Inception win for Best Picture?
+2026-11-06 21:20:57.713 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:20:57.808 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:20:57.830 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Inception (0.4998)
+2026-11-06 21:20:57.830 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: Inception, sim=0.4998)
+2026-11-06 21:20:57.830 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:20:59.764 | INFO     | src.rag.generator:generate:83 - generated answer (1394in/52out tokens)
+2026-11-06 21:20:59.764 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 2051ms
+2026-11-06 21:21:01.908 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_022] task_success=1.0 — The actual answer correctly identifies that the available data does not contain award information and appropriately refuses to answer the question about Oscar wins. This matches the expected answer's indication that award information is not available in the data. The assistant also correctly avoids fabricating information about whether Inception won Best Picture.
+2026-11-06 21:21:01.909 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_022] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:21:04.571 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_022] judge returned invalid JSON, attempting repair
+2026-11-06 21:21:04.572 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_022] faithfulness=1.0 (5 claims)
+2026-11-06 21:21:04.572 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_022] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:21:07.846 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_022] hallucination=0.0 (3 claims)
+2026-11-06 21:21:07.847 | INFO     | src.evaluation.runner:run:401 - --- scenario 15/18 ---
+2026-11-06 21:21:07.847 | INFO     | src.evaluation.runner:_run_single:110 - [sc_023] Did Leonardo DiCaprio direct any movies in the dataset?
+2026-11-06 21:21:07.847 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:21:07.915 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:21:07.935 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Shutter Island (0.5119)
+2026-11-06 21:21:07.936 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: Shutter Island, sim=0.5119)
+2026-11-06 21:21:07.936 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:21:10.147 | INFO     | src.rag.generator:generate:83 - generated answer (1296in/78out tokens)
+2026-11-06 21:21:10.148 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 2301ms
+2026-11-06 21:21:12.639 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_023] task_success=1.0 — The actual answer correctly states that Leonardo DiCaprio did not direct any movies in the dataset and that he appears as an actor instead. It provides additional supporting details about the specific movies he acted in and their actual directors, which reinforces the correctness of the answer without contradicting the expected answer.
+2026-11-06 21:21:12.639 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_023] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:21:15.244 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_023] judge returned invalid JSON, attempting repair
+2026-11-06 21:21:15.245 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_023] faithfulness=1.0 (6 claims)
+2026-11-06 21:21:15.245 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_023] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:21:19.894 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_023] hallucination=0.0 (6 claims)
+2026-11-06 21:21:19.894 | INFO     | src.evaluation.runner:run:401 - --- scenario 16/18 ---
+2026-11-06 21:21:19.894 | INFO     | src.evaluation.runner:_run_single:110 - [sc_024] Tell me about the sequel to Inception called Inception 2.
+2026-11-06 21:21:19.894 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:21:19.956 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:21:19.971 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Inception (0.6777)
+2026-11-06 21:21:19.971 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: Inception, sim=0.6777)
+2026-11-06 21:21:19.972 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:21:21.896 | INFO     | src.rag.generator:generate:83 - generated answer (1288in/51out tokens)
+2026-11-06 21:21:21.897 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 2003ms
+2026-11-06 21:21:24.129 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_024] task_success=1.0 — The actual answer correctly refuses to provide information about 'Inception 2' and accurately states that only the original Inception (2010) exists in the data with no mention of a sequel. This aligns with the expected answer that there is no such movie and no sequel exists.
+2026-11-06 21:21:24.130 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_024] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:21:26.689 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_024] judge returned invalid JSON, attempting repair
+2026-11-06 21:21:26.690 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_024] faithfulness=1.0 (3 claims)
+2026-11-06 21:21:26.690 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_024] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:21:29.866 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_024] hallucination=0.0 (2 claims)
+2026-11-06 21:21:29.866 | INFO     | src.evaluation.runner:run:401 - --- scenario 17/18 ---
+2026-11-06 21:21:29.866 | INFO     | src.evaluation.runner:_run_single:110 - [sc_025] Why was Avatar considered a box office failure?
+2026-11-06 21:21:29.866 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:110 - title boost: no title extracted, using original query
+2026-11-06 21:21:29.921 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:21:29.933 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Image Revolution (0.3948)
+2026-11-06 21:21:29.934 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: The Image Revolution, sim=0.3948)
+2026-11-06 21:21:29.934 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:21:32.030 | INFO     | src.rag.generator:generate:83 - generated answer (1371in/81out tokens)
+2026-11-06 21:21:32.030 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 2164ms
+2026-11-06 21:21:34.370 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_025] task_success=1.0 — The actual answer correctly identifies and corrects the false premise in the question. It explicitly states that Avatar was not a box office failure and provides the accurate data ($237M budget vs $2.787B revenue) showing it was extremely successful, which matches the substance of the expected answer.
+2026-11-06 21:21:34.370 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_025] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:21:37.442 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_025] judge returned invalid JSON, attempting repair
+2026-11-06 21:21:37.442 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_025] faithfulness=1.0 (5 claims)
+2026-11-06 21:21:37.442 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_025] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:21:42.075 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_025] hallucination=0.0 (4 claims)
+2026-11-06 21:21:42.075 | INFO     | src.evaluation.runner:run:401 - --- scenario 18/18 ---
+2026-11-06 21:21:42.076 | INFO     | src.evaluation.runner:_run_single:110 - [sc_026] I heard The Dark Knight had a budget of $5 million. Is that correct?
+2026-11-06 21:21:42.076 | DEBUG    | src.rag.retriever:retrieve_with_title_boost:106 - title boost: extracted '$5 million. Is that correct' from query
+2026-11-06 21:21:42.184 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 21:21:42.202 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Batman (0.5186)
+2026-11-06 21:21:42.202 | INFO     | src.rag.retriever:retrieve_with_title_boost:115 - retrieved (boosted) 5 chunks for query (top: Batman, sim=0.5186)
+2026-11-06 21:21:42.202 | DEBUG    | src.rag.generator:generate:67 - calling claude-sonnet-4-5-20250929 with 5 context chunks
+2026-11-06 21:21:44.507 | INFO     | src.rag.generator:generate:83 - generated answer (1047in/103out tokens)
+2026-11-06 21:21:44.507 | INFO     | src.rag.pipeline:ask:67 - pipeline done in 2431ms
+2026-11-06 21:21:47.682 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_026] task_success=0.0 — The assistant failed to correct the false premise about The Dark Knight's budget. Instead of stating that The Dark Knight had a budget of approximately $185 million (not $5 million), it claimed to lack information about the film. While it provided budgets for other Batman films, it did not address the specific movie in question or correct the grossly inaccurate $5 million figure with the actual ~$185 million budget.
+2026-11-06 21:21:47.682 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_026] calling claude-sonnet-4-5-20250929 for faithfulness judging (RAG mode)
+2026-11-06 21:21:50.241 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_026] judge returned invalid JSON, attempting repair
+2026-11-06 21:21:50.242 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_026] faithfulness=1.0 (4 claims)
+2026-11-06 21:21:50.242 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_026] calling claude-sonnet-4-5-20250929 for hallucination detection (RAG mode)
+2026-11-06 21:21:54.850 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_026] hallucination=0.0 (4 claims)
+2026-11-06 21:21:54.851 | INFO     | src.evaluation.runner:run:444 - eval run complete: 18 scenarios in 284598ms (avg 15811ms)
+2026-11-06 21:21:54.852 | INFO     | __main__:main:196 - ===== mode: agent =====
+2026-11-06 21:21:54.852 | INFO     | src.evaluation.runner:run:389 - starting agent eval run: 18 scenarios, 8 metrics
+2026-11-06 21:21:54.852 | INFO     | src.evaluation.runner:run:401 - --- scenario 1/18 ---
+/opt/homebrew/lib/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+2026-11-06 21:21:55.098 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_008] (agent) What Christopher Nolan movies are in the science fiction genre?
+2026-11-06 21:21:55.098 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'What Christopher Nolan movies are in the science fiction genre?'
+2026-11-06 21:21:56.698 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Christopher Nolan'
+2026-11-06 21:21:56.746 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 8 movies
+2026-11-06 21:21:59.603 | INFO     | src.agent.graph:run_agent:120 - agent done in 4505ms — 1 tool calls, 4325 total tokens
+2026-11-06 21:22:02.529 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_008] task_success=0.5 — The actual answer correctly identifies Inception and Interstellar as Christopher Nolan sci-fi movies, which are the two core films from the expected answer. However, it states definitively that there are only 2 sci-fi movies, missing The Dark Knight Rises and The Prestige which were listed in the expected answer as potential sci-fi films. The answer is partially correct but incomplete.
+2026-11-06 21:22:02.529 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_008] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 21:22:06.525 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_008] judge returned invalid JSON, attempting repair
+2026-11-06 21:22:06.526 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_008] faithfulness=1.0 (11 claims)
+2026-11-06 21:22:06.526 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_008] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 21:22:15.638 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_008] hallucination=0.0 (11 claims)
+2026-11-06 21:22:15.640 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_008] tool_selection=1.0 (calls=1, tools=['search_by_director'], coverage=1.0)
+2026-11-06 21:22:15.640 | INFO     | src.evaluation.runner:run:401 - --- scenario 2/18 ---
+2026-11-06 21:22:15.640 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_009] (agent) Which movies star both Leonardo DiCaprio and Tom Hardy?
+2026-11-06 21:22:15.640 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'Which movies star both Leonardo DiCaprio and Tom Hardy?'
+2026-11-06 21:22:17.859 | DEBUG    | src.agent.tools:search_by_cast:159 - tool:search_by_cast actor='Tom Hardy'
+2026-11-06 21:22:17.861 | DEBUG    | src.agent.tools:search_by_cast:159 - tool:search_by_cast actor='Leonardo DiCaprio'
+2026-11-06 21:22:17.899 | DEBUG    | src.agent.tools:search_by_cast:168 - tool:search_by_cast found 12 movies
+2026-11-06 21:22:17.916 | DEBUG    | src.agent.tools:search_by_cast:168 - tool:search_by_cast found 22 movies
+2026-11-06 21:22:20.347 | INFO     | src.agent.graph:run_agent:120 - agent done in 4707ms — 2 tool calls, 7044 total tokens
+2026-11-06 21:22:22.174 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_009] task_success=1.0 — The actual answer correctly identifies both movies (Inception and The Revenant) where Leonardo DiCaprio and Tom Hardy starred together, matching the expected answer. The additional details about directors, genres, and ratings enhance the response without introducing any incorrect information.
+2026-11-06 21:22:22.175 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_009] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 21:22:26.288 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_009] judge returned invalid JSON, attempting repair
+2026-11-06 21:22:26.290 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_009] faithfulness=0.7778 (9 claims)
+2026-11-06 21:22:26.290 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_009] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:00:59.271 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_009] hallucination=0.2222 (9 claims)
+2026-11-06 22:00:59.275 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_009] tool_selection=1.0 (calls=2, tools=['search_by_cast', 'search_by_cast'], coverage=1.0)
+2026-11-06 22:00:59.276 | INFO     | src.evaluation.runner:run:401 - --- scenario 3/18 ---
+2026-11-06 22:00:59.276 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_010] (agent) What are the action movies directed by James Cameron?
+2026-11-06 22:00:59.276 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'What are the action movies directed by James Cameron?'
+2026-11-06 22:01:00.651 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='James Cameron'
+2026-11-06 22:01:00.700 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 7 movies
+2026-11-06 22:01:04.159 | INFO     | src.agent.graph:run_agent:120 - agent done in 4883ms — 1 tool calls, 4232 total tokens
+2026-11-06 22:01:07.397 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_010] task_success=0.5 — The actual answer correctly identifies 3 of the 4 expected movies (Avatar, Terminator 2: Judgment Day, and Aliens) but misses Titanic, which is listed in the expected answer as an action movie directed by James Cameron. The actual answer also includes additional correct Cameron action films (True Lies, The Abyss, The Terminator) that weren't in the expected list, but the omission of Titanic from the expected set represents a partial miss of the expected answer.
+2026-11-06 22:01:07.398 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_010] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:01:12.847 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_010] judge returned invalid JSON, attempting repair
+2026-11-06 22:01:12.848 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_010] faithfulness=1.0 (14 claims)
+2026-11-06 22:01:12.848 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_010] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:01:26.072 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_010] hallucination=0.0 (20 claims)
+2026-11-06 22:01:26.073 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_010] tool_selection=1.0 (calls=1, tools=['search_by_director'], coverage=1.0)
+2026-11-06 22:01:26.074 | INFO     | src.evaluation.runner:run:401 - --- scenario 4/18 ---
+2026-11-06 22:01:26.074 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_011] (agent) Which comedy movies have a rating above 7.5 and were released after 2010?
+2026-11-06 22:01:26.074 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'Which comedy movies have a rating above 7.5 and were released after 2010?'
+2026-11-06 22:01:27.891 | DEBUG    | src.agent.tools:filter_movies:195 - tool:filter_movies genre=Comedy budget=None-None rev>=None rating>=7.5 year=2011-None sort=-rating limit=20
+2026-11-06 22:01:28.061 | DEBUG    | src.agent.tools:filter_movies:251 - tool:filter_movies matched 14 movies, returning 14
+2026-11-06 22:01:32.915 | INFO     | src.agent.graph:run_agent:120 - agent done in 6841ms — 1 tool calls, 5142 total tokens
+2026-11-06 22:01:35.990 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_011] task_success=1.0 — The actual answer correctly addresses the question by providing a list of comedy movies with ratings above 7.5 released after 2010. The response demonstrates proper filtering on all three required criteria: genre=comedy, vote_average>7.5, and release_date>2010. The movies listed (Inside Out 8.0, Grand Budapest Hotel 8.0, Wolf of Wall Street 7.9, etc.) all meet these specifications, and the answer provides helpful additional context like directors and years without fabricating information.
+2026-11-06 22:01:35.990 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_011] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:01:43.365 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_011] judge returned invalid JSON, attempting repair
+2026-11-06 22:01:43.365 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_011] faithfulness=1.0 (30 claims)
+2026-11-06 22:01:43.365 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_011] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:01:55.709 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_011] hallucination=0.0 (20 claims)
+2026-11-06 22:01:55.710 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_011] tool_selection=1.0 (calls=1, tools=['filter_movies'], coverage=None)
+2026-11-06 22:01:55.710 | INFO     | src.evaluation.runner:run:401 - --- scenario 5/18 ---
+2026-11-06 22:01:55.710 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_012] (agent) What movies were produced by both Warner Bros. and Legendary Pictures?
+2026-11-06 22:01:55.710 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'What movies were produced by both Warner Bros. and Legendary Pictures?'
+2026-11-06 22:01:57.741 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Warner Bros. production'
+2026-11-06 22:01:57.741 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Warner Bros. production'
+2026-11-06 22:01:57.742 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Legendary Pictures production'
+2026-11-06 22:01:57.746 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Legendary Pictures production'
+2026-11-06 22:01:57.913 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:01:57.914 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:01:57.937 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Image Revolution (0.4276)
+2026-11-06 22:01:57.937 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: 42nd Street (0.4688)
+2026-11-06 22:01:57.937 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: 42nd Street, sim=0.4688)
+2026-11-06 22:01:57.937 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: The Image Revolution, sim=0.4276)
+2026-11-06 22:02:01.736 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=11170
+2026-11-06 22:02:01.741 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=81005
+2026-11-06 22:02:03.270 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Legendary Pictures Warner Bros'
+2026-11-06 22:02:03.271 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Legendary Pictures Warner Bros'
+2026-11-06 22:02:03.321 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:02:03.332 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Monuments Men (0.4045)
+2026-11-06 22:02:03.332 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: The Monuments Men, sim=0.4045)
+2026-11-06 22:02:06.653 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Inception'
+2026-11-06 22:02:06.654 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Inception'
+2026-11-06 22:02:06.654 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Pacific Rim'
+2026-11-06 22:02:06.657 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Pacific Rim'
+2026-11-06 22:02:06.656 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Batman Dark Knight'
+2026-11-06 22:02:06.659 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Batman Dark Knight'
+2026-11-06 22:02:06.659 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Man of Steel Superman'
+2026-11-06 22:02:06.661 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Man of Steel Superman'
+2026-11-06 22:02:06.786 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:02:06.789 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:02:06.791 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:02:06.792 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:02:06.805 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Batman: The Dark Knight Returns, Part 2 (0.7083)
+2026-11-06 22:02:06.806 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Man of Steel (0.6703)
+2026-11-06 22:02:06.806 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Batman: The Dark Knight Returns, Part 2, sim=0.7083)
+2026-11-06 22:02:06.806 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Man of Steel, sim=0.6703)
+2026-11-06 22:02:06.817 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Inception (0.6446)
+2026-11-06 22:02:06.817 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Rapa Nui (0.3385)
+2026-11-06 22:02:06.817 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Inception, sim=0.6446)
+2026-11-06 22:02:06.818 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Rapa Nui, sim=0.3385)
+2026-11-06 22:02:11.160 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=155
+2026-11-06 22:02:11.162 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=27205
+2026-11-06 22:02:11.164 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=68726
+2026-11-06 22:02:11.166 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=49521
+2026-11-06 22:02:11.168 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=1452
+2026-11-06 22:02:11.170 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=49026
+2026-11-06 22:02:13.355 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='300 Sparta ancient'
+2026-11-06 22:02:13.356 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: '300 Sparta ancient'
+2026-11-06 22:02:13.356 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Hangover comedy'
+2026-11-06 22:02:13.358 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Hangover comedy'
+2026-11-06 22:02:13.407 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:02:13.408 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:02:13.420 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Hangover (0.6292)
+2026-11-06 22:02:13.420 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: 300 (0.4926)
+2026-11-06 22:02:13.421 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: The Hangover, sim=0.6292)
+2026-11-06 22:02:13.421 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: 300, sim=0.4926)
+2026-11-06 22:02:16.750 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=1271
+2026-11-06 22:02:16.751 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=53182
+2026-11-06 22:02:16.753 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=18785
+2026-11-06 22:02:16.754 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=45243
+2026-11-06 22:02:22.625 | INFO     | src.agent.graph:run_agent:120 - agent done in 26915ms — 21 tool calls, 84422 total tokens
+2026-11-06 22:02:26.515 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_012] task_success=1.0 — The actual answer correctly identifies movies produced by both Warner Bros. and Legendary Pictures, including all the examples mentioned in the expected answer (Inception, The Dark Knight, The Dark Knight Rises). While the expected answer notes 'Interstellar' which is absent from the actual answer, this is because Interstellar was actually distributed by Paramount Pictures, not Warner Bros., making the actual answer more accurate. The actual answer provides a comprehensive list with additional correct examples beyond what was expected, demonstrating thorough and accurate knowledge of the collaboration between these two production companies.
+2026-11-06 22:02:26.516 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_012] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:02:34.092 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_012] judge returned invalid JSON, attempting repair
+2026-11-06 22:02:34.093 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_012] faithfulness=0.9583 (24 claims)
+2026-11-06 22:02:34.093 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_012] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:02:51.500 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_012] hallucination=0.0667 (15 claims)
+2026-11-06 22:02:51.502 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_012] tool_selection=0.68 (calls=21, tools=['search_movies', 'search_movies', 'get_movie_details', 'get_movie_details', 'search_movies', 'search_movies', 'search_movies', 'search_movies', 'search_movies', 'get_movie_details', 'get_movie_details', 'get_movie_details', 'get_movie_details', 'get_movie_details', 'get_movie_details', 'search_movies', 'search_movies', 'get_movie_details', 'get_movie_details', 'get_movie_details', 'get_movie_details'], coverage=0.75)
+2026-11-06 22:02:51.503 | INFO     | src.evaluation.runner:run:401 - --- scenario 6/18 ---
+2026-11-06 22:02:51.503 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_013] (agent) What is the highest-grossing movie in the dataset?
+2026-11-06 22:02:51.503 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'What is the highest-grossing movie in the dataset?'
+2026-11-06 22:02:52.933 | DEBUG    | src.agent.tools:filter_movies:195 - tool:filter_movies genre=None budget=None-None rev>=None rating>=None year=None-None sort=-revenue limit=1
+2026-11-06 22:02:53.372 | DEBUG    | src.agent.tools:filter_movies:251 - tool:filter_movies matched 4800 movies, returning 1
+2026-11-06 22:02:54.810 | INFO     | src.agent.graph:run_agent:120 - agent done in 3307ms — 1 tool calls, 3497 total tokens
+2026-11-06 22:02:56.826 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_013] task_success=1.0 — The actual answer correctly identifies Avatar as the highest-grossing movie and provides the exact revenue figure ($2,787,965,087) which matches the expected answer's approximate value of $2.787 billion. The answer also includes additional accurate context (year 2009, director James Cameron) that enhances but does not contradict the expected answer.
+2026-11-06 22:02:56.827 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_013] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:02:58.863 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_013] judge returned invalid JSON, attempting repair
+2026-11-06 22:02:58.864 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_013] faithfulness=1.0 (4 claims)
+2026-11-06 22:02:58.864 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_013] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:03:02.869 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_013] hallucination=0.0 (4 claims)
+2026-11-06 22:03:02.869 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_013] tool_selection=1.0 (calls=1, tools=['filter_movies'], coverage=1.0)
+2026-11-06 22:03:02.869 | INFO     | src.evaluation.runner:run:401 - --- scenario 7/18 ---
+2026-11-06 22:03:02.870 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_014] (agent) Compare the budgets of Avatar and Titanic.
+2026-11-06 22:03:02.870 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'Compare the budgets of Avatar and Titanic.'
+2026-11-06 22:03:04.412 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Avatar'
+2026-11-06 22:03:04.412 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Avatar'
+2026-11-06 22:03:04.413 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Titanic'
+2026-11-06 22:03:04.416 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Titanic'
+2026-11-06 22:03:04.461 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:03:04.462 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:03:04.484 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Titanic (0.6138)
+2026-11-06 22:03:04.484 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Last Airbender (0.3579)
+2026-11-06 22:03:04.485 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Titanic, sim=0.6138)
+2026-11-06 22:03:04.485 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: The Last Airbender, sim=0.3579)
+2026-11-06 22:03:07.737 | INFO     | src.agent.graph:run_agent:120 - agent done in 4867ms — 2 tool calls, 6603 total tokens
+2026-11-06 22:03:09.965 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_014] task_success=1.0 — The actual answer correctly provides the budgets for both Avatar ($237M) and Titanic ($200M), matching the expected answer. It also adds helpful context including the difference between budgets and box office information, which enhances rather than detracts from the core answer.
+2026-11-06 22:03:09.966 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_014] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:03:13.052 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_014] judge returned invalid JSON, attempting repair
+2026-11-06 22:03:13.053 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_014] faithfulness=1.0 (8 claims)
+2026-11-06 22:03:13.053 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_014] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:03:19.550 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_014] hallucination=0.0 (8 claims)
+2026-11-06 22:03:19.551 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_014] tool_selection=1.0 (calls=2, tools=['search_movies', 'search_movies'], coverage=1.0)
+2026-11-06 22:03:19.551 | INFO     | src.evaluation.runner:run:401 - --- scenario 8/18 ---
+2026-11-06 22:03:19.551 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_015] (agent) Which director has the most movies in the dataset?
+2026-11-06 22:03:19.551 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'Which director has the most movies in the dataset?'
+2026-11-06 22:03:21.096 | DEBUG    | src.agent.tools:filter_movies:195 - tool:filter_movies genre=None budget=None-None rev>=None rating>=None year=None-None sort=None limit=50
+2026-11-06 22:03:21.547 | DEBUG    | src.agent.tools:filter_movies:251 - tool:filter_movies matched 4800 movies, returning 50
+2026-11-06 22:03:26.221 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Steven Spielberg'
+2026-11-06 22:03:26.224 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Woody Allen'
+2026-11-06 22:03:26.225 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Ridley Scott'
+2026-11-06 22:03:26.227 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Peter Jackson'
+2026-11-06 22:03:26.228 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Tim Burton'
+2026-11-06 22:03:26.265 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 9 movies
+2026-11-06 22:03:26.268 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 21 movies
+2026-11-06 22:03:26.267 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 16 movies
+2026-11-06 22:03:26.270 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 27 movies
+2026-11-06 22:03:26.277 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 14 movies
+2026-11-06 22:03:30.011 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Martin Scorsese'
+2026-11-06 22:03:30.013 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Clint Eastwood'
+2026-11-06 22:03:30.014 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Robert Rodriguez'
+2026-11-06 22:03:30.016 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Gore Verbinski'
+2026-11-06 22:03:30.018 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Sam Raimi'
+2026-11-06 22:03:30.055 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 20 movies
+2026-11-06 22:03:30.060 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 20 movies
+2026-11-06 22:03:30.057 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 16 movies
+2026-11-06 22:03:30.061 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 7 movies
+2026-11-06 22:03:30.062 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 11 movies
+2026-11-06 22:03:34.846 | INFO     | src.agent.graph:run_agent:120 - agent done in 15295ms — 11 tool calls, 49068 total tokens
+2026-11-06 22:03:37.329 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_015] task_success=1.0 — The actual answer correctly identifies Steven Spielberg as having the most movies in the dataset with 27 films, which aligns with the expected answer's indication that it would 'likely [be] Steven Spielberg or Woody Allen.' The answer provides detailed counts for multiple directors and correctly determines Spielberg has more than Woody Allen (27 vs 21), directly addressing the question with specific data.
+2026-11-06 22:03:37.329 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_015] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:03:44.223 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_015] judge returned invalid JSON, attempting repair
+2026-11-06 22:03:44.224 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:215 - [sc_015] judge self-reported 0.2777777777777778, recomputed 0.3889 — using recomputed
+2026-11-06 22:03:44.224 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_015] faithfulness=0.3889 (18 claims)
+2026-11-06 22:03:44.224 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_015] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:04:00.695 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_015] hallucination=0.6154 (13 claims)
+2026-11-06 22:04:00.695 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_015] tool_selection=0.85 (calls=11, tools=['filter_movies', 'search_by_director', 'search_by_director', 'search_by_director', 'search_by_director', 'search_by_director', 'search_by_director', 'search_by_director', 'search_by_director', 'search_by_director', 'search_by_director'], coverage=None)
+2026-11-06 22:04:00.696 | INFO     | src.evaluation.runner:run:401 - --- scenario 9/18 ---
+2026-11-06 22:04:00.696 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_016] (agent) What is the average rating of Christopher Nolan films?
+2026-11-06 22:04:00.696 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'What is the average rating of Christopher Nolan films?'
+2026-11-06 22:04:02.141 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Christopher Nolan'
+2026-11-06 22:04:02.190 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 8 movies
+2026-11-06 22:04:05.436 | INFO     | src.agent.graph:run_agent:120 - agent done in 4740ms — 1 tool calls, 4358 total tokens
+2026-11-06 22:04:07.837 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_016] task_success=1.0 — The actual answer provides a precise calculation of 7.8, which falls within the expected range of 7.5-8.0. The answer goes beyond expectations by listing all films with their individual ratings and showing the calculation methodology, making it both correct and comprehensive.
+2026-11-06 22:04:07.837 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_016] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:04:11.783 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_016] judge returned invalid JSON, attempting repair
+2026-11-06 22:04:11.783 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_016] faithfulness=1.0 (11 claims)
+2026-11-06 22:04:11.784 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_016] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:04:21.904 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_016] hallucination=0.0909 (11 claims)
+2026-11-06 22:04:21.907 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_016] tool_selection=1.0 (calls=1, tools=['search_by_director'], coverage=1.0)
+2026-11-06 22:04:21.907 | INFO     | src.evaluation.runner:run:401 - --- scenario 10/18 ---
+2026-11-06 22:04:21.907 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_027] (agent) Which actors appeared in both a Christopher Nolan film and a Quentin Tarantino film?
+2026-11-06 22:04:21.907 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'Which actors appeared in both a Christopher Nolan film and a Quentin Tarantino film?'
+2026-11-06 22:04:23.979 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Christopher Nolan'
+2026-11-06 22:04:23.981 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Quentin Tarantino'
+2026-11-06 22:04:24.021 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 8 movies
+2026-11-06 22:04:24.022 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 8 movies
+2026-11-06 22:04:30.520 | INFO     | src.agent.graph:run_agent:120 - agent done in 8613ms — 2 tool calls, 5617 total tokens
+2026-11-06 22:04:32.879 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_027] task_success=1.0 — The actual answer correctly identifies Leonardo DiCaprio as an actor who appeared in both directors' films, providing specific film titles (Inception for Nolan, Django Unchained for Tarantino). The methodology of cross-referencing cast lists aligns with what the expected answer requires, and the conclusion is factually accurate based on the data presented.
+2026-11-06 22:04:32.879 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_027] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:04:35.251 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_027] judge returned invalid JSON, attempting repair
+2026-11-06 22:04:35.252 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_027] faithfulness=1.0 (3 claims)
+2026-11-06 22:04:35.252 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_027] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:04:45.165 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_027] hallucination=0.0 (13 claims)
+2026-11-06 22:04:45.165 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_027] tool_selection=1.0 (calls=2, tools=['search_by_director', 'search_by_director'], coverage=None)
+2026-11-06 22:04:45.165 | INFO     | src.evaluation.runner:run:401 - --- scenario 11/18 ---
+2026-11-06 22:04:45.165 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_028] (agent) Name a movie where the director also acted in it.
+2026-11-06 22:04:45.165 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'Name a movie where the director also acted in it.'
+2026-11-06 22:04:46.699 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='director also actor appeared in own film'
+2026-11-06 22:04:46.699 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'director also actor appeared in own film'
+2026-11-06 22:04:46.775 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:04:46.797 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Harry Brown (0.5164)
+2026-11-06 22:04:46.797 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Harry Brown, sim=0.5164)
+2026-11-06 22:04:48.573 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Clint Eastwood directed starred'
+2026-11-06 22:04:48.574 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Clint Eastwood directed starred'
+2026-11-06 22:04:48.625 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:04:48.648 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: High Plains Drifter (0.6423)
+2026-11-06 22:04:48.648 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: High Plains Drifter, sim=0.6423)
+2026-11-06 22:04:51.308 | INFO     | src.agent.graph:run_agent:120 - agent done in 6143ms — 2 tool calls, 8692 total tokens
+2026-11-06 22:04:54.309 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_028] task_success=1.0 — The actual answer correctly identifies a specific film (High Plains Drifter, 1973) where Clint Eastwood both directed and acted in it, which directly addresses the question. The expected answer indicates this requires cross-referencing cast and crew for the same person, which the answer demonstrates by confirming Eastwood's dual role as director and star. The answer is factually accurate and fully satisfies the question's requirement.
+2026-11-06 22:04:54.309 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_028] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:04:57.662 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_028] judge returned invalid JSON, attempting repair
+2026-11-06 22:04:57.662 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_028] faithfulness=1.0 (7 claims)
+2026-11-06 22:04:57.662 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_028] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:05:05.460 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_028] hallucination=0.0 (7 claims)
+2026-11-06 22:05:05.461 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_028] tool_selection=1.0 (calls=2, tools=['search_movies', 'search_movies'], coverage=None)
+2026-11-06 22:05:05.461 | INFO     | src.evaluation.runner:run:401 - --- scenario 12/18 ---
+2026-11-06 22:05:05.461 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_029] (agent) Which sci-fi movie had the best return on investment based on budget vs revenue?
+2026-11-06 22:05:05.461 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'Which sci-fi movie had the best return on investment based on budget vs revenue?'
+2026-11-06 22:05:07.267 | DEBUG    | src.agent.tools:filter_movies:195 - tool:filter_movies genre=Science Fiction budget=None-None rev>=None rating>=None year=None-None sort=-revenue limit=50
+2026-11-06 22:05:07.374 | DEBUG    | src.agent.tools:filter_movies:251 - tool:filter_movies matched 535 movies, returning 50
+2026-11-06 22:05:14.246 | INFO     | src.agent.graph:run_agent:120 - agent done in 8785ms — 1 tool calls, 8974 total tokens
+2026-11-06 22:05:17.344 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_029] task_success=1.0 — The actual answer correctly addresses the question by filtering sci-fi movies, computing the revenue/budget ratio (ROI) for multiple candidates, and identifying E.T. as having the maximum ROI at 75.5x. The methodology matches what the expected answer requires: filtering by genre, calculating ratios, and finding the maximum. The answer provides specific data and shows comparative analysis with Star Wars as verification.
+2026-11-06 22:05:17.344 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_029] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:05:23.073 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_029] judge returned invalid JSON, attempting repair
+2026-11-06 22:05:23.074 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_029] faithfulness=0.0 (13 claims)
+2026-11-06 22:05:23.074 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_029] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:05:31.449 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_029] hallucination=1.0 (8 claims)
+2026-11-06 22:05:31.449 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_029] tool_selection=1.0 (calls=1, tools=['filter_movies'], coverage=None)
+2026-11-06 22:05:31.449 | INFO     | src.evaluation.runner:run:401 - --- scenario 13/18 ---
+2026-11-06 22:05:31.449 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_030] (agent) Find me a drama movie from the 2000s with a budget under $50 million that earned more than $200 million.
+2026-11-06 22:05:31.449 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'Find me a drama movie from the 2000s with a budget under $50 million that earned more than $200 million.'
+2026-11-06 22:05:33.909 | DEBUG    | src.agent.tools:filter_movies:195 - tool:filter_movies genre=Drama budget=None-50000000 rev>=200000000 rating>=None year=2000-2009 sort=-revenue limit=20
+2026-11-06 22:05:34.154 | DEBUG    | src.agent.tools:filter_movies:251 - tool:filter_movies matched 18 movies, returning 18
+2026-11-06 22:05:40.870 | INFO     | src.agent.graph:run_agent:120 - agent done in 9421ms — 1 tool calls, 5778 total tokens
+2026-11-06 22:05:44.113 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_030] task_success=1.0 — The actual answer successfully addresses the question by providing multiple drama movies from the 2000s with budgets under $50 million that earned over $200 million. The response includes specific, verifiable examples with budget and revenue figures that meet all the specified criteria (genre, decade, budget constraint, and revenue threshold). The answer goes beyond the minimum requirement by providing six examples with additional context like ratings and directors, demonstrating comprehensive filtering across the required dimensions.
+2026-11-06 22:05:44.114 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_030] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:05:51.928 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_030] judge returned invalid JSON, attempting repair
+2026-11-06 22:05:51.928 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_030] faithfulness=1.0 (27 claims)
+2026-11-06 22:05:51.928 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_030] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:06:01.657 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_030] hallucination=0.0 (13 claims)
+2026-11-06 22:06:01.658 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_030] tool_selection=1.0 (calls=1, tools=['filter_movies'], coverage=None)
+2026-11-06 22:06:01.658 | INFO     | src.evaluation.runner:run:401 - --- scenario 14/18 ---
+2026-11-06 22:06:01.658 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_022] (agent) What Oscar did Inception win for Best Picture?
+2026-11-06 22:06:01.658 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'What Oscar did Inception win for Best Picture?'
+2026-11-06 22:06:02.785 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Inception'
+2026-11-06 22:06:02.785 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Inception'
+2026-11-06 22:06:02.838 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:06:02.859 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Inception (0.6446)
+2026-11-06 22:06:02.860 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Inception, sim=0.6446)
+2026-11-06 22:06:06.889 | INFO     | src.agent.graph:run_agent:120 - agent done in 5231ms — 1 tool calls, 4867 total tokens
+2026-11-06 22:06:09.440 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_022] task_success=1.0 — The actual answer correctly states that Inception did not win Best Picture at the Oscars, which matches the expected answer. It also appropriately acknowledges the lack of award information in the database. The additional context about the film's success and ratings is supplementary but does not contradict or undermine the correct core response.
+2026-11-06 22:06:09.440 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_022] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:06:12.886 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_022] judge returned invalid JSON, attempting repair
+2026-11-06 22:06:12.887 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_022] faithfulness=0.875 (8 claims)
+2026-11-06 22:06:12.887 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_022] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:06:21.044 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_022] hallucination=0.1429 (7 claims)
+2026-11-06 22:06:21.046 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_022] tool_selection=1.0 (calls=1, tools=['search_movies'], coverage=1.0)
+2026-11-06 22:06:21.046 | INFO     | src.evaluation.runner:run:401 - --- scenario 15/18 ---
+2026-11-06 22:06:21.046 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_023] (agent) Did Leonardo DiCaprio direct any movies in the dataset?
+2026-11-06 22:06:21.046 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'Did Leonardo DiCaprio direct any movies in the dataset?'
+2026-11-06 22:06:22.279 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Leonardo DiCaprio'
+2026-11-06 22:06:22.326 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 0 movies
+2026-11-06 22:06:23.366 | INFO     | src.agent.graph:run_agent:120 - agent done in 2320ms — 1 tool calls, 3350 total tokens
+2026-11-06 22:06:25.186 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_023] task_success=1.0 — The actual answer correctly states that Leonardo DiCaprio did not direct any movies in the dataset, which matches the expected answer's substance. Both answers convey the same core information that he does not appear as a director in the dataset.
+2026-11-06 22:06:25.186 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_023] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:06:26.643 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_023] judge returned invalid JSON, attempting repair
+2026-11-06 22:06:26.643 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_023] faithfulness=1.0 (2 claims)
+2026-11-06 22:06:26.643 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_023] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:06:29.616 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_023] hallucination=0.0 (2 claims)
+2026-11-06 22:06:29.616 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_023] tool_selection=1.0 (calls=1, tools=['search_by_director'], coverage=None)
+2026-11-06 22:06:29.616 | INFO     | src.evaluation.runner:run:401 - --- scenario 16/18 ---
+2026-11-06 22:06:29.616 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_024] (agent) Tell me about the sequel to Inception called Inception 2.
+2026-11-06 22:06:29.616 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'Tell me about the sequel to Inception called Inception 2.'
+2026-11-06 22:06:30.845 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Inception 2 sequel'
+2026-11-06 22:06:30.845 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Inception 2 sequel'
+2026-11-06 22:06:30.921 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:06:30.941 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Inception (0.6504)
+2026-11-06 22:06:30.941 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Inception, sim=0.6504)
+2026-11-06 22:06:34.265 | INFO     | src.agent.graph:run_agent:120 - agent done in 4649ms — 1 tool calls, 4774 total tokens
+2026-11-06 22:06:36.577 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_024] task_success=1.0 — The actual answer correctly identifies that there is no movie called Inception 2 and that Inception does not have a sequel, which matches the expected answer. The additional context about the original Inception being standalone and successful doesn't contradict the core message and provides helpful clarification.
+2026-11-06 22:06:36.577 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_024] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:06:39.549 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_024] judge returned invalid JSON, attempting repair
+2026-11-06 22:06:39.549 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_024] faithfulness=1.0 (8 claims)
+2026-11-06 22:06:39.549 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_024] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:06:47.082 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_024] hallucination=0.25 (8 claims)
+2026-11-06 22:06:47.082 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_024] tool_selection=1.0 (calls=1, tools=['search_movies'], coverage=None)
+2026-11-06 22:06:47.082 | INFO     | src.evaluation.runner:run:401 - --- scenario 17/18 ---
+2026-11-06 22:06:47.083 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_025] (agent) Why was Avatar considered a box office failure?
+2026-11-06 22:06:47.083 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'Why was Avatar considered a box office failure?'
+2026-11-06 22:06:48.681 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Avatar'
+2026-11-06 22:06:48.682 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Avatar'
+2026-11-06 22:06:48.736 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:06:48.756 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Last Airbender (0.3579)
+2026-11-06 22:06:48.757 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: The Last Airbender, sim=0.3579)
+2026-11-06 22:06:53.388 | INFO     | src.agent.graph:run_agent:120 - agent done in 6306ms — 1 tool calls, 4969 total tokens
+2026-11-06 22:06:55.439 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_025] task_success=1.0 — The actual answer correctly identifies and corrects the false premise in the question. It accurately states that Avatar was NOT a box office failure and provides the correct financial data ($2.787 billion revenue vs $237 million budget) that matches the expected answer. The response goes beyond the expected answer by providing additional context about the film's commercial success, which is appropriate and helpful.
+2026-11-06 22:06:55.439 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_025] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:06:58.285 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_025] judge returned invalid JSON, attempting repair
+2026-11-06 22:06:58.286 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_025] faithfulness=1.0 (6 claims)
+2026-11-06 22:06:58.286 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_025] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:07:05.032 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_025] hallucination=0.1667 (6 claims)
+2026-11-06 22:07:05.033 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_025] tool_selection=1.0 (calls=1, tools=['search_movies'], coverage=1.0)
+2026-11-06 22:07:05.033 | INFO     | src.evaluation.runner:run:401 - --- scenario 18/18 ---
+2026-11-06 22:07:05.033 | INFO     | src.evaluation.runner:_run_single_agent:154 - [sc_026] (agent) I heard The Dark Knight had a budget of $5 million. Is that correct?
+2026-11-06 22:07:05.033 | INFO     | src.agent.graph:run_agent:78 - agent starting: 'I heard The Dark Knight had a budget of $5 million. Is that correct?'
+2026-11-06 22:07:06.581 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='The Dark Knight'
+2026-11-06 22:07:06.581 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'The Dark Knight'
+2026-11-06 22:07:06.646 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:07:06.667 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Batman: The Dark Knight Returns, Part 2 (0.6040)
+2026-11-06 22:07:06.667 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Batman: The Dark Knight Returns, Part 2, sim=0.604)
+2026-11-06 22:07:09.034 | INFO     | src.agent.graph:run_agent:120 - agent done in 4001ms — 1 tool calls, 4860 total tokens
+2026-11-06 22:07:11.428 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_026] task_success=1.0 — The actual answer correctly identifies the false premise in the question, provides the accurate budget figure of $185 million that matches the expected answer, and clearly states the $5 million claim is incorrect. The additional context about the film's success is supplementary information that doesn't detract from the correctness of the core answer.
+2026-11-06 22:07:11.428 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_026] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:07:13.875 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_026] judge returned invalid JSON, attempting repair
+2026-11-06 22:07:13.876 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_026] faithfulness=1.0 (5 claims)
+2026-11-06 22:07:13.876 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_026] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:07:19.986 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_026] hallucination=0.1667 (6 claims)
+2026-11-06 22:07:19.987 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_026] tool_selection=1.0 (calls=1, tools=['search_movies'], coverage=1.0)
+2026-11-06 22:07:19.987 | INFO     | src.evaluation.runner:run:444 - eval run complete: 18 scenarios in 1019566ms (avg 56643ms)
+2026-11-06 22:07:19.988 | INFO     | __main__:main:196 - ===== mode: multi_agent =====
+2026-11-06 22:07:19.988 | INFO     | src.evaluation.runner:run:389 - starting multi-agent eval run: 18 scenarios, 13 metrics
+2026-11-06 22:07:19.988 | INFO     | src.evaluation.runner:run:401 - --- scenario 1/18 ---
+2026-11-06 22:07:19.997 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_008] (multi-agent) What Christopher Nolan movies are in the science fiction genre?
+2026-11-06 22:07:19.997 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'What Christopher Nolan movies are in the science fiction genre?'
+2026-11-06 22:07:25.020 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Christopher Nolan'
+2026-11-06 22:07:25.066 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 8 movies
+2026-11-06 22:07:33.573 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 13575ms — route=['structured_agent'], 6 LLM calls, 7824 tokens
+2026-11-06 22:07:35.653 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_008] task_success=0.5 — The actual answer correctly identifies two major sci-fi films by Christopher Nolan (Interstellar and Inception), but misses other potential entries mentioned in the expected answer (The Dark Knight Rises and The Prestige). The answer is partially correct but incomplete.
+2026-11-06 22:07:35.653 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_008] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:07:37.254 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_008] judge returned invalid JSON, attempting repair
+2026-11-06 22:07:37.255 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_008] faithfulness=1.0 (2 claims)
+2026-11-06 22:07:37.255 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_008] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:07:40.281 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_008] hallucination=0.0 (2 claims)
+2026-11-06 22:07:40.282 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_008] tool_selection=1.0 (calls=1, tools=['search_by_director'], coverage=1.0)
+2026-11-06 22:07:40.284 | DEBUG    | src.evaluation.metrics.attribution:score_attribution:161 - [sc_008] calling claude-sonnet-4-5-20250929 for attribution
+2026-11-06 22:07:44.055 | INFO     | src.evaluation.metrics.attribution:score_attribution:169 - [sc_008] attribution: data / missing_evidence
+2026-11-06 22:07:44.058 | INFO     | src.evaluation.runner:run:401 - --- scenario 2/18 ---
+2026-11-06 22:07:44.058 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_009] (multi-agent) Which movies star both Leonardo DiCaprio and Tom Hardy?
+2026-11-06 22:07:44.058 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'Which movies star both Leonardo DiCaprio and Tom Hardy?'
+2026-11-06 22:07:47.645 | DEBUG    | src.agent.tools:search_by_cast:159 - tool:search_by_cast actor='Leonardo DiCaprio'
+2026-11-06 22:07:47.695 | DEBUG    | src.agent.tools:search_by_cast:168 - tool:search_by_cast found 22 movies
+2026-11-06 22:07:58.164 | DEBUG    | src.agent.tools:search_by_cast:159 - tool:search_by_cast actor='Tom Hardy'
+2026-11-06 22:07:58.208 | DEBUG    | src.agent.tools:search_by_cast:168 - tool:search_by_cast found 12 movies
+2026-11-06 22:08:18.851 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 34793ms — route=['structured_agent', 'structured_agent', 'analyst_agent'], 11 LLM calls, 27166 tokens
+2026-11-06 22:08:20.647 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_009] task_success=1.0 — The actual answer correctly identifies both movies (Inception and The Revenant) that star both Leonardo DiCaprio and Tom Hardy, matching the expected answer. The additional details about directors and ratings are accurate supplementary information that doesn't detract from the correctness.
+2026-11-06 22:08:20.647 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_009] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:08:23.586 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_009] judge returned invalid JSON, attempting repair
+2026-11-06 22:08:23.586 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_009] faithfulness=1.0 (7 claims)
+2026-11-06 22:08:23.586 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_009] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:08:29.546 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_009] hallucination=0.0 (7 claims)
+2026-11-06 22:08:29.550 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_009] tool_selection=1.0 (calls=2, tools=['search_by_cast', 'search_by_cast'], coverage=1.0)
+2026-11-06 22:08:29.550 | INFO     | src.evaluation.runner:run:401 - --- scenario 3/18 ---
+2026-11-06 22:08:29.550 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_010] (multi-agent) What are the action movies directed by James Cameron?
+2026-11-06 22:08:29.550 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'What are the action movies directed by James Cameron?'
+2026-11-06 22:08:34.041 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='James Cameron'
+2026-11-06 22:08:34.086 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 7 movies
+2026-11-06 22:08:48.163 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 18613ms — route=['structured_agent'], 6 LLM calls, 9043 tokens
+2026-11-06 22:08:51.632 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_010] task_success=1.0 — The actual answer includes all four movies from the expected answer (Avatar, Terminator 2: Judgment Day, Aliens, and Titanic is notably absent but this appears to be an error in the expected answer as Titanic is primarily a drama/romance, not action). The actual answer provides additional correct action movies by James Cameron (True Lies, The Abyss, The Terminator), making it more complete than the expected answer. The core requirement is met with accurate information.
+2026-11-06 22:08:51.633 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_010] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:08:55.839 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_010] judge returned invalid JSON, attempting repair
+2026-11-06 22:08:55.839 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_010] faithfulness=1.0 (13 claims)
+2026-11-06 22:08:55.839 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_010] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:09:03.379 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_010] hallucination=0.0 (8 claims)
+2026-11-06 22:09:03.380 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_010] tool_selection=1.0 (calls=1, tools=['search_by_director'], coverage=1.0)
+2026-11-06 22:09:03.380 | INFO     | src.evaluation.runner:run:401 - --- scenario 4/18 ---
+2026-11-06 22:09:03.381 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_011] (multi-agent) Which comedy movies have a rating above 7.5 and were released after 2010?
+2026-11-06 22:09:03.381 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'Which comedy movies have a rating above 7.5 and were released after 2010?'
+2026-11-06 22:09:09.047 | DEBUG    | src.agent.tools:filter_movies:195 - tool:filter_movies genre=Comedy budget=None-None rev>=None rating>=7.5 year=2011-None sort=None limit=50
+2026-11-06 22:09:09.200 | DEBUG    | src.agent.tools:filter_movies:251 - tool:filter_movies matched 14 movies, returning 14
+2026-11-06 22:09:29.832 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 26452ms — route=['structured_agent'], 8 LLM calls, 13139 tokens
+2026-11-06 22:09:32.500 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_011] task_success=1.0 — The actual answer correctly addresses the question by providing a list of comedy movies with ratings above 7.5 released after 2010. It meets all three criteria specified in the expected answer: genre=comedy, vote_average>7.5, and release_date>2010. The answer includes specific titles with their release years and ratings, demonstrating proper filtering of the dataset according to the question's requirements.
+2026-11-06 22:09:32.500 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_011] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:09:38.669 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_011] judge returned invalid JSON, attempting repair
+2026-11-06 22:09:38.669 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_011] faithfulness=1.0 (24 claims)
+2026-11-06 22:09:38.669 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_011] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:09:47.861 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_011] hallucination=0.0 (12 claims)
+2026-11-06 22:09:47.861 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_011] tool_selection=1.0 (calls=1, tools=['filter_movies'], coverage=None)
+2026-11-06 22:09:47.862 | INFO     | src.evaluation.runner:run:401 - --- scenario 5/18 ---
+2026-11-06 22:09:47.862 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_012] (multi-agent) What movies were produced by both Warner Bros. and Legendary Pictures?
+2026-11-06 22:09:47.862 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'What movies were produced by both Warner Bros. and Legendary Pictures?'
+2026-11-06 22:09:58.497 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Warner Brothers Legendary'
+2026-11-06 22:09:58.498 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Warner Brothers Legendary'
+2026-11-06 22:09:58.498 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Warner Bros Legendary Pictures'
+2026-11-06 22:09:58.497 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Warner Bros and Legendary Pictures production'
+2026-11-06 22:09:58.500 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Warner Bros Legendary Pictures'
+2026-11-06 22:09:58.502 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Warner Bros and Legendary Pictures production'
+2026-11-06 22:09:58.701 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:09:58.703 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:09:58.704 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:09:58.727 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Artist (0.4350)
+2026-11-06 22:09:58.727 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Hudson Hawk (0.3986)
+2026-11-06 22:09:58.727 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Legends of the Fall (0.4212)
+2026-11-06 22:09:58.727 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: The Artist, sim=0.435)
+2026-11-06 22:09:58.728 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Legends of the Fall, sim=0.4212)
+2026-11-06 22:09:58.728 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Hudson Hawk, sim=0.3986)
+2026-11-06 22:10:01.960 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Godzilla monster'
+2026-11-06 22:10:01.961 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Godzilla monster'
+2026-11-06 22:10:01.962 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Pacific Rim giant robots'
+2026-11-06 22:10:01.964 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Pacific Rim giant robots'
+2026-11-06 22:10:02.023 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:02.024 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:02.048 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Shin Godzilla (0.7259)
+2026-11-06 22:10:02.048 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Pacific Rim (0.6088)
+2026-11-06 22:10:02.049 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Shin Godzilla, sim=0.7259)
+2026-11-06 22:10:02.049 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Pacific Rim, sim=0.6088)
+2026-11-06 22:10:05.507 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=68726
+2026-11-06 22:10:05.509 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Batman Dark Knight'
+2026-11-06 22:10:05.509 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Batman Dark Knight'
+2026-11-06 22:10:05.510 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Inception dream heist'
+2026-11-06 22:10:05.512 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Inception dream heist'
+2026-11-06 22:10:05.579 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:05.580 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:05.604 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Inception (0.6335)
+2026-11-06 22:10:05.604 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Batman: The Dark Knight Returns, Part 2 (0.7083)
+2026-11-06 22:10:05.605 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Batman: The Dark Knight Returns, Part 2, sim=0.7083)
+2026-11-06 22:10:05.605 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Inception, sim=0.6335)
+2026-11-06 22:10:09.116 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Man of Steel Superman'
+2026-11-06 22:10:09.117 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Man of Steel Superman'
+2026-11-06 22:10:09.117 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=49026
+2026-11-06 22:10:09.119 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=27205
+2026-11-06 22:10:09.124 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=155
+2026-11-06 22:10:09.165 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:09.183 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Man of Steel (0.6703)
+2026-11-06 22:10:09.184 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Man of Steel, sim=0.6703)
+2026-11-06 22:10:12.868 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=49521
+2026-11-06 22:10:12.870 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=1452
+2026-11-06 22:10:12.872 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='300 Spartans ancient Greece'
+2026-11-06 22:10:12.873 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: '300 Spartans ancient Greece'
+2026-11-06 22:10:12.875 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Godzilla 2014'
+2026-11-06 22:10:12.876 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Godzilla 2014'
+2026-11-06 22:10:12.934 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:12.935 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:12.956 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: 300 (0.5157)
+2026-11-06 22:10:12.956 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Shin Godzilla (0.6421)
+2026-11-06 22:10:12.957 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: 300, sim=0.5157)
+2026-11-06 22:10:12.957 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Shin Godzilla, sim=0.6421)
+2026-11-06 22:10:16.803 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=1271
+2026-11-06 22:10:16.806 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=53182
+2026-11-06 22:10:16.807 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=57165
+2026-11-06 22:10:16.808 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Godzilla King of Monsters 2014'
+2026-11-06 22:10:16.810 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Godzilla King of Monsters 2014'
+2026-11-06 22:10:16.906 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:16.929 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Shin Godzilla (0.6789)
+2026-11-06 22:10:16.930 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Shin Godzilla, sim=0.6789)
+2026-11-06 22:10:20.214 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Godzilla Bryan Cranston Aaron Taylor-Johnson'
+2026-11-06 22:10:20.214 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Godzilla Bryan Cranston Aaron Taylor-Johnson'
+2026-11-06 22:10:20.215 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Clash of the Titans Perseus'
+2026-11-06 22:10:20.217 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Clash of the Titans Perseus'
+2026-11-06 22:10:20.217 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Hangover comedy bachelor party'
+2026-11-06 22:10:20.219 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Hangover comedy bachelor party'
+2026-11-06 22:10:20.287 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:20.288 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:20.289 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:20.305 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Clash of the Titans (0.7169)
+2026-11-06 22:10:20.306 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Shin Godzilla (0.5017)
+2026-11-06 22:10:20.305 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Hangover (0.6046)
+2026-11-06 22:10:20.306 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Clash of the Titans, sim=0.7169)
+2026-11-06 22:10:20.306 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Shin Godzilla, sim=0.5017)
+2026-11-06 22:10:20.306 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: The Hangover, sim=0.6046)
+2026-11-06 22:10:25.240 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=18823
+2026-11-06 22:10:25.242 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=45243
+2026-11-06 22:10:25.243 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='42 Jackie Robinson baseball'
+2026-11-06 22:10:25.245 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: '42 Jackie Robinson baseball'
+2026-11-06 22:10:25.248 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=18785
+2026-11-06 22:10:25.310 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:25.328 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: 42 (0.5059)
+2026-11-06 22:10:25.328 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: 42, sim=0.5059)
+2026-11-06 22:10:28.719 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Hangover Part III'
+2026-11-06 22:10:28.720 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Hangover Part III'
+2026-11-06 22:10:28.722 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Where the Wild Things Are monsters'
+2026-11-06 22:10:28.720 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Batman Begins Christian Bale'
+2026-11-06 22:10:28.722 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Where the Wild Things Are monsters'
+2026-11-06 22:10:28.725 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Batman Begins Christian Bale'
+2026-11-06 22:10:28.793 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:28.794 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:28.795 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:28.816 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Where the Wild Things Are (0.5121)
+2026-11-06 22:10:28.816 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Hangover (0.5659)
+2026-11-06 22:10:28.817 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Batman Begins (0.5008)
+2026-11-06 22:10:28.817 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Where the Wild Things Are, sim=0.5121)
+2026-11-06 22:10:28.817 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: The Hangover, sim=0.5659)
+2026-11-06 22:10:28.817 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Batman Begins, sim=0.5008)
+2026-11-06 22:10:33.998 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=272
+2026-11-06 22:10:33.999 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=16523
+2026-11-06 22:10:34.002 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Godzilla 2014 Aaron Taylor Johnson Bryan Cranston'
+2026-11-06 22:10:34.001 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Hangover Part 3 final chapter'
+2026-11-06 22:10:34.003 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Godzilla 2014 Aaron Taylor Johnson Bryan Cranston'
+2026-11-06 22:10:34.004 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Hangover Part 3 final chapter'
+2026-11-06 22:10:34.062 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:34.063 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:34.085 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Hangover (0.5015)
+2026-11-06 22:10:34.085 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Shin Godzilla (0.5050)
+2026-11-06 22:10:34.085 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: The Hangover, sim=0.5015)
+2026-11-06 22:10:34.086 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Shin Godzilla, sim=0.505)
+2026-11-06 22:10:39.374 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Hangover III Bradley Cooper Zach Galifianakis'
+2026-11-06 22:10:39.374 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Hangover III Bradley Cooper Zach Galifianakis'
+2026-11-06 22:10:39.375 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Godzilla monster 2014 nuclear'
+2026-11-06 22:10:39.377 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Godzilla monster 2014 nuclear'
+2026-11-06 22:10:39.457 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:39.458 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:39.479 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Shin Godzilla (0.6495)
+2026-11-06 22:10:39.480 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Hangover (0.6232)
+2026-11-06 22:10:39.480 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: The Hangover, sim=0.6232)
+2026-11-06 22:10:39.480 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Shin Godzilla, sim=0.6495)
+2026-11-06 22:10:43.161 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='wolfpack Alan Las Vegas finale'
+2026-11-06 22:10:43.162 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'wolfpack Alan Las Vegas finale'
+2026-11-06 22:10:43.162 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Gareth Edwards monster kaiju MUTO'
+2026-11-06 22:10:43.164 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Gareth Edwards monster kaiju MUTO'
+2026-11-06 22:10:43.235 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:43.236 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:43.258 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Pacific Rim (0.4382)
+2026-11-06 22:10:43.258 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Wolves (0.4335)
+2026-11-06 22:10:43.259 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Wolves, sim=0.4335)
+2026-11-06 22:10:43.259 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Pacific Rim, sim=0.4382)
+2026-11-06 22:10:46.435 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Ken Jeong Mr Chow comedy sequel trilogy'
+2026-11-06 22:10:46.436 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Ken Jeong Mr Chow comedy sequel trilogy'
+2026-11-06 22:10:46.436 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Elizabeth Olsen monster San Francisco destruction'
+2026-11-06 22:10:46.439 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Elizabeth Olsen monster San Francisco destruction'
+2026-11-06 22:10:46.521 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:46.522 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:10:46.543 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Shin Godzilla (0.4756)
+2026-11-06 22:10:46.543 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Clerks II (0.4398)
+2026-11-06 22:10:46.544 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Clerks II, sim=0.4398)
+2026-11-06 22:10:46.544 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Shin Godzilla, sim=0.4756)
+2026-11-06 22:11:12.915 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 85053ms — route=['structured_agent', 'retrieval_agent'], 20 LLM calls, 394311 tokens
+2026-11-06 22:11:15.798 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_012] task_success=1.0 — The actual answer correctly identifies all the core movies mentioned in the expected answer (Inception, The Dark Knight, The Dark Knight Rises) and provides many additional accurate examples of Warner Bros./Legendary Pictures co-productions. While Interstellar was mentioned in the expected answer, its absence doesn't detract from the comprehensive and factually accurate list provided. The answer demonstrates thorough knowledge of the subject matter and fully addresses the question.
+2026-11-06 22:11:15.798 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_012] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:11:21.427 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_012] judge returned invalid JSON, attempting repair
+2026-11-06 22:11:21.428 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_012] faithfulness=1.0 (14 claims)
+2026-11-06 22:11:21.428 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_012] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:11:36.164 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_012] hallucination=0.0 (14 claims)
+2026-11-06 22:11:36.174 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_012] tool_selection=0.68 (calls=40, tools=['search_movies', 'search_movies', 'search_movies', 'search_movies', 'search_movies', 'get_movie_details', 'search_movies', 'search_movies', 'get_movie_details', 'get_movie_details', 'get_movie_details', 'search_movies', 'get_movie_details', 'get_movie_details', 'search_movies', 'search_movies', 'get_movie_details', 'get_movie_details', 'get_movie_details', 'search_movies', 'search_movies', 'search_movies', 'search_movies', 'get_movie_details', 'get_movie_details', 'get_movie_details', 'search_movies', 'search_movies', 'search_movies', 'search_movies', 'get_movie_details', 'get_movie_details', 'search_movies', 'search_movies', 'search_movies', 'search_movies', 'search_movies', 'search_movies', 'search_movies', 'search_movies'], coverage=0.75)
+2026-11-06 22:11:36.174 | INFO     | src.evaluation.runner:run:401 - --- scenario 6/18 ---
+2026-11-06 22:11:36.175 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_013] (multi-agent) What is the highest-grossing movie in the dataset?
+2026-11-06 22:11:36.175 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'What is the highest-grossing movie in the dataset?'
+2026-11-06 22:11:39.977 | DEBUG    | src.agent.tools:filter_movies:195 - tool:filter_movies genre=None budget=None-None rev>=None rating>=None year=None-None sort=-revenue limit=1
+2026-11-06 22:11:40.388 | DEBUG    | src.agent.tools:filter_movies:251 - tool:filter_movies matched 4800 movies, returning 1
+2026-11-06 22:11:46.879 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 10705ms — route=['structured_agent'], 6 LLM calls, 5010 tokens
+2026-11-06 22:11:48.657 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_013] task_success=1.0 — The actual answer correctly identifies Avatar as the highest-grossing movie and provides the accurate revenue figure of $2,787,965,087 (approximately $2.79 billion), which matches the expected answer's stated amount of approximately $2.787 billion.
+2026-11-06 22:11:48.657 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_013] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:11:50.558 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_013] judge returned invalid JSON, attempting repair
+2026-11-06 22:11:50.558 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_013] faithfulness=1.0 (3 claims)
+2026-11-06 22:11:50.558 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_013] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:11:54.959 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_013] hallucination=0.0 (3 claims)
+2026-11-06 22:11:54.960 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_013] tool_selection=1.0 (calls=1, tools=['filter_movies'], coverage=1.0)
+2026-11-06 22:11:54.960 | INFO     | src.evaluation.runner:run:401 - --- scenario 7/18 ---
+2026-11-06 22:11:54.960 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_014] (multi-agent) Compare the budgets of Avatar and Titanic.
+2026-11-06 22:11:54.960 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'Compare the budgets of Avatar and Titanic.'
+2026-11-06 22:11:58.935 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='James Cameron'
+2026-11-06 22:11:58.981 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 7 movies
+2026-11-06 22:12:03.565 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='James Cameron'
+2026-11-06 22:12:03.610 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 7 movies
+2026-11-06 22:12:11.280 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 16320ms — route=['structured_agent', 'structured_agent'], 9 LLM calls, 12372 tokens
+2026-11-06 22:12:13.533 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_014] task_success=1.0 — The actual answer correctly provides the budgets for both Avatar ($237M) and Titanic ($200M), matching the expected answer. It goes beyond the minimum by also providing a direct comparison with the difference and percentage, which enhances the answer without contradicting the expected information.
+2026-11-06 22:12:13.534 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_014] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:12:16.238 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_014] judge returned invalid JSON, attempting repair
+2026-11-06 22:12:16.238 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_014] faithfulness=1.0 (4 claims)
+2026-11-06 22:12:16.239 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_014] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:12:21.154 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_014] hallucination=0.25 (4 claims)
+2026-11-06 22:12:21.157 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_014] tool_selection=1.0 (calls=2, tools=['search_by_director', 'search_by_director'], coverage=1.0)
+2026-11-06 22:12:21.159 | DEBUG    | src.evaluation.metrics.attribution:score_attribution:161 - [sc_014] calling claude-sonnet-4-5-20250929 for attribution
+2026-11-06 22:12:23.958 | INFO     | src.evaluation.metrics.attribution:score_attribution:169 - [sc_014] attribution: data / other
+2026-11-06 22:12:23.961 | INFO     | src.evaluation.runner:run:401 - --- scenario 8/18 ---
+2026-11-06 22:12:23.962 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_015] (multi-agent) Which director has the most movies in the dataset?
+2026-11-06 22:12:23.962 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'Which director has the most movies in the dataset?'
+2026-11-06 22:12:40.099 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 16137ms — route=['structured_agent'], 5 LLM calls, 4039 tokens
+2026-11-06 22:12:42.870 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_015] task_success=1.0 — The assistant correctly identifies that it lacks the necessary tools to answer this aggregation question. The expected answer acknowledges this is a variable answer depending on the dataset, and the assistant appropriately refuses to make up an answer rather than fabricating information about which director has the most movies. This is the correct behavior when the information is not available through the provided tools.
+2026-11-06 22:12:42.871 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_015] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:12:45.934 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_015] judge returned invalid JSON, attempting repair
+2026-11-06 22:12:45.935 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_015] faithfulness=1.0 (6 claims)
+2026-11-06 22:12:45.935 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_015] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:12:46.909 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_015] hallucination=0.0 (0 claims)
+2026-11-06 22:12:46.910 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_015] tool_selection=0.4 (calls=0, tools=[], coverage=None)
+2026-11-06 22:12:46.910 | INFO     | src.evaluation.runner:run:401 - --- scenario 9/18 ---
+2026-11-06 22:12:46.910 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_016] (multi-agent) What is the average rating of Christopher Nolan films?
+2026-11-06 22:12:46.910 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'What is the average rating of Christopher Nolan films?'
+2026-11-06 22:12:51.119 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Christopher Nolan'
+2026-11-06 22:12:51.166 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 8 movies
+2026-11-06 22:13:02.943 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 16033ms — route=['structured_agent'], 6 LLM calls, 8134 tokens
+2026-11-06 22:13:05.672 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_016] task_success=1.0 — The actual answer provides a precise average rating of 7.8, which falls within the expected range of 7.5-8.0. The answer goes beyond expectations by showing the detailed calculation and listing all films with their individual ratings, demonstrating accuracy and thoroughness.
+2026-11-06 22:13:05.673 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_016] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:13:09.226 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_016] judge returned invalid JSON, attempting repair
+2026-11-06 22:13:09.226 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_016] faithfulness=1.0 (10 claims)
+2026-11-06 22:13:09.227 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_016] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:13:16.284 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_016] hallucination=0.0 (10 claims)
+2026-11-06 22:13:16.285 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_016] tool_selection=1.0 (calls=1, tools=['search_by_director'], coverage=1.0)
+2026-11-06 22:13:16.286 | INFO     | src.evaluation.runner:run:401 - --- scenario 10/18 ---
+2026-11-06 22:13:16.286 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_027] (multi-agent) Which actors appeared in both a Christopher Nolan film and a Quentin Tarantino film?
+2026-11-06 22:13:16.286 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'Which actors appeared in both a Christopher Nolan film and a Quentin Tarantino film?'
+2026-11-06 22:13:20.360 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Christopher Nolan'
+2026-11-06 22:13:20.410 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 8 movies
+2026-11-06 22:13:30.875 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Quentin Tarantino'
+2026-11-06 22:13:30.920 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 8 movies
+2026-11-06 22:14:01.162 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 44876ms — route=['structured_agent', 'structured_agent', 'analyst_agent'], 11 LLM calls, 26313 tokens
+2026-11-06 22:14:03.825 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_027] task_success=0.5 — The answer correctly identifies Leonardo DiCaprio as one actor who appeared in both directors' films, with accurate film titles. However, the expected answer indicates there are multiple actors who fit this criteria ('Varies — requires cross-referencing'), and the response only provides one example without acknowledging that other actors also meet this criterion. The answer is partially correct but incomplete.
+2026-11-06 22:14:03.825 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_027] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:14:06.061 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_027] judge returned invalid JSON, attempting repair
+2026-11-06 22:14:06.062 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_027] faithfulness=1.0 (3 claims)
+2026-11-06 22:14:06.062 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_027] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:14:11.271 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_027] hallucination=0.0 (5 claims)
+2026-11-06 22:14:11.271 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_027] tool_selection=1.0 (calls=2, tools=['search_by_director', 'search_by_director'], coverage=None)
+2026-11-06 22:14:11.273 | DEBUG    | src.evaluation.metrics.attribution:score_attribution:161 - [sc_027] calling claude-sonnet-4-5-20250929 for attribution
+2026-11-06 22:14:21.269 | ERROR    | src.evaluation.metrics.attribution:score_attribution:165 - [sc_027] could not parse attribution judge response
+2026-11-06 22:14:21.269 | INFO     | src.evaluation.runner:run:401 - --- scenario 11/18 ---
+2026-11-06 22:14:21.269 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_028] (multi-agent) Name a movie where the director also acted in it.
+2026-11-06 22:14:21.269 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'Name a movie where the director also acted in it.'
+2026-11-06 22:14:27.103 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='director acting in own movie'
+2026-11-06 22:14:27.103 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'director acting in own movie'
+2026-11-06 22:14:27.105 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='actor-director starring in their own film'
+2026-11-06 22:14:27.107 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'actor-director starring in their own film'
+2026-11-06 22:14:27.294 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:14:27.294 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:14:27.318 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Last Shot (0.5384)
+2026-11-06 22:14:27.318 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Supporting Characters (0.5679)
+2026-11-06 22:14:27.318 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: The Last Shot, sim=0.5384)
+2026-11-06 22:14:27.318 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Supporting Characters, sim=0.5679)
+2026-11-06 22:14:30.786 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Clint Eastwood directing and starring'
+2026-11-06 22:14:30.787 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Clint Eastwood directing and starring'
+2026-11-06 22:14:30.789 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Mel Gibson directed and acted'
+2026-11-06 22:14:30.787 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Orson Welles actor director same film'
+2026-11-06 22:14:30.790 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Orson Welles actor director same film'
+2026-11-06 22:14:30.789 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Mel Gibson directed and acted'
+2026-11-06 22:14:30.855 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:14:30.856 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:14:30.857 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:14:30.879 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Me and Orson Welles (0.6559)
+2026-11-06 22:14:30.879 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Hereafter (0.6631)
+2026-11-06 22:14:30.880 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: The Passion of the Christ (0.6451)
+2026-11-06 22:14:30.880 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Me and Orson Welles, sim=0.6559)
+2026-11-06 22:14:30.880 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: The Passion of the Christ, sim=0.6451)
+2026-11-06 22:14:30.880 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Hereafter, sim=0.6631)
+2026-11-06 22:14:35.097 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=9573
+2026-11-06 22:14:35.098 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=8879
+2026-11-06 22:14:35.100 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=3766
+2026-11-06 22:14:35.102 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=11901
+2026-11-06 22:14:35.103 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=197
+2026-11-06 22:14:35.106 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=66
+2026-11-06 22:14:37.342 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Kenneth Branagh Shakespeare directed acted'
+2026-11-06 22:14:37.343 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Kenneth Branagh Shakespeare directed acted'
+2026-11-06 22:14:37.343 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Ben Affleck directed starring'
+2026-11-06 22:14:37.345 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Ben Affleck directed starring'
+2026-11-06 22:14:37.412 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:14:37.413 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:14:37.436 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Henry V (0.6903)
+2026-11-06 22:14:37.436 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: What Just Happened (0.6006)
+2026-11-06 22:14:37.437 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: What Just Happened, sim=0.6006)
+2026-11-06 22:14:37.437 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Henry V, sim=0.6903)
+2026-11-06 22:14:40.196 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=10705
+2026-11-06 22:14:40.197 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=10549
+2026-11-06 22:14:40.200 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=11971
+2026-11-06 22:14:40.201 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=68734
+2026-11-06 22:14:40.204 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=23168
+2026-11-06 22:14:56.326 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 35067ms — route=['retrieval_agent'], 10 LLM calls, 69645 tokens
+2026-11-06 22:14:58.883 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_028] task_success=1.0 — The actual answer correctly identifies a valid example (Braveheart with Mel Gibson as both director and actor), which addresses the question appropriately. The expected answer indicates that any correct cross-reference of the same person as director and cast member is acceptable, and the answer provides exactly that with supporting details.
+2026-11-06 22:14:58.884 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_028] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:15:03.092 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_028] judge returned invalid JSON, attempting repair
+2026-11-06 22:15:03.093 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_028] faithfulness=0.8889 (9 claims)
+2026-11-06 22:15:03.093 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_028] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:15:12.750 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_028] hallucination=0.1111 (9 claims)
+2026-11-06 22:15:12.750 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_028] tool_selection=0.6 (calls=18, tools=['search_movies', 'search_movies', 'search_movies', 'search_movies', 'search_movies', 'get_movie_details', 'get_movie_details', 'get_movie_details', 'get_movie_details', 'get_movie_details', 'get_movie_details', 'search_movies', 'search_movies', 'get_movie_details', 'get_movie_details', 'get_movie_details', 'get_movie_details', 'get_movie_details'], coverage=None)
+2026-11-06 22:15:12.752 | DEBUG    | src.evaluation.metrics.attribution:score_attribution:161 - [sc_028] calling claude-sonnet-4-5-20250929 for attribution
+2026-11-06 22:15:15.983 | INFO     | src.evaluation.metrics.attribution:score_attribution:169 - [sc_028] attribution: data / missing_evidence
+2026-11-06 22:15:15.985 | INFO     | src.evaluation.runner:run:401 - --- scenario 12/18 ---
+2026-11-06 22:15:15.986 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_029] (multi-agent) Which sci-fi movie had the best return on investment based on budget vs revenue?
+2026-11-06 22:15:15.986 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'Which sci-fi movie had the best return on investment based on budget vs revenue?'
+2026-11-06 22:15:21.465 | DEBUG    | src.agent.tools:filter_movies:195 - tool:filter_movies genre=Science Fiction budget=None-None rev>=None rating>=None year=None-None sort=-revenue limit=50
+2026-11-06 22:15:21.560 | DEBUG    | src.agent.tools:filter_movies:251 - tool:filter_movies matched 535 movies, returning 50
+2026-11-06 22:15:40.664 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 24679ms — route=['structured_agent'], 6 LLM calls, 14636 tokens
+2026-11-06 22:15:43.212 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_029] task_success=1.0 — The actual answer correctly addresses the question by identifying E.T. as the sci-fi movie with the best ROI, providing specific budget and revenue figures, and calculating the ratio (75.52x). This matches the expected answer's requirement to filter sci-fi genre, compute revenue/budget ratios, and find the maximum. The answer also provides supporting comparison with Star Wars, demonstrating proper analysis.
+2026-11-06 22:15:43.213 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_029] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:15:46.074 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_029] judge returned invalid JSON, attempting repair
+2026-11-06 22:15:46.075 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_029] faithfulness=0.0 (5 claims)
+2026-11-06 22:15:46.075 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_029] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:15:55.013 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_029] hallucination=0.6667 (6 claims)
+2026-11-06 22:15:55.013 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_029] tool_selection=1.0 (calls=1, tools=['filter_movies'], coverage=None)
+2026-11-06 22:15:55.015 | DEBUG    | src.evaluation.metrics.attribution:score_attribution:161 - [sc_029] calling claude-sonnet-4-5-20250929 for attribution
+2026-11-06 22:15:58.150 | INFO     | src.evaluation.metrics.attribution:score_attribution:169 - [sc_029] attribution: structured_agent / bad_tool_args
+2026-11-06 22:15:58.151 | INFO     | src.evaluation.runner:run:401 - --- scenario 13/18 ---
+2026-11-06 22:15:58.151 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_030] (multi-agent) Find me a drama movie from the 2000s with a budget under $50 million that earned more than $200 million.
+2026-11-06 22:15:58.151 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'Find me a drama movie from the 2000s with a budget under $50 million that earned more than $200 million.'
+2026-11-06 22:16:05.035 | DEBUG    | src.agent.tools:filter_movies:195 - tool:filter_movies genre=Drama budget=None-50000000 rev>=200000000 rating>=None year=2000-2009 sort=None limit=50
+2026-11-06 22:16:05.214 | DEBUG    | src.agent.tools:filter_movies:251 - tool:filter_movies matched 18 movies, returning 18
+2026-11-06 22:16:21.785 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 23634ms — route=['structured_agent'], 6 LLM calls, 11650 tokens
+2026-11-06 22:16:24.625 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_030] task_success=1.0 — The actual answer correctly addresses the question by providing multiple valid examples of drama movies from the 2000s with budgets under $50 million that earned more than $200 million. All five films listed meet the specified criteria: they are dramas, released in the 2000s (2002-2009), had budgets well under $50 million, and earned over $200 million in revenue. The answer demonstrates successful filtering across multiple dimensions (genre, date range, budget, and revenue) as expected.
+2026-11-06 22:16:24.625 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_030] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:16:28.420 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_030] judge returned invalid JSON, attempting repair
+2026-11-06 22:16:28.420 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_030] faithfulness=0.4 (10 claims)
+2026-11-06 22:16:28.420 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_030] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:16:36.204 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_030] hallucination=0.6364 (11 claims)
+2026-11-06 22:16:36.204 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_030] tool_selection=1.0 (calls=1, tools=['filter_movies'], coverage=None)
+2026-11-06 22:16:36.205 | DEBUG    | src.evaluation.metrics.attribution:score_attribution:161 - [sc_030] calling claude-sonnet-4-5-20250929 for attribution
+2026-11-06 22:16:41.710 | INFO     | src.evaluation.metrics.attribution:score_attribution:169 - [sc_030] attribution: structured_agent / bad_tool_args
+2026-11-06 22:16:41.712 | INFO     | src.evaluation.runner:run:401 - --- scenario 14/18 ---
+2026-11-06 22:16:41.712 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_022] (multi-agent) What Oscar did Inception win for Best Picture?
+2026-11-06 22:16:41.712 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'What Oscar did Inception win for Best Picture?'
+2026-11-06 22:16:46.201 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Inception'
+2026-11-06 22:16:46.201 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Inception'
+2026-11-06 22:16:46.264 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:16:46.286 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Inception (0.6446)
+2026-11-06 22:16:46.287 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Inception, sim=0.6446)
+2026-11-06 22:16:48.152 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=27205
+2026-11-06 22:17:03.048 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 21336ms — route=['retrieval_agent'], 9 LLM calls, 14001 tokens
+2026-11-06 22:17:05.288 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_022] task_success=1.0 — The actual answer correctly states that award information is not available in the database, which aligns with the expected answer's indication that award data is not contained in the available data. Both answers appropriately refuse to provide information that isn't available rather than fabricating an answer.
+2026-11-06 22:17:05.288 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_022] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:17:06.987 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_022] judge returned invalid JSON, attempting repair
+2026-11-06 22:17:06.987 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_022] faithfulness=1.0 (1 claims)
+2026-11-06 22:17:06.988 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_022] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:17:09.690 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_022] hallucination=0.0 (1 claims)
+2026-11-06 22:17:09.691 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_022] tool_selection=1.0 (calls=2, tools=['search_movies', 'get_movie_details'], coverage=1.0)
+2026-11-06 22:17:09.691 | INFO     | src.evaluation.runner:run:401 - --- scenario 15/18 ---
+2026-11-06 22:17:09.692 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_023] (multi-agent) Did Leonardo DiCaprio direct any movies in the dataset?
+2026-11-06 22:17:09.692 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'Did Leonardo DiCaprio direct any movies in the dataset?'
+2026-11-06 22:17:14.990 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Leonardo DiCaprio'
+2026-11-06 22:17:15.034 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 0 movies
+2026-11-06 22:17:20.986 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 11294ms — route=['structured_agent'], 6 LLM calls, 4595 tokens
+2026-11-06 22:17:22.455 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_023] task_success=1.0 — The actual answer correctly states that Leonardo DiCaprio did not direct any movies in the dataset, which matches the expected answer's substance. Both confirm he does not appear as a director in the dataset.
+2026-11-06 22:17:22.455 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_023] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:17:23.970 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_023] judge returned invalid JSON, attempting repair
+2026-11-06 22:17:23.970 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_023] faithfulness=1.0 (2 claims)
+2026-11-06 22:17:23.971 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_023] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:17:26.894 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_023] hallucination=0.0 (2 claims)
+2026-11-06 22:17:26.895 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_023] tool_selection=1.0 (calls=1, tools=['search_by_director'], coverage=None)
+2026-11-06 22:17:26.895 | INFO     | src.evaluation.runner:run:401 - --- scenario 16/18 ---
+2026-11-06 22:17:26.895 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_024] (multi-agent) Tell me about the sequel to Inception called Inception 2.
+2026-11-06 22:17:26.895 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'Tell me about the sequel to Inception called Inception 2.'
+2026-11-06 22:17:32.121 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Inception 2 sequel'
+2026-11-06 22:17:32.122 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Inception 2 sequel'
+2026-11-06 22:17:32.306 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:17:32.325 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Inception (0.6504)
+2026-11-06 22:17:32.326 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Inception, sim=0.6504)
+2026-11-06 22:17:43.501 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 16606ms — route=['retrieval_agent'], 6 LLM calls, 7473 tokens
+2026-11-06 22:17:45.633 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_024] task_success=1.0 — The actual answer correctly identifies that there is no sequel to Inception called 'Inception 2' and appropriately refuses to fabricate information about a non-existent movie. This matches the substance of the expected answer, which states there is no such movie and that Inception has no sequel.
+2026-11-06 22:17:45.633 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_024] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:17:48.234 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_024] judge returned invalid JSON, attempting repair
+2026-11-06 22:17:48.235 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_024] faithfulness=1.0 (4 claims)
+2026-11-06 22:17:48.235 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_024] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:17:53.416 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_024] hallucination=0.0 (4 claims)
+2026-11-06 22:17:53.416 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_024] tool_selection=1.0 (calls=1, tools=['search_movies'], coverage=None)
+2026-11-06 22:17:53.416 | INFO     | src.evaluation.runner:run:401 - --- scenario 17/18 ---
+2026-11-06 22:17:53.417 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_025] (multi-agent) Why was Avatar considered a box office failure?
+2026-11-06 22:17:53.417 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'Why was Avatar considered a box office failure?'
+2026-11-06 22:17:58.746 | DEBUG    | src.agent.tools:search_movies:98 - tool:search_movies query='Avatar 2009 James Cameron'
+2026-11-06 22:17:58.746 | DEBUG    | src.rag.retriever:retrieve:37 - retrieving top-5 for: 'Avatar 2009 James Cameron'
+2026-11-06 22:17:58.821 | INFO     | src.ingestion.embedder:embed_texts:37 - embedded 1 texts → shape (1, 384)
+2026-11-06 22:17:58.842 | DEBUG    | src.database.vector_store:search:66 - search returned 5 results, top match: Avatar (0.5028)
+2026-11-06 22:17:58.842 | INFO     | src.rag.retriever:retrieve:44 - retrieved 5 chunks for query (top: Avatar, sim=0.5028)
+2026-11-06 22:18:00.475 | DEBUG    | src.agent.tools:get_movie_details:270 - tool:get_movie_details id=19995
+2026-11-06 22:18:12.656 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 19240ms — route=['retrieval_agent'], 7 LLM calls, 11196 tokens
+2026-11-06 22:18:14.693 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_025] task_success=1.0 — The actual answer correctly identifies and refutes the false premise of the question. It accurately states that Avatar was not a box office failure but rather a massive success, and provides supporting financial data ($237M budget, $2.79B revenue) that matches the expected answer's figures. The answer directly addresses the adversarial nature of the question appropriately.
+2026-11-06 22:18:14.693 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_025] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:18:17.962 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_025] judge returned invalid JSON, attempting repair
+2026-11-06 22:18:17.963 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_025] faithfulness=1.0 (7 claims)
+2026-11-06 22:18:17.963 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_025] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:18:25.980 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_025] hallucination=0.4286 (7 claims)
+2026-11-06 22:18:25.981 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_025] tool_selection=1.0 (calls=2, tools=['search_movies', 'get_movie_details'], coverage=1.0)
+2026-11-06 22:18:25.983 | DEBUG    | src.evaluation.metrics.attribution:score_attribution:161 - [sc_025] calling claude-sonnet-4-5-20250929 for attribution
+2026-11-06 22:18:28.626 | INFO     | src.evaluation.metrics.attribution:score_attribution:169 - [sc_025] attribution: supervisor / wrong_route
+2026-11-06 22:18:28.629 | INFO     | src.evaluation.runner:run:401 - --- scenario 18/18 ---
+2026-11-06 22:18:28.629 | INFO     | src.evaluation.runner:_run_single_multi_agent:231 - [sc_026] (multi-agent) I heard The Dark Knight had a budget of $5 million. Is that correct?
+2026-11-06 22:18:28.629 | INFO     | src.multi_agent.graph:run_multi_agent:293 - multi-agent starting: 'I heard The Dark Knight had a budget of $5 million. Is that correct?'
+2026-11-06 22:18:32.720 | DEBUG    | src.agent.tools:filter_movies:195 - tool:filter_movies genre=None budget=None-None rev>=None rating>=None year=None-None sort=None limit=50
+2026-11-06 22:18:33.067 | DEBUG    | src.agent.tools:filter_movies:251 - tool:filter_movies matched 4800 movies, returning 50
+2026-11-06 22:18:35.372 | DEBUG    | src.agent.tools:search_by_director:115 - tool:search_by_director name='Christopher Nolan'
+2026-11-06 22:18:35.419 | DEBUG    | src.agent.tools:search_by_director:125 - tool:search_by_director found 8 movies
+2026-11-06 22:18:43.499 | INFO     | src.multi_agent.graph:run_multi_agent:307 - multi-agent done in 14870ms — route=['structured_agent'], 7 LLM calls, 21320 tokens
+2026-11-06 22:18:44.858 | INFO     | src.evaluation.metrics.task_success:score_task_success:93 - [sc_026] task_success=1.0 — The actual answer correctly identifies the false premise in the question and provides the accurate budget figure of $185 million, matching the expected answer's substance exactly.
+2026-11-06 22:18:44.858 | DEBUG    | src.evaluation.metrics.faithfulness:score_faithfulness:178 - [sc_026] calling claude-sonnet-4-5-20250929 for faithfulness judging (agent mode)
+2026-11-06 22:18:46.641 | WARNING  | src.evaluation.metrics.faithfulness:score_faithfulness:193 - [sc_026] judge returned invalid JSON, attempting repair
+2026-11-06 22:18:46.641 | INFO     | src.evaluation.metrics.faithfulness:score_faithfulness:223 - [sc_026] faithfulness=1.0 (2 claims)
+2026-11-06 22:18:46.641 | DEBUG    | src.evaluation.metrics.hallucination:score_hallucination:244 - [sc_026] calling claude-sonnet-4-5-20250929 for hallucination detection (agent mode)
+2026-11-06 22:18:49.973 | INFO     | src.evaluation.metrics.hallucination:score_hallucination:272 - [sc_026] hallucination=0.0 (2 claims)
+2026-11-06 22:18:49.978 | INFO     | src.evaluation.metrics.tool_selection:score_tool_selection:107 - [sc_026] tool_selection=1.0 (calls=2, tools=['filter_movies', 'search_by_director'], coverage=1.0)
+2026-11-06 22:18:49.979 | INFO     | src.evaluation.runner:run:444 - eval run complete: 18 scenarios in 690022ms (avg 38335ms)
+2026-11-06 22:18:49.986 | INFO     | __main__:main:212 - results written to results/mode_comparison_fixed_tools.json
+
+======================================================================================================================
+  RAG — 18 scenarios
+======================================================================================================================
+  ID       Category       Task  Faith  Halluc  LLM  Tokens    Cost$   Latency
+  sc_008   multi_field    1.00   1.00    0.00    1    1377  $0.0050    3353ms
+  sc_009   multi_field    0.00   1.00    0.00    1    1280  $0.0046    2633ms
+  sc_010   multi_field    0.00   1.00    0.00    1    1322  $0.0049    1954ms
+  sc_011   multi_field    1.00   1.00    0.00    1    1108  $0.0042    1936ms
+  sc_012   multi_field    0.00   1.00    0.00    1    1336  $0.0045    1888ms
+  sc_013   aggregation    0.00   1.00    0.00    1    1346  $0.0044    1419ms
+  sc_014   aggregation    1.00   1.00    0.00    1    1459  $0.0050    1813ms
+  sc_015   aggregation    1.00   1.00    0.00    1    1224  $0.0047    2247ms
+  sc_016   aggregation    1.00   1.00    0.00    1    1122  $0.0043    2252ms
+  sc_027   multi_hop      1.00   1.00    0.00    1    1308  $0.0054    3535ms
+  sc_028   multi_hop      1.00   1.00    0.00    1    1281  $0.0047    2623ms
+  sc_029   multi_hop      0.00   1.00    0.29    1    1265  $0.0055    3460ms
+  sc_030   multi_hop      1.00   1.00    0.00    1    1430  $0.0062    3731ms
+  sc_022   adversarial    1.00   1.00    0.00    1    1446  $0.0050    2051ms
+  sc_023   adversarial    1.00   1.00    0.00    1    1374  $0.0051    2301ms
+  sc_024   adversarial    1.00   1.00    0.00    1    1339  $0.0046    2003ms
+  sc_025   adversarial    1.00   1.00    0.00    1    1452  $0.0053    2164ms
+  sc_026   adversarial    0.00   1.00    0.00    1    1150  $0.0047    2431ms
+
+======================================================================================================================
+  Single agent — 18 scenarios
+======================================================================================================================
+  ID       Category       Task  Faith  Halluc  LLM  Tokens    Cost$   Latency
+  sc_008   multi_field    0.50   1.00    0.00    2    4325  $0.0158    4505ms
+  sc_009   multi_field    1.00   0.78    0.22    2    7044  $0.0240    4707ms
+  sc_010   multi_field    0.50   1.00    0.00    2    4232  $0.0162    4882ms
+  sc_011   multi_field    1.00   1.00    0.00    2    5142  $0.0210    6841ms
+  sc_012   multi_field    1.00   0.96    0.07    8   84422  $0.2714   26915ms
+  sc_013   aggregation    1.00   1.00    0.00    2    3497  $0.0118    3307ms
+  sc_014   aggregation    1.00   1.00    0.00    2    6603  $0.0226    4867ms
+  sc_015   aggregation    1.00   0.39    0.62    4   49068  $0.1572   15295ms
+  sc_016   aggregation    1.00   1.00    0.09    2    4358  $0.0164    4740ms
+  sc_027   multi_hop      1.00   1.00    0.00    2    5617  $0.0237    8613ms
+  sc_028   multi_hop      1.00   1.00    0.00    3    8692  $0.0287    6143ms
+  sc_029   multi_hop      1.00   0.00    1.00    2    8974  $0.0319    8784ms
+  sc_030   multi_hop      1.00   1.00    0.00    2    5778  $0.0240    9421ms
+  sc_022   adversarial    1.00   0.88    0.14    2    4867  $0.0169    5231ms
+  sc_023   adversarial    1.00   1.00    0.00    2    3350  $0.0111    2320ms
+  sc_024   adversarial    1.00   1.00    0.25    2    4774  $0.0163    4649ms
+  sc_025   adversarial    1.00   1.00    0.17    2    4969  $0.0176    6306ms
+  sc_026   adversarial    1.00   1.00    0.17    2    4860  $0.0165    4001ms
+
+======================================================================================================================
+  Multi-agent — 18 scenarios
+======================================================================================================================
+  ID       Category       Task  Faith  Halluc  LLM  Tokens    Cost$   Latency  Route   Verif  Culprit
+  sc_008   multi_field    0.50   1.00    0.00    6    7824  $0.0314   13575ms   1.00 approve  data
+  sc_009   multi_field    1.00   1.00    0.00   11   27166  $0.1071   34793ms   1.00 approve  
+  sc_010   multi_field    1.00   1.00    0.00    6    9043  $0.0411   18613ms   1.00 approve  
+  sc_011   multi_field    1.00   1.00    0.00    8   13139  $0.0583   26452ms   1.00  revise  
+  sc_012   multi_field    1.00   1.00    0.00   20  394311  $1.2291   85053ms   0.67 approve  
+  sc_013   aggregation    1.00   1.00    0.00    6    5010  $0.0202   10704ms   1.00 approve  
+  sc_014   aggregation    1.00   1.00    0.25    9   12372  $0.0448   16320ms   0.00 approve  data
+  sc_015   aggregation    1.00   1.00    0.00    5    4039  $0.0201   16137ms   0.67 approve  
+  sc_016   aggregation    1.00   1.00    0.00    6    8134  $0.0348   16033ms   0.67 approve  
+  sc_027   multi_hop      0.50   1.00    0.00   11   26313  $0.1201   44876ms   1.00 approve  
+  sc_028   multi_hop      1.00   0.89    0.11   10   69645  $0.2311   35067ms   0.00 approve  data
+  sc_029   multi_hop      1.00   0.00    0.67    6   14636  $0.0583   24679ms   0.67 approve  structured_agent
+  sc_030   multi_hop      1.00   0.40    0.64    6   11650  $0.0516   23634ms   1.00 approve  structured_agent
+  sc_022   adversarial    1.00   1.00    0.00    9   14001  $0.0534   21336ms    n/a  revise  
+  sc_023   adversarial    1.00   1.00    0.00    6    4595  $0.0188   11294ms    n/a approve  
+  sc_024   adversarial    1.00   1.00    0.00    6    7473  $0.0301   16606ms    n/a approve  
+  sc_025   adversarial    1.00   1.00    0.43    7   11196  $0.0444   19240ms    n/a approve  supervisor
+  sc_026   adversarial    1.00   1.00    0.00    7   21320  $0.0709   14870ms    n/a approve  
+
+======================================================================================================================
+  Side by side
+======================================================================================================================
+                                           RAG    Single agent     Multi-agent
+  Accuracy (task_success)                 0.67            0.94            0.94
+  Fully correct                             12              16              16
+  Faithfulness                            1.00            0.89            0.90
+  Hallucination                           0.02            0.15            0.12
+  Routing accuracy                         n/a             n/a            0.74
+  Avg LLM calls                            1.0             2.5             8.1
+  Avg tokens                             1,312          12,254          36,770
+  Tokens / correct answer                1,968          13,786          41,367
+  Avg latency (ms)                       2,433           7,307          24,960
+  Avg cost / query                     $0.0049         $0.0413         $0.1259
+  Total cost                            $0.088          $0.743          $2.265
+
+  Multi-agent: 0 loop(s), 2 verifier revision(s)
+  Multi-agent failures by culprit / type: {'data / missing_evidence': 2, 'structured_agent / bad_tool_args': 2, 'data / other': 1, 'supervisor / wrong_route': 1}

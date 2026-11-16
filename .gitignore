@@ -28,3 +28,12 @@ node_modules/
 
 # Judge result cache
 results/.cache/
+
+# Claude Code local settings and worktrees
+.claude/
+
+# Scratch results: aborted runs, hung runs, cheap trials (full runs are committed)
+results/*FAILED*
+results/*_HUNG.log
+results/*_trial.json
+results/*_trial.log
