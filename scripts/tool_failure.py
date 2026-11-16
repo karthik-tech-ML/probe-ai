@@ -75,6 +75,10 @@ def main() -> None:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--reclassify", default=None, metavar="FILE",
                     help="re-score the saved answers in FILE with the current classifier (no API calls)")
+    ap.add_argument("--systems", default=",".join(SYSTEMS), help="comma-separated: agent, multi_agent")
+    ap.add_argument("--case", default=None, help="only this case id (e.g. inception_plot)")
+    ap.add_argument("--mode", default=None, help="only this failure mode id (e.g. error_persistent)")
+    ap.add_argument("--repeat", type=int, default=1, help="run each job this many times")
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--out", default="results/tool_failure.json")
     a = ap.parse_args()
@@ -94,7 +98,10 @@ def main() -> None:
         print(json.dumps(summary))
         return
 
-    jobs = jobs_for(SYSTEMS)[: a.limit] if a.limit else jobs_for(SYSTEMS)
+    jobs = [(s, c, m) for s, c, m in jobs_for(tuple(a.systems.split(",")))
+            if (not a.case or c.id == a.case) and (not a.mode or m.id == a.mode)] * a.repeat
+    if a.limit:
+        jobs = jobs[: a.limit]
     rows = []
     for s, c, m in jobs:
         row = run_one(s, c, m)

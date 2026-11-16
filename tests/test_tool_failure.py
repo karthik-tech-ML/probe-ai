@@ -103,3 +103,30 @@ def test_prompts_tell_agents_how_to_handle_tool_errors():
     from src.multi_agent.prompts import RETRIEVAL_SYSTEM, STRUCTURED_SYSTEM, TOOL_ERROR_RULE
     assert TOOL_ERROR_RULE in RETRIEVAL_SYSTEM and TOOL_ERROR_RULE in STRUCTURED_SYSTEM
     assert "retry it once" in _SYSTEM_PROMPT
+
+
+EV_FAIL = [{"agent": "retrieval_agent", "task": "t", "result": "x",
+            "tool_outputs": [("search_movies", "TOOL ERROR (RuntimeError: boom). The tool returned no data."),
+                             ("search_by_director", '[{"title": "Inception"}]')]}]
+EV_OK = [{"agent": "structured_agent", "task": "t", "result": "x",
+          "tool_outputs": [("search_by_director", '[{"title": "Inception"}]')]}]
+
+
+def test_tool_failures_come_from_raw_tool_outputs():
+    from src.multi_agent.graph import tool_failures
+    assert tool_failures(EV_FAIL) == ["search_movies"]
+    assert tool_failures(EV_OK) == []
+    # model text that merely mentions an error is not a tool failure
+    assert tool_failures([{"agent": "a", "task": "t", "result": "TOOL ERROR in text", "tool_outputs": []}]) == []
+
+
+def test_failure_note_empty_without_failures_so_prompts_are_unchanged():
+    from src.multi_agent.graph import failure_note
+    assert failure_note(EV_OK) == "" and failure_note(EV_OK, for_verifier=True) == ""
+
+
+def test_failure_note_names_the_tool_and_differs_for_verifier():
+    from src.multi_agent.graph import failure_note
+    d, v = failure_note(EV_FAIL), failure_note(EV_FAIL, for_verifier=True)
+    assert "search_movies" in d and "Never say the database lacks" in d
+    assert "search_movies" in v and "Revise the draft" in v

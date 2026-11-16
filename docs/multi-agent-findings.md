@@ -180,6 +180,18 @@ work. Two questions (Nolan's films via `search_by_director`, the plot of Incepti
   "I don't have that information... the plot summary is not available in the retrieved data". It
   blamed the data and never mentioned the failed tool, while the single agent recovered on the same case.
 
+**Fixing the misattribution.** I reproduced the multi-agent decline and printed its trace. The retrieval
+specialist had reported the failure, the supervisor routed on to the structured agent, and the final draft
+then wrote "the plot summary is not available in the retrieved data". The failure was in its evidence and
+the prompt already told it to mention tool failures, so another prompt rule was unlikely to help. The fix is
+structural: code scans the raw tool outputs for `TOOL ERROR`, and adds a note naming the failed tools (and
+saying this is failure, not missing data) to the draft and verifier inputs. The note is empty when no tool
+failed, so runs without failures get exactly the prompts they always did. Three reruns of that case: two
+named the failed tool and said the answer may be incomplete, one recovered the plot with `get_movie_details`
+(before: 0 of 1 disclosed). One of the two declines still added a wrong claim, that the database fields
+"do not include plot summaries", next to the correct disclosure. So disclosure improved; accuracy of the
+explanation did not fully. Three runs, one case, and the other seven multi-agent failure cells were not rerun.
+
 **Caveats.**
 - My first classifier mislabeled two answers (it missed "technical difficulties" and "timeouts").
   I fixed the keyword list and re-scored the saved answers with no new API calls; both labels are kept
