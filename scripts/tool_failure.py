@@ -22,7 +22,7 @@ from loguru import logger
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.safety.tool_failure import CASES, MODES, classify, disclosed, failing, reclassify  # noqa: E402
+from src.safety.tool_failure import CASES, MODES, classify, disclosed, failing, is_fatal_api_error, reclassify  # noqa: E402
 
 SYSTEMS = ("agent", "multi_agent")
 
@@ -63,6 +63,8 @@ def run_one(system: str, case, mode) -> dict:
                        tools_used=[tc.tool_name for tc in res.trace.tool_calls],
                        outcome=classify(case, res.answer), disclosed=disclosed(res.answer))
         except Exception as e:  # noqa: BLE001  a crash is itself a result
+            if is_fatal_api_error(e):
+                raise  # billing or auth problem: not evidence about tool-failure handling
             logger.error(f"{system} {case.id} {mode.id} crashed: {e}")
             row.update(answer="", tokens=0, tools_used=[], outcome="crashed", disclosed=False,
                        error=f"{type(e).__name__}: {e}")
@@ -104,7 +106,12 @@ def main() -> None:
         jobs = jobs[: a.limit]
     rows = []
     for s, c, m in jobs:
-        row = run_one(s, c, m)
+        try:
+            row = run_one(s, c, m)
+        except Exception as e:  # noqa: BLE001  only fatal API errors reach here
+            logger.error(f"stopping after {len(rows)} of {len(jobs)} runs: {type(e).__name__}: {str(e)[:160]}")
+            Path(a.out).write_text(json.dumps({"incomplete": True, "reason": str(e)[:300], "rows": rows}, indent=2))
+            sys.exit(f"aborted: API error, {len(rows)} of {len(jobs)} runs completed (see {a.out})")
         rows.append(row)
         logger.info(f"{s} {c.id} {m.id}: {row['outcome']}")
         Path(a.out).write_text(json.dumps({"rows": rows}, indent=2))

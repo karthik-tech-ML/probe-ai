@@ -130,3 +130,16 @@ def test_failure_note_names_the_tool_and_differs_for_verifier():
     d, v = failure_note(EV_FAIL), failure_note(EV_FAIL, for_verifier=True)
     assert "search_movies" in d and "Never say the database lacks" in d
     assert "search_movies" in v and "Revise the draft" in v
+
+
+def test_billing_and_auth_errors_are_fatal_but_tool_errors_are_not():
+    from src.safety.tool_failure import is_fatal_api_error
+
+    class Billing(Exception):
+        status_code = 400
+    assert is_fatal_api_error(Billing("Your credit balance is too low to access the Anthropic API"))
+
+    class Auth(Exception):
+        status_code = 401
+    assert is_fatal_api_error(Auth("invalid x-api-key"))
+    assert not is_fatal_api_error(RuntimeError("database connection lost"))

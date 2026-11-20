@@ -129,3 +129,13 @@ def reclassify(case_by_id: dict[str, Case], rows: list[dict]) -> list[dict]:
             r["disclosed"] = disclosed(r["answer"])
         out.append(r)
     return out
+
+
+def is_fatal_api_error(exc: Exception) -> bool:
+    """
+    Billing or auth errors from the Anthropic API. These say nothing about how the system handles a
+    failed tool, so a run must stop on them instead of recording a 'crashed' outcome.
+    """
+    msg = str(exc).lower()
+    status = getattr(exc, "status_code", None)
+    return "credit balance" in msg or status in (401, 402, 403)
