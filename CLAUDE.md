@@ -164,7 +164,9 @@ probeai/
 │   │   ├── __init__.py
 │   │   ├── injection.py         # Prompt injection tests
 │   │   ├── guardrails.py        # Topic boundary, format, PII checks
-│   │   └── redteam.py           # Red team prompt suite
+│   │   ├── redteam.py           # Red team prompt suite
+│   │   ├── indirect_injection.py # Poisoned-record injection (3 payload rounds)
+│   │   └── tool_failure.py      # Break one tool: error, timeout, empty, transient
 │   └── benchmark/               # Week 5
 │       ├── __init__.py
 │       ├── inference.py         # Local vs cloud comparison
@@ -290,6 +292,22 @@ python scripts/smoke_test_multi_agent.py --trace
 # Compare RAG vs single agent vs multi-agent on the 18-scenario hard subset
 python scripts/compare_modes.py --limit 3      # cheap trial first
 python scripts/compare_modes.py
+
+# Does the verifier catch planted errors? (collect real evidence once, then evaluate)
+python scripts/planted_errors.py collect
+python scripts/planted_errors.py evaluate --dry-run     # free: lists the corruptions
+python scripts/planted_errors.py evaluate [--hard]
+
+# Indirect prompt injection (poisoned record); rounds 1 to 3
+python scripts/indirect_injection.py --round 2 --dry-run
+python scripts/indirect_injection.py --round 2 --systems multi_agent
+
+# Tool failure injection (one tool raises / times out / returns nothing)
+python scripts/tool_failure.py --dry-run
+python scripts/tool_failure.py
+
+# Refresh the dashboard's Multi-agent tab from results/ (dashboard/dist is gitignored)
+python scripts/add_multi_agent_tab.py
 
 # Unit tests (no API calls)
 python -m pytest tests

@@ -29,8 +29,8 @@ Most teams evaluate AI outputs by eyeballing them. This project answers: *"How d
 
 ```bash
 # Clone and setup
-git clone https://github.com/YOUR_USERNAME/probeai.git
-cd probeai
+git clone https://github.com/karthik-tech-ML/probe-ai.git
+cd probe-ai
 pip install -e .
 
 # Set environment variables
@@ -45,6 +45,9 @@ python scripts/evaluate.py
 
 # Run specific category
 python scripts/evaluate.py --category adversarial
+
+# Unit tests (no API calls)
+python -m pytest tests
 ```
 
 ## Evaluation Metrics

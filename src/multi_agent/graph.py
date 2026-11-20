@@ -151,6 +151,38 @@ def _format_evidence_body(evidence: list[dict[str, Any]], with_tools: bool) -> s
     return "\n\n".join(blocks)
 
 
+_TOOL_ERROR_PREFIX = "TOOL ERROR"
+
+
+def tool_failures(evidence: list[dict[str, Any]]) -> list[str]:
+    """Distinct tools that errored during the run, from the raw tool outputs (not from model text)."""
+    seen: list[str] = []
+    for e in evidence:
+        for name, out in e.get("tool_outputs", []):
+            if str(out).startswith(_TOOL_ERROR_PREFIX) and name not in seen:
+                seen.append(name)
+    return seen
+
+
+def failure_note(evidence: list[dict[str, Any]], for_verifier: bool = False) -> str:
+    """
+    A note built by our code, so the draft and verifier cannot miss that a tool failed. Empty when nothing
+    failed, so runs without failures see exactly the prompts they always did.
+    """
+    failed = tool_failures(evidence)
+    if not failed:
+        return ""
+    note = (f"\nTool failures during this run: {', '.join(failed)}. These are failures, not missing data: "
+            "information that needed those tools may exist in the database but could not be retrieved.")
+    if for_verifier:
+        return note + (" Revise the draft if it presents missing information as absent from the database, "
+                       "or gives a complete-sounding answer, without naming the failed tool and saying the "
+                       "answer may be incomplete.\n")
+    return note + (" If your answer is missing or partial because of them, name the failed tool and say the "
+                   "answer may be incomplete. Never say the database lacks something that a failed tool "
+                   "would have provided.\n")
+
+
 def verify_draft(question: str, evidence: list[dict[str, Any]], draft: str) -> tuple[str, str, int, int]:
     """
     One verifier call: returns (action, reason, input_tokens, output_tokens), where
@@ -159,7 +191,7 @@ def verify_draft(question: str, evidence: list[dict[str, Any]], draft: str) -> t
     """
     user = (f"Question: {question}\n\n"
             f"Evidence:\n{_format_evidence(evidence, with_tools=True)}\n\n"
-            f"Draft answer:\n{draft}")
+            f"Draft answer:\n{draft}{failure_note(evidence, for_verifier=True)}")
     resp = _llm(512).invoke([SystemMessage(prompts.VERIFIER_SYSTEM), HumanMessage(user)])
     in_tok, out_tok = _usage(resp)
     verdict = parse_json_object(_text(resp.content)) or {}
@@ -305,7 +337,8 @@ def _build_graph(trace: MultiAgentTrace, max_steps: int):
 
     def draft(state: MultiAgentState) -> dict[str, Any]:
         user = (f"Question: {state['question']}\n\n"
-                f"Evidence:\n{_format_evidence(state['evidence'], with_tools=True)}\n")
+                f"Evidence:\n{_format_evidence(state['evidence'], with_tools=True)}\n"
+                f"{failure_note(state['evidence'])}")
         if state["verifier_feedback"]:
             user += f"\nVerifier feedback on the previous draft: {state['verifier_feedback']}\n"
         resp = _llm(1024).invoke([SystemMessage(prompts.DRAFT_SYSTEM), HumanMessage(user)])

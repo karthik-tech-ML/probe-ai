@@ -180,6 +180,22 @@ work. Two questions (Nolan's films via `search_by_director`, the plot of Incepti
   "I don't have that information... the plot summary is not available in the retrieved data". It
   blamed the data and never mentioned the failed tool, while the single agent recovered on the same case.
 
+**Fixing the misattribution.** I reproduced the multi-agent decline and printed its trace. The retrieval
+specialist had reported the failure, the supervisor routed on to the structured agent, and the final draft
+then wrote "the plot summary is not available in the retrieved data". The failure was in its evidence and
+the prompt already told it to mention tool failures, so another prompt rule was unlikely to help. The fix is
+structural: code scans the raw tool outputs for `TOOL ERROR`, and adds a note naming the failed tools (and
+saying this is failure, not missing data) to the draft and verifier inputs. The note is empty when no tool
+failed, so runs without failures get exactly the prompts they always did. Three reruns of that case: two
+named the failed tool and said the answer may be incomplete, one recovered the plot with `get_movie_details`
+(before: 0 of 1 disclosed). One of the two declines still added a wrong claim, that the database fields
+"do not include plot summaries", next to the correct disclosure. So disclosure improved; accuracy of the
+explanation did not fully. Three runs on one case. I then reran the full multi-agent matrix (8 runs,
+`results/tool_failure_multi_after_note.json`): 0 crashed, 5 recovered, 3 honest partial or declined answers, all
+of which named the failed tool, and 0 declined without disclosure (was 1 of 8). No cell got worse. I read the
+three non-recovered answers and none contained a wrong claim about the data. Costs were uneven: the broken
+`search_movies` was called 11 times in one run, and one Nolan run used 78K tokens.
+
 **Caveats.**
 - My first classifier mislabeled two answers (it missed "technical difficulties" and "timeouts").
   I fixed the keyword list and re-scored the saved answers with no new API calls; both labels are kept
@@ -187,7 +203,7 @@ work. Two questions (Nolan's films via `search_by_director`, the plot of Incepti
   the two answers I had already read by hand, and it was written after seeing results.
 - "Recovered" means the answer held enough of the expected titles or plot words, not that a list was
   complete. The single agent's timeout fallback listed 6 Nolan films without disclosure; the data has 8.
-- Two multi-agent runs called the failed tool 6 times each (28K and 31K tokens). The existing caps bound
+- Several multi-agent runs retried a failed or empty tool many times (6 calls in two runs of the first rerun, 11 in one run of the last). The existing caps bound
   that, but it is a retry storm.
 - One run per cell. The crash result is deterministic; the recovery split is anecdotal.
 
