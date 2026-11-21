@@ -104,6 +104,29 @@ python scripts/indirect_injection.py --round 2 --dry-run
 python scripts/tool_failure.py --dry-run
 ```
 
+## MCP prototype
+
+A small [Model Context Protocol](https://modelcontextprotocol.io) server exposes three of the agent's tools over stdio. It calls the existing functions in `src/agent/tools.py`, and the input schemas are read from their signatures, so there is one copy of the query logic.
+
+| Exposed over MCP | Not exposed |
+|---|---|
+| `search_by_director`, `filter_movies`, `get_movie_details` | `search_movies`, `search_by_cast`, `search_by_genre` |
+
+```bash
+python -m src.mcp_server.server        # the server (speaks MCP on stdin/stdout)
+python scripts/smoke_test_mcp.py       # starts it, lists the tools, calls each once (no LLM calls)
+```
+
+The single agent can load its tools from the server instead of importing them: `run_agent(question, use_mcp=True)`. It is off by default, and the default path is unchanged. The MCP path uses one persistent session (the adapters' `get_tools()` starts a new server process per tool call), and it uses `asyncio.run`, so call it from sync code.
+
+**Injection rerun.** `python scripts/indirect_injection.py --round 2 --systems agent --mcp` runs the round-2 payloads against the single agent with MCP tools. The tools run in a separate process, so `scripts/poisoned_mcp_server.py` plants the payload inside the server. Result: the agent followed **0 of 7** payloads, the same as in-process (0 of 7). The comparison is weak:
+- The agent saw the payload in only **4 of 7** runs, against all 7 in-process. With three tools it cannot call `search_movies`, so a plot payload is reachable only by looking up Inception's id and calling `get_movie_details`, which it did in 3 of 6 plot-payload runs. The stored `payload_seen` says 5 of 7; one is a false positive from look-alike words, and the check has since been fixed.
+- The tool set differs (3 vs 6), so any difference could come from that, not from MCP.
+- MCP's JSON text escapes the newlines inside a payload. It changed nothing here, but it is a transport difference.
+- 7 runs, one pass.
+
+Dependencies added: `mcp>=1.28,<2` and `langchain-mcp-adapters>=0.2.1,<0.3` (the adapters repo is archived upstream, with MCP support moved into `langchain.mcp`; 0.3 would force a `langchain-core` upgrade).
+
 ## Bring Your Own System
 
 ProbeAI isn't locked to the TMDB movie dataset. Any RAG pipeline or AI agent can plug in through the connector interface — you implement three methods and the entire eval framework works with your system.

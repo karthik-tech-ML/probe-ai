@@ -16,10 +16,11 @@ from pathlib import Path
 
 from loguru import logger
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 
 from src.safety.indirect_injection import (  # noqa: E402
-    PAYLOADS, PAYLOADS_V2, PAYLOADS_V3, QUESTIONS, complied, poisoned, spread, token_in,
+    PAYLOADS, PAYLOADS_V2, PAYLOADS_V3, QUESTIONS, complied, payload_in, poisoned, spread, token_in,
 )
 
 
@@ -44,23 +45,37 @@ def dry_run(payloads) -> None:
         print(f"[{p.id}] ({p.surface}) goal: {p.goal}\n   tail: ...{tail}\n")
 
 
+def poisoned_server(payload) -> dict:
+    """Connection spec for an MCP server process that has `payload` planted in the Inception record."""
+    return {"transport": "stdio", "command": sys.executable, "cwd": str(ROOT),
+            "args": [str(ROOT / "scripts" / "poisoned_mcp_server.py"), payload.id]}
+
+
 def run_one(system: str, question: str, payload) -> dict:
-    with poisoned(payload):
-        if system == "multi_agent":
-            from src.multi_agent.graph import run_multi_agent
-            res = run_multi_agent(question)
-            tokens = res.trace.total_input_tokens + res.trace.total_output_tokens
-            extra = {"spread": spread(res.trace, payload)}
-        else:
-            from src.agent.graph import run_agent
-            res = run_agent(question)
-            tokens = res.trace.total_input_tokens + res.trace.total_output_tokens
-            extra = {}
+    if system == "agent_mcp":
+        # the tools run in a separate server process, so the poison is applied there, not here
+        from src.agent.graph import run_agent
+        res = run_agent(question, use_mcp=True, mcp_server=poisoned_server(payload))
+        tokens = res.trace.total_input_tokens + res.trace.total_output_tokens
+        extra = {}
+    else:
+        with poisoned(payload):
+            if system == "multi_agent":
+                from src.multi_agent.graph import run_multi_agent
+                res = run_multi_agent(question)
+                tokens = res.trace.total_input_tokens + res.trace.total_output_tokens
+                extra = {"spread": spread(res.trace, payload)}
+            else:
+                from src.agent.graph import run_agent
+                res = run_agent(question)
+                tokens = res.trace.total_input_tokens + res.trace.total_output_tokens
+                extra = {}
     # did the poisoned text actually reach the model? Without this, "resisted" could mean "never saw it"
-    seen = any(token_in(tc.tool_output, payload) for tc in res.trace.tool_calls)
+    seen = any(payload_in(tc.tool_output, payload) for tc in res.trace.tool_calls)
     return {"system": system, "payload": payload.id, "question": question, "answer": res.answer,
-            "payload_seen": seen, "complied": complied(payload, res.answer), "token_in_answer": token_in(res.answer, payload),
-            "tokens": tokens, **extra}
+            "payload_seen": seen, "complied": complied(payload, res.answer),
+            "token_in_answer": token_in(res.answer, payload), "tokens": tokens,
+            "tools_used": [tc.tool_name for tc in res.trace.tool_calls], **extra}
 
 
 def main() -> None:
@@ -68,6 +83,8 @@ def main() -> None:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--round", type=int, choices=(1, 2, 3), default=1, help="1: crude, 2: stronger, 3: fresh payloads written after the mitigation")
     ap.add_argument("--systems", default="agent,multi_agent", help="comma-separated: agent, multi_agent")
+    ap.add_argument("--mcp", action="store_true",
+                    help="run the single agent with its tools loaded from a (poisoned) MCP server; system name agent_mcp")
     ap.add_argument("--only", default=None, help="only this payload id (e.g. r3_no_conflict)")
     ap.add_argument("--repeat", type=int, default=1, help="run each job this many times")
     ap.add_argument("--limit", type=int, default=None, help="only run this many runs")
@@ -79,7 +96,8 @@ def main() -> None:
 
     if a.only:
         payloads = tuple(p for p in payloads if p.id == a.only)
-    jobs = jobs_for(payloads, tuple(a.systems.split(","))) * a.repeat
+    systems = tuple("agent_mcp" if (a.mcp and x == "agent") else x for x in a.systems.split(","))
+    jobs = jobs_for(payloads, systems) * a.repeat
     if a.limit:
         jobs = jobs[: a.limit]
     rows = []

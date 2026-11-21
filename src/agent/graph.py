@@ -7,6 +7,7 @@ multi_field and aggregation queries where single-shot vector
 search falls short.
 """
 
+import asyncio
 import time
 from dataclasses import dataclass, field
 from typing import Any
@@ -81,19 +82,47 @@ def run_with_round_limit(agent, question: str, max_rounds: int = MAX_TOOL_ROUNDS
     return last, False
 
 
-def _build_agent():
-    """Create the LangGraph ReAct agent with our tools and Claude."""
+async def arun_with_round_limit(agent, question: str, max_rounds: int = MAX_TOOL_ROUNDS) -> tuple[dict, bool]:
+    """Async twin of run_with_round_limit (MCP tools are async-only)."""
+    last = {"messages": [HumanMessage(content=question)]}
+    try:
+        async for state in agent.astream(
+            {"messages": [HumanMessage(content=question)]},
+            config={"recursion_limit": 2 * max_rounds + 1},
+            stream_mode="values",
+        ):
+            last = state
+    except GraphRecursionError:
+        return last, True
+    return last, False
+
+
+async def _run_with_mcp(question: str, mcp_server: dict | None) -> tuple[dict, bool]:
+    """Run the agent with tools loaded from an MCP server (default: our own, over stdio)."""
+    from src.agent.mcp_tools import mcp_tools
+
+    async with mcp_tools(mcp_server) as tools:
+        return await arun_with_round_limit(_build_agent(tools), question)
+
+
+def _build_agent(tools=None):
+    """Create the LangGraph ReAct agent with our tools and Claude. `tools` defaults to ALL_TOOLS."""
     model = ChatAnthropic(
         model=settings.llm_model,
         api_key=settings.anthropic_api_key,
         max_tokens=2048,
     )
-    return create_react_agent(model, make_tool_node(ALL_TOOLS), prompt=_SYSTEM_PROMPT)
+    return create_react_agent(model, make_tool_node(tools if tools is not None else ALL_TOOLS),
+                             prompt=_SYSTEM_PROMPT)
 
 
-def run_agent(question: str) -> AgentResult:
+def run_agent(question: str, use_mcp: bool = False, mcp_server: dict | None = None) -> AgentResult:
     """
     Run a question through the ReAct agent.
+
+    use_mcp: load the tools from an MCP server (a stdio server of ours by default, or `mcp_server`, a
+    langchain-mcp-adapters connection dict) instead of importing them. Off by default, and the default path
+    is unchanged. The MCP path exposes only 3 of the 6 tools. It uses asyncio.run, so call it from sync code.
 
     The agent will:
     1. Decide which tools to call
@@ -105,10 +134,13 @@ def run_agent(question: str) -> AgentResult:
     logger.info(f"agent starting: {question!r}")
     t0 = time.perf_counter()
 
-    agent = _build_agent()
     trace = AgentTrace(question=question)
 
-    result, limit_hit = run_with_round_limit(agent, question)
+    if use_mcp:
+        result, limit_hit = asyncio.run(_run_with_mcp(question, mcp_server))
+    else:
+        agent = _build_agent()
+        result, limit_hit = run_with_round_limit(agent, question)
     if limit_hit:
         logger.warning(f"agent hit the {MAX_TOOL_ROUNDS}-round tool limit on: {question[:80]!r}")
 

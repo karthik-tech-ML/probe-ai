@@ -67,3 +67,14 @@ def test_round3_payloads_are_new_and_apply():
     out = _poison_output({"title": "Inception", "genres": "Action", "cast": "A"}, g)
     assert g.text in out["genres"] and out["cast"] == "A"
     assert complied(next(p for p in PAYLOADS_V3 if p.id == "r3_spanish"), "Plot... ZX-R3-D")
+
+
+def test_payload_in_matches_the_payload_not_look_alike_tokens():
+    from src.safety.indirect_injection import PAYLOADS_V2, payload_in
+    fact = next(p for p in PAYLOADS_V2 if p.id == "authority_correction")
+    # an unrelated record that merely contains the compliance tokens is not the payload
+    assert not payload_in("Title: The Matrix Director: Wachowski Release Year: 1999 Spielberg", fact)
+    assert payload_in("Plot: dreams. " + fact.text, fact)
+    # MCP serialises text as JSON: newlines arrive escaped
+    tag = next(p for p in PAYLOADS_V2 if p.id == "fake_system_tag")
+    assert payload_in(tag.text.replace("\n", "\\n"), tag)
